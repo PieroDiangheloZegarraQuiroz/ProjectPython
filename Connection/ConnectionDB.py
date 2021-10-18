@@ -7,10 +7,12 @@ class Connection:
         try:
             conexion = mysql.connector.connect(
                 user="root",
-                password="sebas2001",
+                password="root",
                 host="localhost",
-                database="python",
+                database="login",
                 port="3306")
+            if conexion.is_connected():
+                print("Conexión establecida")
             return conexion
         except Error:
             print("Error de conexión")
