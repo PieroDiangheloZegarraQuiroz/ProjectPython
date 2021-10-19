@@ -37,7 +37,7 @@ Pendiente...
 ## Autores ✒️
 
 * **Sebastián Yactayo** - *aporte* - [YactayoC](https://github.com/YactayoC)
-* **Gabriel Segura** - *aporte* - [username](link a github)
+* **Gabriel Segura** - *aporte* - [Gabriel](link a github)
 * **Stefany Jimenes** - *aporte* - [Sthefanny283](https://github.com/Sthefanny283)
 * **Jose de la Cruz** - *aporte* - [username](link a github)
 * **Jorge Ore** - *aporte* - [Jore24](https://github.com/Jore24)
