@@ -7,12 +7,10 @@ class Connection:
         try:
             conexion = mysql.connector.connect(
                 user="root",
-                password="root",
+                password="sebas2001",
                 host="localhost",
-                database="login",
+                database="python",
                 port="3306")
-            if conexion.is_connected():
-                print("Conexión establecida")
             return conexion
         except Error:
             print("Error de conexión")
@@ -109,3 +107,23 @@ class Connection:
         resultado = cursor.fetchone()[0]
         conexion.close()
         return resultado
+
+    def insertFile(self, urlFile, name, description, idUser):
+        conexion = self.startConnection()
+        cursor = conexion.cursor()
+        sql = "INSERT INTO file (urlFile, name, description, idUser) VALUES ('{}', '{}', '{}', '{}')" \
+            .format(urlFile, name, description, idUser)
+        cursor.execute(sql)
+        conexion.commit()
+        print("Guardado exitoso")
+        conexion.close()
+
+    def listFile(self):
+        conexion = self.startConnection()
+        cursor = conexion.cursor()
+        cursor.execute("SELECT * FROM file")
+        results = cursor.fetchall()
+        quantity = cursor.rowcount
+        name = results
+        conexion.close()
+        return results, quantity, name

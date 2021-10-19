@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QDialog, QApplication, QLabel, QLineEdit, QPushButton, QMessageBox, QComboBox
+from PyQt5.QtWidgets import QDialog, QApplication, QLabel, QLineEdit, QPushButton, QMessageBox, QComboBox, QWidget
 from PyQt5.QtGui import QFont, QPixmap, QPalette, QBrush, QIcon
 from PyQt5.QtCore import Qt
 from Models import Student_Registration
@@ -13,14 +13,16 @@ class Login(QDialog):
         self.initialize()
 
     def initialize(self):
-        self.setGeometry(500, 250, 500, 500)
+        # self.setStyleSheet("background-color: white;")
+        self.setGeometry(500, 250, 400, 500)
         self.setWindowTitle("Login")
+        self.setMinimumSize(400, 500)
+        self.setMaximumSize(400, 500)
         self.setWindowIcon(QIcon("../Images/fondo.jpg"))
         wallpaper = QPalette()
         wallpaper.setBrush(self.backgroundRole(), QBrush(QPixmap("../Images/fondo.jpg")))
         self.setPalette(wallpaper)
         self.display_widgets()
-
 
     def display_widgets(self):
         # Images
@@ -30,25 +32,24 @@ class Login(QDialog):
                 imageLogin = QLabel(self)
                 pixmap = QPixmap(user_png)
                 imageLogin.setPixmap(pixmap)
-                imageLogin.move(200, 50)
+                imageLogin.move(150, 50)
                 imageLogin.resize(100, 100)
         except FileNotFoundError:
             print("No se encontró la ruta")
 
         # Text Boxes
         self.emailBox = QLineEdit(self)
-        self.emailBox.move(150, 180)
+        self.emailBox.move(100, 180)
         self.emailBox.resize(200, 30)
         self.emailBox.setFont(QFont("Arial", 10, QFont.Bold))
         self.emailBox.setAlignment(Qt.AlignCenter)
         self.emailBox.setPlaceholderText("Email")
         self.emailBox.setStyleSheet("border-radius: 10px;"
                                     "color: white;"
-                                    "background-color: rgba(255, 255, 255, 50);"
-                                    "border: 2px solid red;")  # Conficiona si no llena
+                                    "background-color: rgba(255, 255, 255, 50);")
 
         self.passwordBox = QLineEdit(self)
-        self.passwordBox.move(150, 230)
+        self.passwordBox.move(100, 230)
         self.passwordBox.resize(200, 30)
         self.passwordBox.setEchoMode(QLineEdit.Password)
         self.passwordBox.setFont(QFont("Arial", 10, QFont.Bold))
@@ -61,7 +62,7 @@ class Login(QDialog):
         # Buttons
         self.buttonLoggin = QPushButton("Ingresar", self)
         self.buttonLoggin.setFont(QFont("Arial", 8, QFont.Bold))
-        self.buttonLoggin.move(170, 300)
+        self.buttonLoggin.move(130, 300)
         self.buttonLoggin.resize(150, 30)
         self.buttonLoggin.clicked.connect(self.data)
         self.buttonLoggin.setStyleSheet("border-radius: 10px;"
@@ -71,7 +72,7 @@ class Login(QDialog):
         self.comboRegister = QComboBox(self)
         self.comboRegister.addItems(["Registrate", "Estudiante", "Profesor"])
         self.comboRegister.setFont(QFont("Arial", 8, QFont.Bold))
-        self.comboRegister.move(170, 350)
+        self.comboRegister.move(130, 350)
         self.comboRegister.resize(150, 30)
         self.comboRegister.activated[str].connect(self.register)
         self.comboRegister.setStyleSheet("background-color: #4286F5;"
