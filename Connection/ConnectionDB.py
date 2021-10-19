@@ -7,12 +7,10 @@ class Connection:
         try:
             conexion = mysql.connector.connect(
                 user="root",
-                password="root",
+                password="sebas2001",
                 host="localhost",
-                database="login",
+                database="python",
                 port="3306")
-            if conexion.is_connected():
-                print("Conexión establecida")
             return conexion
         except Error:
             print("Error de conexión")
@@ -125,7 +123,7 @@ class Connection:
         cursor = conexion.cursor()
         cursor.execute("SELECT * FROM file")
         results = cursor.fetchall()
-        conexion.close()
-        name = results
         quantity = cursor.rowcount
+        name = results
+        conexion.close()
         return results, quantity, name
