@@ -3,7 +3,7 @@ import ConnectionDB
 
 def listar():
     objUsuarios = ConnectionDB.Connection()
-    objUsuarios.listUser()
+    objUsuarios.listFile()
 
 
 listar()

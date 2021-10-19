@@ -107,3 +107,23 @@ class Connection:
         resultado = cursor.fetchone()[0]
         conexion.close()
         return resultado
+
+    def insertFile(self, urlFile, name, description, idUser):
+        conexion = self.startConnection()
+        cursor = conexion.cursor()
+        sql = "INSERT INTO file (urlFile, name, description, idUser) VALUES ('{}', '{}', '{}', '{}')" \
+            .format(urlFile, name, description, idUser)
+        cursor.execute(sql)
+        conexion.commit()
+        print("Guardado exitoso")
+        conexion.close()
+
+    def listFile(self):
+        conexion = self.startConnection()
+        cursor = conexion.cursor()
+        cursor.execute("SELECT * FROM file")
+        results = cursor.fetchall()
+        conexion.close()
+        name = results
+        quantity = cursor.rowcount
+        return results, quantity, name
