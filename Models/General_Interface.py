@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QPushButto
 from PyQt5.QtGui import QFont, QPixmap, QPalette, QBrush, QIcon
 from PyQt5.QtCore import Qt
 from Models import Login
+from Connection import ConnectionDB
 
 
 class General_Interface(QDialog):
@@ -39,9 +40,11 @@ class General_Interface(QDialog):
         except FileNotFoundError:
             print("Nose encontro el archivo")
 
-        self.user = QLabel("Password", self)
-        self.user.setFont(QFont("Arial", 10))
-        self.user.move(30, 200)
+        #NameUser = ConnectionDB.Connection().getDataUserStudent()
+        #self.user= QLabel(f'{NameUser}', self)
+        self.user = QLabel("User name", self)
+        self.user.setFont(QFont("Arial", 11))
+        self.user.move(120, 170)
         self.user.setStyleSheet("color: white;")
 
         # Buttons

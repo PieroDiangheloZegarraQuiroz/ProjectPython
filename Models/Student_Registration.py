@@ -109,13 +109,13 @@ class User_Register(QDialog):
                                   "background-color: rgba(255, 225, 255, 0.5);"
                                   "font-weight: bold; ")
 
-        self.levelBox = QLineEdit(self)
-        self.levelBox.setAlignment(Qt.AlignCenter)
-        self.levelBox.move(150, 270)
-        self.levelBox.resize(200, 25)
-        self.levelBox.setStyleSheet("border-radius: 10px;"
-                                    "background-color: rgba(255, 225, 255, 0.5);"
-                                    "font-weight: bold; ")
+        self.levelComboBox = QComboBox(self)
+        self.levelComboBox.addItems(["Selecciona tu grado", "4toº Primaria", "5toº Primaria", "6toº Primaria"])
+        self.levelComboBox.setFont(QFont("Arial", 8, QFont.Bold))
+        self.levelComboBox.move(150, 270)
+        self.levelComboBox.resize(200, 25)
+        self.levelComboBox.setStyleSheet("background-color: #F4F6F6;"
+                                         "color: black")
 
         self.emailBox = QLineEdit(self)
         self.emailBox.setAlignment(Qt.AlignCenter)
@@ -147,7 +147,7 @@ class User_Register(QDialog):
         text_name = self.nameBox.text()
         text_lastname = self.lastnameBox.text()
         text_age = self.ageBox.text()
-        text_grade = self.levelBox.text()
+        text_grade = self.levelComboBox.currentText()
         text_email = self.emailBox.text()
         text_password = self.passwordBox.text()
         insertUser = ConnectionDB.Connection().insertUser(text_email, text_password, 0)
