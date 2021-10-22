@@ -11,7 +11,7 @@ class General_Interface(QDialog):
         self.initialize()
 
     def initialize(self):
-        self.setGeometry(550, 250, 800, 650)
+        self.setGeometry(350, 150, 800, 650)
         self.setWindowTitle("Registro Usuario")
         self.display_widgets()
         window_palette = QPalette()
@@ -92,3 +92,10 @@ class General_Interface(QDialog):
     def sessionClose(self):
         General_Interface.close(self)
         Login.Login().exec_()
+
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = General_Interface()
+    window.show()
+    sys.exit(app.exec_())
