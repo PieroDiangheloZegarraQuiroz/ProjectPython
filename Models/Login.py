@@ -4,7 +4,6 @@ from PyQt5.QtCore import Qt
 from Models import Student_Registration
 from Models import Teacher_Registration
 from Models import General_Interface
-
 from Connection import ConnectionDB
 import sys
 
@@ -28,7 +27,7 @@ class Login(QDialog):
 
     def display_widgets(self):
         # Images
-        user_png = r"../Images/perfil.png"
+        user_png = r"../Images/login.png"
         try:
             with open(user_png):
                 imageLogin = QLabel(self)
@@ -84,22 +83,19 @@ class Login(QDialog):
     def data(self):
         text_email = self.emailBox.text()
         text_password = self.passwordBox.text()
-        validate = ConnectionDB.Connection().validateUser(text_email, text_password)
-        if validate == 0:
-            dataUser = ConnectionDB.Connection().getDataUserStudent(text_email, text_password)
-            QMessageBox.information(self, "Succeful", f"Bienvenido {dataUser}", QMessageBox.Ok, QMessageBox.Ok)
-            Login.close(self)
+        user = ConnectionDB.Connection().validateUser(text_email, text_password)
+        log = user[4]
+        print(log)
+        if user[4] == 0:
+            QMessageBox.information(self, "Succeful", f"Bienvenido {user[2]}", QMessageBox.Ok, QMessageBox.Ok)
+            Login.hide(self)
             General_Interface.General_Interface().exec_()
-
-        elif validate == 1:
-            dataUser = ConnectionDB.Connection().getDataUserTeacher(text_email, text_password)
-            QMessageBox.information(self, "Succeful", f"Bienvenido {dataUser}", QMessageBox.Ok, QMessageBox.Ok)
-            Login.close(self)
-            Teacher_Registration.User_Register().exec_()
-        elif validate is None and len(text_email) != 0 or len(text_password) != 0:
+        elif user[4] == 1:
+            QMessageBox.information(self, "Succeful", f"Bienvenido {user[2]}", QMessageBox.Ok, QMessageBox.Ok)
+        elif len(text_email) != 0 or len(text_password) != 0 and user == "None":
             QMessageBox.warning(self, "Error", "Email o contraseña incorrectas", QMessageBox.Ok, QMessageBox.Ok)
-        elif len(text_email) == 0 or len(text_password) == 0:
-            QMessageBox.warning(self, "Error", "Campos vacios", QMessageBox.Ok, QMessageBox.Ok)
+        # elif len(text_email) == 0 or len(text_password) == 0:
+        #     QMessageBox.warning(self, "Error", "Campos vacios", QMessageBox.Ok, QMessageBox.Ok)
 
     def register(self):
         text_register = self.comboRegister.currentText()

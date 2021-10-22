@@ -7,7 +7,7 @@ class Connection:
         try:
             conexion = mysql.connector.connect(
                 user="root",
-                password="kimini28",
+                password="sebas2001",
                 host="localhost",
                 database="python",
                 port="3306")
@@ -29,18 +29,27 @@ class Connection:
         flagType = None
         cursor = conexion.cursor()
         cursor.execute(
-            "SELECT flagType FROM user WHERE email='" + email + "' AND password='" + password + "'")
+            "SELECT * FROM user WHERE email='" + email + "' AND password='" + password + "'")
         resultado = cursor.fetchone()
+        print(resultado)
         if resultado:
-            if resultado[0] == 0:
-                flagType = 0
-            elif resultado[0] == 1:
-                flagType = 1
+            print(resultado)
         else:
             print("No existe el usuario")
-        conexion.close()
-        return flagType
 
+        conexion.close()
+        return resultado
+
+    def getDataUser(self, idUser):
+        conexion = self.startConnection()
+        cursor = conexion.cursor()
+        cursor.execute("SELECT * FROM user WHERE idUser='" + idUser + "'")
+        resultado = cursor.fetchone()
+        conexion.close()
+        print(resultado)
+        return resultado
+
+    # Corregir por id
     def getDataUserStudent(self, email, password):
         conexion = self.startConnection()
         valores = None
@@ -91,10 +100,11 @@ class Connection:
         print("Ingreso exitoso teacher")
         conexion.close()
 
-    def insertUser(self, email, password, flagType):
+    def insertUser(self, email, password, avatar, flagType):
         conexion = self.startConnection()
         cursor = conexion.cursor()
-        sql = "INSERT INTO user (email, password, flagType) VALUES ('{}', '{}', '{}')".format(email, password, flagType)
+        sql = "INSERT INTO user (email, password, avatar, flagType) VALUES ('{}', '{}', '{}', '{}')" \
+            .format(email, password, avatar, flagType)
         cursor.execute(sql)
         conexion.commit()
         print("Ingreso exitoso user")

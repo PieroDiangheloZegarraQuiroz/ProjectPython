@@ -3,7 +3,6 @@ from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QPushButto
 from PyQt5.QtGui import QFont, QPixmap, QPalette, QBrush, QIcon
 from PyQt5.QtCore import Qt
 from Models import Login
-from Connection import ConnectionDB
 
 
 class General_Interface(QDialog):
@@ -29,7 +28,7 @@ class General_Interface(QDialog):
                                 "background-color: red;"
                                 "font-weight: bold; ")
 
-        user_image = r"../Images/klipartz_opt.png"
+        user_image = r"../Images/perfil.png"
         try:
             with open(user_image):
                 etiqueta_imagen = QLabel(self)
@@ -40,11 +39,9 @@ class General_Interface(QDialog):
         except FileNotFoundError:
             print("Nose encontro el archivo")
 
-        #NameUser = ConnectionDB.Connection().getDataUserStudent()
-        #self.user= QLabel(f'{NameUser}', self)
-        self.user = QLabel("User name", self)
-        self.user.setFont(QFont("Arial", 11))
-        self.user.move(120, 170)
+        self.user = QLabel("Password", self)
+        self.user.setFont(QFont("Arial", 10))
+        self.user.move(30, 200)
         self.user.setStyleSheet("color: white;")
 
         # Buttons
@@ -95,10 +92,3 @@ class General_Interface(QDialog):
     def sessionClose(self):
         General_Interface.close(self)
         Login.Login().exec_()
-
-
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = General_Interface()
-    window.show()
-    sys.exit(app.exec_())

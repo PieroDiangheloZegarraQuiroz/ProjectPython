@@ -150,7 +150,8 @@ class User_Register(QDialog):
         text_grade = self.levelComboBox.currentText()
         text_email = self.emailBox.text()
         text_password = self.passwordBox.text()
-        insertUser = ConnectionDB.Connection().insertUser(text_email, text_password, 0)
+        text_perfil = 'perfil.png'
+        insertUser = ConnectionDB.Connection().insertUser(text_email, text_password, text_perfil, 0)
         lastId = ConnectionDB.Connection().getLastIdUser()
         insertUsStudent = ConnectionDB.Connection().insertUser_Student(text_name, text_lastname, text_age, text_grade,
                                                                        lastId)
