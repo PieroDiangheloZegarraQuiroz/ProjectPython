@@ -1,7 +1,9 @@
 from PyQt5.QtCore import QDir
 from urllib import request
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QFileDialog, QTextEdit, QLineEdit, QMessageBox
+import Test.urlDow
 from Connection import ConnectionDB
+from Test import *
 import sys
 
 
@@ -9,6 +11,7 @@ class Download(QWidget):
     def __init__(self):
         super(Download, self).__init__()
         self.initialize()
+        self.urlClass = Test.urlDow.Url()  # Llamando a otra clase
 
     def initialize(self):
         self.resize(500, 500)
@@ -16,7 +19,6 @@ class Download(QWidget):
         self.display_widgets()
 
     def display_widgets(self):
-
         self.buttonDownload = QPushButton("Descargar nomvbre", self)
         self.buttonDownload.move(100, 00)
         self.buttonDownload.setEnabled(False)
@@ -37,11 +39,39 @@ class Download(QWidget):
         self.urlBox.move(10, 60)
         self.urlBox.textChanged.connect(self.buttonEnabled)
 
-        files, quantity, name = ConnectionDB.Connection().listFile()
+        files, quantity = ConnectionDB.Connection().listFile()
 
-        self.buttonFile = QPushButton(f"Descargar Aprendizaje 1", self)
-        self.buttonFile.move(160, 120)
-        self.buttonFile.clicked.connect(self.download)
+        # Iteración de los nombres para guardarlos en arreglo
+        self.names = []
+        for f in files:
+            self.names.append(f[2])
+        print(self.names)
+
+        # Iteración de los links para guardarlos en arreglo
+        self.urls = []
+        for f in files:
+            self.urls.append(f[1])
+        print(self.urls)
+
+        # Iteración de los id para guardarlos en arreglo
+        self.ids = []
+        for f in files:
+            self.ids.append(f[0])
+        print(self.ids)
+
+        # Iteración del nombre y botoón para que se repita segun la cantidad
+        self.value = None
+        self.buttonNum = []
+        for m in range(quantity):
+            self.buttonNum.append(f"ButtonFile{m + 1}")
+        print(self.buttonNum)
+
+        for self.n in range(quantity):
+            boton = self.buttonNum[self.n]
+            boton = QPushButton(f"{boton}", self)
+            boton.move(100, 100 * (self.n + 1))
+            boton.clicked.connect(self.download)
+            print(self.n)
 
     def buttonEnabled(self):
         if self.urlBox.text() != "":
@@ -54,13 +84,14 @@ class Download(QWidget):
             self.buttonClear.setEnabled(False)
 
     def download(self):
-        files, quantity, name = ConnectionDB.Connection().listFile()
-        remote_url = str(files[1][1])
-        local_file = QFileDialog.getSaveFileName(self, "Seleccionar ruta", "", "Archivo PDF (*.pdf)")
-        request.urlretrieve(remote_url, local_file[0])
-
-        if local_file:
-            QMessageBox.information(self, "Succeful", f"Se ha descargado el archivo", QMessageBox.Ok, QMessageBox.Ok)
+        print(self.value)
+        files, quantity = ConnectionDB.Connection().listFile()
+        self.urlClass.downloadUrl(self.urls[self.n])
+        # remote_url = files[1][1]
+        # local_file = QFileDialog.getSaveFileName(self, "Seleccionar ruta", "", "Archivo PDF (*.pdf)")
+        # request.urlretrieve(remote_url, local_file[0])
+        # if local_file:
+        #     QMessageBox.information(self, "Succeful", f"Se ha descargado el archivo", QMessageBox.Ok, QMessageBox.Ok)
 
     def upload(self):
         remote_url = self.urlBox.text()

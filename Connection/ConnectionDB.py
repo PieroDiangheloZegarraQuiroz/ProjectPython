@@ -124,6 +124,6 @@ class Connection:
         cursor.execute("SELECT * FROM file")
         results = cursor.fetchall()
         quantity = cursor.rowcount
-        name = results
         conexion.close()
-        return results, quantity, name
+        print(results)
+        return results, quantity
