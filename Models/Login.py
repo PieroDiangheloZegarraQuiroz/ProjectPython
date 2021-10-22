@@ -3,6 +3,8 @@ from PyQt5.QtGui import QFont, QPixmap, QPalette, QBrush, QIcon
 from PyQt5.QtCore import Qt
 from Models import Student_Registration
 from Models import Teacher_Registration
+from Models import General_Interface
+
 from Connection import ConnectionDB
 import sys
 
@@ -87,7 +89,8 @@ class Login(QDialog):
             dataUser = ConnectionDB.Connection().getDataUserStudent(text_email, text_password)
             QMessageBox.information(self, "Succeful", f"Bienvenido {dataUser}", QMessageBox.Ok, QMessageBox.Ok)
             Login.close(self)
-            Student_Registration.User_Register().exec_()
+            General_Interface.General_Interface().exec_()
+
         elif validate == 1:
             dataUser = ConnectionDB.Connection().getDataUserTeacher(text_email, text_password)
             QMessageBox.information(self, "Succeful", f"Bienvenido {dataUser}", QMessageBox.Ok, QMessageBox.Ok)
