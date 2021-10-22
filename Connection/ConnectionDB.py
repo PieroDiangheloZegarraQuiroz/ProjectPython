@@ -9,7 +9,7 @@ class Connection:
                 user="root",
                 password="kimini28",
                 host="localhost",
-                database="proyectopython",
+                database="python",
                 port="3306")
             return conexion
         except Error:
