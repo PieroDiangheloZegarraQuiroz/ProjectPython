@@ -1,4 +1,5 @@
-from PyQt5.QtWidgets import QDialog, QApplication, QLabel, QLineEdit, QPushButton, QMessageBox, QComboBox, QWidget
+from PyQt5.QtWidgets import QDialog, QApplication, QLabel, QLineEdit, QPushButton, QMessageBox, QComboBox, QWidget, \
+    QMainWindow
 from PyQt5.QtGui import QFont, QPixmap, QPalette, QBrush, QIcon
 from PyQt5.QtCore import Qt
 from Models import Student_Registration
@@ -8,7 +9,7 @@ from Connection import ConnectionDB
 import sys
 
 
-class Login(QDialog):
+class Login(QMainWindow):
     def __init__(self):
         super(Login, self).__init__()
         self.initialize()
@@ -19,15 +20,15 @@ class Login(QDialog):
         self.setWindowTitle("Login")
         self.setMinimumSize(400, 500)
         self.setMaximumSize(400, 500)
-        self.setWindowIcon(QIcon("../Images/fondo.jpg"))
+        self.setWindowIcon(QIcon("../Images/Others/fondo.jpg"))
         wallpaper = QPalette()
-        wallpaper.setBrush(self.backgroundRole(), QBrush(QPixmap("../Images/fondo.jpg")))
+        wallpaper.setBrush(self.backgroundRole(), QBrush(QPixmap("../Images/Others/fondo.jpg")))
         self.setPalette(wallpaper)
         self.display_widgets()
 
     def display_widgets(self):
         # Images
-        user_png = r"../Images/login.png"
+        user_png = r"../Images/Others/login.png"
         try:
             with open(user_png):
                 imageLogin = QLabel(self)
@@ -83,27 +84,30 @@ class Login(QDialog):
     def data(self):
         text_email = self.emailBox.text()
         text_password = self.passwordBox.text()
-        user = ConnectionDB.Connection().validateUser(text_email, text_password)
-        log = user[4]
-        print(log)
-        if user[4] == 0:
-            QMessageBox.information(self, "Succeful", f"Bienvenido {user[2]}", QMessageBox.Ok, QMessageBox.Ok)
-            Login.hide(self)
-            General_Interface.General_Interface().exec_()
-        elif user[4] == 1:
-            QMessageBox.information(self, "Succeful", f"Bienvenido {user[2]}", QMessageBox.Ok, QMessageBox.Ok)
-        elif len(text_email) != 0 or len(text_password) != 0 and user == "None":
-            QMessageBox.warning(self, "Error", "Email o contraseña incorrectas", QMessageBox.Ok, QMessageBox.Ok)
-        # elif len(text_email) == 0 or len(text_password) == 0:
-        #     QMessageBox.warning(self, "Error", "Campos vacios", QMessageBox.Ok, QMessageBox.Ok)
+        largoEmail = len(text_email)
+        largoPassword = len(text_password)
+        if largoEmail != 0 and largoPassword != 0:
+            user, result = ConnectionDB.Connection().validateUser(text_email, text_password)
+            print(user)
+            if result and user[4] == 0:
+                QMessageBox.information(self, "Succeful", f"Bienvenido {user[2]}", QMessageBox.Ok, QMessageBox.Ok)
+                self.hide()
+                General_Interface.General_Interface().exec_()
+
+            elif result and user[4] == 1:
+                QMessageBox.information(self, "Succeful",
+                                        f"Bienvenido {user[2]}, la interfaz de profesor esta en progreso..",
+                                        QMessageBox.Ok, QMessageBox.Ok)
+            elif not result:
+                QMessageBox.information(self, "Error", "Email o contraseña incorrectas", QMessageBox.Ok, QMessageBox.Ok)
+        else:
+            QMessageBox.warning(self, "Error", f"Campos vacios", QMessageBox.Ok, QMessageBox.Ok)
 
     def register(self):
         text_register = self.comboRegister.currentText()
         if text_register == "Estudiante":
-            Login.close(self)
             Student_Registration.User_Register().exec_()
         elif text_register == "Profesor":
-            Login.close(self)
             Teacher_Registration.User_Register().exec_()
 
 

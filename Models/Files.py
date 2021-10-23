@@ -37,7 +37,7 @@ class Download(QWidget):
         self.urlBox.move(10, 60)
         self.urlBox.textChanged.connect(self.buttonEnabled)
 
-        files, quantity, name = ConnectionDB.Connection().listFile()
+        files, quantity = ConnectionDB.Connection().listFile()
 
         self.buttonFile = QPushButton(f"Descargar Aprendizaje 1", self)
         self.buttonFile.move(160, 120)

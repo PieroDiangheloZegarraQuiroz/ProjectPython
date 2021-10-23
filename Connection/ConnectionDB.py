@@ -15,70 +15,64 @@ class Connection:
         except Error:
             print("Error de conexión")
 
-    def listUser(self):
-        conexion = self.startConnection()
-        cursor = conexion.cursor()
-        cursor.execute("SELECT * FROM user")
-        resultado = cursor.fetchall()
-        for r in resultado:
-            print(r[0], r[1], r[2], r[3])
-        conexion.close()
-
+    # === Methods Login ===
     def validateUser(self, email, password):
         conexion = self.startConnection()
-        flagType = None
         cursor = conexion.cursor()
         cursor.execute(
             "SELECT * FROM user WHERE email='" + email + "' AND password='" + password + "'")
+        result = False
         resultado = cursor.fetchone()
-        print(resultado)
         if resultado:
-            print(resultado)
-        else:
-            print("No existe el usuario")
+            result = True
+        elif not resultado:
+            result = False
+        return resultado, result
 
-        conexion.close()
-        return resultado
-
-    def getDataUser(self, idUser):
-        conexion = self.startConnection()
-        cursor = conexion.cursor()
-        cursor.execute("SELECT * FROM user WHERE idUser='" + idUser + "'")
-        resultado = cursor.fetchone()
-        conexion.close()
-        print(resultado)
-        return resultado
-
-    # Corregir por id
-    def getDataUserStudent(self, email, password):
+    def getDataUserStudent(self, idUser):
         conexion = self.startConnection()
         valores = None
         cursor = conexion.cursor()
         cursor.execute(
-            "SELECT s.name, s.lastName, u.flagType FROM user AS u "
-            "INNER JOIN student AS s ON (s.idUser = u.idUser)"
-            "WHERE u.email='" + email + "' AND u.password='" + password + "'")
-
+            "SELECT * FROM student AS s INNER JOIN user AS u ON (s.idUser = u.idUser) "
+            "WHERE u.idUser ='" + idUser + "'")
         resultado = cursor.fetchall()
         for n in resultado:
             valores = n[0] + " " + n[1]
         conexion.close()
         return valores
 
-    def getDataUserTeacher(self, email, password):
+    def getDataUserTeacher(self, idUser):
         conexion = self.startConnection()
         valores = None
         cursor = conexion.cursor()
         cursor.execute(
-            "SELECT t.name, t.lastName, u.flagType FROM user AS u "
-            "INNER JOIN teacher AS t ON (t.idUser = u.idUser)"
-            "WHERE u.email='" + email + "' AND u.password='" + password + "'")
-
+            "SELECT * FROM teacher AS t INNER JOIN user AS u ON (t.idUser = u.idUser) "
+            "WHERE u.idUser ='" + idUser + "'")
         resultado = cursor.fetchall()
         for n in resultado:
             valores = n[0] + " " + n[1]
         conexion.close()
         return valores
+
+    # === Methods Register ===
+    def insertUser(self, email, password, avatar, flagType):
+        conexion = self.startConnection()
+        cursor = conexion.cursor()
+        sql = "INSERT INTO user (email, password, avatar, flagType) VALUES ('{}', '{}', '{}', '{}')" \
+            .format(email, password, avatar, flagType)
+        cursor.execute(sql)
+        conexion.commit()
+        print("Ingreso exitoso user")
+        conexion.close()
+
+    def getLastIdUser(self):
+        conexion = self.startConnection()
+        cursor = conexion.cursor()
+        cursor.execute("SELECT idUser FROM user ORDER BY idUser DESC")
+        resultado = cursor.fetchone()[0]
+        conexion.close()
+        return resultado
 
     def insertUser_Student(self, name, lastname, age, degree, idUser):
         conexion = self.startConnection()
@@ -100,23 +94,15 @@ class Connection:
         print("Ingreso exitoso teacher")
         conexion.close()
 
-    def insertUser(self, email, password, avatar, flagType):
+    # ===  ===
+    def listUser(self):
         conexion = self.startConnection()
         cursor = conexion.cursor()
-        sql = "INSERT INTO user (email, password, avatar, flagType) VALUES ('{}', '{}', '{}', '{}')" \
-            .format(email, password, avatar, flagType)
-        cursor.execute(sql)
-        conexion.commit()
-        print("Ingreso exitoso user")
+        cursor.execute("SELECT * FROM user")
+        resultado = cursor.fetchall()
+        for r in resultado:
+            print(r[0], r[1], r[2], r[3])
         conexion.close()
-
-    def getLastIdUser(self):
-        conexion = self.startConnection()
-        cursor = conexion.cursor()
-        cursor.execute("SELECT idUser FROM user ORDER BY idUser DESC")
-        resultado = cursor.fetchone()[0]
-        conexion.close()
-        return resultado
 
     def insertFile(self, urlFile, name, description, idUser):
         conexion = self.startConnection()
@@ -135,5 +121,4 @@ class Connection:
         results = cursor.fetchall()
         quantity = cursor.rowcount
         conexion.close()
-        print(results)
         return results, quantity

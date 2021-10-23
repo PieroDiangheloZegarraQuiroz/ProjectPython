@@ -23,13 +23,13 @@ class User_Register(QDialog):
         self.setWindowTitle("Student Registration")
         self.display_widgets()
         window_palette = QPalette()
-        window_palette.setBrush(self.backgroundRole(), QBrush(QPixmap("../Images/Rfondo2.jpg")))
+        window_palette.setBrush(self.backgroundRole(), QBrush(QPixmap("../Images/Others/Rfondo2.jpg")))
         self.setPalette(window_palette)
         self.display_widgets()
 
     def display_widgets(self):
         # Images
-        Icon_Return = r"../Images/IconoReturn_1.png"
+        Icon_Return = r"../Images/Others/IconoReturn_1.png"
         try:
             with open(Icon_Return):
                 Image = QLabelClick(self)
@@ -42,7 +42,7 @@ class User_Register(QDialog):
 
         Image.clicked.connect(self.login)
 
-        user_image = r"../Images/IconoStudent2.png"
+        user_image = r"../Images/Others/IconoStudent2.png"
         try:
             with open(user_image):
                 etiqueta_imagen = QLabel(self)
@@ -157,8 +157,8 @@ class User_Register(QDialog):
                                                                        lastId)
         QMessageBox.information(self, "Succeful", "Registro exitoso", QMessageBox.Ok, QMessageBox.Ok)
         self.close()
-        Login.Login().exec_()
 
     def login(self):
-        User_Register.close(self)
-        Login.Login().exec_()
+        login = Login.Login()
+        login.show()
+        self.close()

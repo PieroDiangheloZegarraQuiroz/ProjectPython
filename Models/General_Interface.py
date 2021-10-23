@@ -5,7 +5,7 @@ from PyQt5.QtCore import Qt
 from Models import Login
 
 
-class General_Interface(QDialog):
+class General_Interface(QDialog): # Cambiar
     def __init__(self):
         super(General_Interface, self).__init__()
         self.initialize()
@@ -28,7 +28,7 @@ class General_Interface(QDialog):
                                 "background-color: red;"
                                 "font-weight: bold; ")
 
-        user_image = r"../Images/perfil.png"
+        user_image = r"../Images/Profile/perfil.png"
         try:
             with open(user_image):
                 etiqueta_imagen = QLabel(self)
@@ -39,6 +39,9 @@ class General_Interface(QDialog):
         except FileNotFoundError:
             print("Nose encontro el archivo")
 
+        # objeto = Login.Login()
+        # idUser = objeto.data()
+        # print(idUser)
         self.user = QLabel("Password", self)
         self.user.setFont(QFont("Arial", 10))
         self.user.move(30, 200)
@@ -90,5 +93,9 @@ class General_Interface(QDialog):
         print("Se ha cerrado la ventana")
 
     def sessionClose(self):
-        General_Interface.close(self)
-        Login.Login().exec_()
+        pass
+        #General_Interface.close(self)
+        # Login.Login().exec_()
+
+
+
