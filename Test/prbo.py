@@ -103,6 +103,7 @@ class ventanaPrincipal(QMainWindow):
 
     def enviarAbrir(self):
         # Obtener texto del QLineEdit
+        self.hide()
         texto = self.lineEdit.text()
 
         # Llamar la ventana hija pasandole un parametro

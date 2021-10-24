@@ -17,6 +17,7 @@ class Login(QMainWindow):
     def initialize(self):
         # self.setStyleSheet("background-color: white;")
         self.setGeometry(500, 250, 400, 500)
+        # self.setWindowFlag(Qt.FramelessWindowHint)
         self.setWindowTitle("Login")
         self.setMinimumSize(400, 500)
         self.setMaximumSize(400, 500)

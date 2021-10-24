@@ -20,6 +20,7 @@ class User_Register(QDialog):
 
     def initialize(self):
         self.setGeometry(500, 250, 500, 500)
+        self.setWindowFlag(Qt.FramelessWindowHint)
         self.setWindowTitle("Student Registration")
         self.display_widgets()
         window_palette = QPalette()

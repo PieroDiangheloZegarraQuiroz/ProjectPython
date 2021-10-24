@@ -28,6 +28,7 @@ class Download(QWidget):
 
     def initialize(self):
         self.resize(600, 500)
+
         self.setWindowTitle("Download")
         self.display_widgets()
 
