@@ -27,20 +27,17 @@ class Connection:
             result = True
         elif not resultado:
             result = False
+        conexion.close()
         return resultado, result
 
     def getDataUserStudent(self, idUser):
         conexion = self.startConnection()
-        valores = None
         cursor = conexion.cursor()
-        cursor.execute(
-            "SELECT * FROM student AS s INNER JOIN user AS u ON (s.idUser = u.idUser) "
-            "WHERE u.idUser ='" + idUser + "'")
-        resultado = cursor.fetchall()
-        for n in resultado:
-            valores = n[0] + " " + n[1]
+        sql = "SELECT * FROM student AS s INNER JOIN user AS u ON (s.idUser = u.idUser) WHERE u.idUser='" + idUser + "'"
+        cursor.execute(sql)
+        resultado = cursor.fetchone()
         conexion.close()
-        return valores
+        return resultado
 
     def getDataUserTeacher(self, idUser):
         conexion = self.startConnection()

@@ -3,17 +3,18 @@ from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QPushButto
 from PyQt5.QtGui import QFont, QPixmap, QPalette, QBrush, QIcon
 from PyQt5.QtCore import Qt
 from Models import Login
+from Connection import ConnectionDB
 
 
-class General_Interface(QDialog): # Cambiar
-    def __init__(self):
+class General_Interface(QDialog):  # Cambiar
+    def __init__(self, idUser):
         super(General_Interface, self).__init__()
+        self.idUser = str(idUser)
         self.initialize()
 
     def initialize(self):
         self.setGeometry(350, 150, 800, 650)
         self.setWindowTitle("Registro Usuario")
-        self.display_widgets()
         window_palette = QPalette()
         window_palette.setBrush(self.backgroundRole(), QBrush(QPixmap("Images/")))
         self.setPalette(window_palette)
@@ -39,12 +40,12 @@ class General_Interface(QDialog): # Cambiar
         except FileNotFoundError:
             print("Nose encontro el archivo")
 
-        # objeto = Login.Login()
-        # idUser = objeto.data()
-        # print(idUser)
-        self.user = QLabel("Password", self)
-        self.user.setFont(QFont("Arial", 10))
-        self.user.move(30, 200)
+        results = ConnectionDB.Connection().getDataUserStudent(self.idUser)
+        names = (results[1] + " " + results[2])
+        print(names)
+        self.user = QLabel(f'{names}', self)
+        self.user.setFont(QFont("Arial", 15))
+        self.user.move(60, 180)
         self.user.setStyleSheet("color: white;")
 
         # Buttons
@@ -94,8 +95,6 @@ class General_Interface(QDialog): # Cambiar
 
     def sessionClose(self):
         pass
-        #General_Interface.close(self)
+        # General_Interface.close(self)
         # Login.Login().exec_()
-
-
 
