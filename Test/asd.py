@@ -1,12 +1,10 @@
-from PyQt5.QtCore import *
-from urllib import request
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QFileDialog, QTextEdit, QLineEdit, QMessageBox, QLabel, \
-    QScrollArea, QVBoxLayout, QFormLayout, QGroupBox
-import Test.urlDow
-from Connection import ConnectionDB
-from Test import *
 import sys
+from urllib import request
 
+from PyQt5.QtCore import Qt, pyqtSignal
+from PyQt5.QtWidgets import *
+from Connection import ConnectionDB
+from PyQt5.QtGui import *
 
 
 class QLabelClick(QLabel):
@@ -22,19 +20,11 @@ class QLabelClick(QLabel):
             QMessageBox.information(self, "Succeful", f"Se ha descargado el archivo", QMessageBox.Ok, QMessageBox.Ok)
 
 
-class Download(QWidget):
+class MainWindow(QWidget):
     def __init__(self):
-        super(Download, self).__init__()
-        self.initialize()
-        self.urlClass = Test.urlDow.Url()
-
-    def initialize(self):
-        # self.resize(600, 500)
-        self.setGeometry(100, 100, 600, 400)
-        self.setWindowTitle("Download")
-        self.display_widgets()
-
-    def display_widgets(self):
+        super().__init__()
+        self.setWindowTitle('QScrollArea Test')
+        self.setGeometry(400, 400, 600, 400)
 
         formLayout = QFormLayout()
         groupBox = QGroupBox()
@@ -66,14 +56,15 @@ class Download(QWidget):
             self.varsu.append(f'lab{i + 1}')
 
         for i in range(quantity):
-            self.vars = QLabel(f'{self.names[i]}', self)
+            self.vars = QLabel(f'{self.names[i]}\t\t{self.descriptions[i]}', self)
             self.vars.move(30, 50 * (i + 1))
 
-            self.descs = QLabel(f'{self.descriptions[i]}', self)
-            self.descs.move(120, 50 * (i + 1))
+            # self.descs = QLabel(f'{self.descriptions[i]}', self)
+            # self.descs.move(120, 50 * (i + 1))
 
             self.varsu = QLabelClick(f'{self.urls[i]}', self)
             self.varsu.move(210, 50 * (i + 1))
+
             formLayout.setContentsMargins(100, 10, 5, 5)
             formLayout.setHorizontalSpacing(50)
             formLayout.setVerticalSpacing(50)
@@ -89,8 +80,9 @@ class Download(QWidget):
         layout = QVBoxLayout(self)
         layout.addWidget(scroll)
 
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = Download()
+
+if __name__ == '__main__':
+    app = QApplication([])
+    window = MainWindow()
     window.show()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())

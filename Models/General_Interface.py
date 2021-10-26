@@ -22,12 +22,21 @@ class General_Interface(QDialog):  # Cambiar
 
     def display_widgets(self):
         # Labels
+
+        self.lbl2 = QLabel(self)
+        self.lbl2.setGeometry(550, 250, 500, 650)
+        self.lbl2.move(300, 0)
+        self.lbl2.setStyleSheet("border-radius: 0px;"
+                                "background-color: blue;"
+                                "font-weight: bold; ")
         self.lbl1 = QLabel(self)
         self.lbl1.setGeometry(550, 250, 500, 650)
         self.lbl1.move(300, 0)
         self.lbl1.setStyleSheet("border-radius: 0px;"
                                 "background-color: red;"
                                 "font-weight: bold; ")
+
+
 
         user_image = r"../Images/Profile/perfil.png"
         try:
@@ -40,7 +49,7 @@ class General_Interface(QDialog):  # Cambiar
         except FileNotFoundError:
             print("Nose encontro el archivo")
 
-        results = ConnectionDB.Connection().getDataUserStudent(self.idUser)
+        results = ConnectionDB.Connection().getDataUserStudent("1")
         names = (results[1] + " " + results[2])
         print(names)
         self.user = QLabel(f'{names}', self)
@@ -82,8 +91,12 @@ class General_Interface(QDialog):  # Cambiar
                                             "font-weight: bold; ")
 
     def Action1(self):
-
-        print("Se ha cerrado la ventana")
+        self.lbl1.setStyleSheet("border-radius: 0px;"
+                                "background-color: white;"
+                                "font-weight: bold; ")
+        self.lbl1.hide()
+        self.lbl2.show()
+        print("boton juego")
 
     def Action2(self):
 
@@ -98,3 +111,9 @@ class General_Interface(QDialog):  # Cambiar
         # General_Interface.close(self)
         # Login.Login().exec_()
 
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    window = General_Interface(1)
+    window.show()
+    sys.exit(app.exec_())
