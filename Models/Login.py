@@ -1,10 +1,8 @@
-from PyQt5.QtWidgets import QDialog, QApplication, QLabel, QLineEdit, QPushButton, QMessageBox, QComboBox, QWidget, \
-    QMainWindow
+from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QMessageBox, QComboBox, QMainWindow
 from PyQt5.QtGui import QFont, QPixmap, QPalette, QBrush, QIcon
 from PyQt5.QtCore import Qt
-from Models import Student_Registration
-from Models import Teacher_Registration
-from Models import General_Interface
+from Models.General import Student_Registration, Teacher_Registration
+from Models.Student import General_Interface
 from Connection import ConnectionDB
 import sys
 
