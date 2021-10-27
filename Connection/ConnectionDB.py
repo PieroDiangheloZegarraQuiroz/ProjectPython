@@ -101,6 +101,7 @@ class Connection:
             print(r[0], r[1], r[2], r[3])
         conexion.close()
 
+    # === Files ===
     def insertFile(self, urlFile, name, description, idUser):
         conexion = self.startConnection()
         cursor = conexion.cursor()
@@ -119,3 +120,14 @@ class Connection:
         quantity = cursor.rowcount
         conexion.close()
         return results, quantity
+
+    # === Questions ===
+    def insertQuestions(self, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10):
+        conexion = self.startConnection()
+        cursor = conexion.cursor()
+        sql = "INSERT INTO form (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10) VALUES ('{}', '{}', '{}', '{}', '{}', '{}'," \
+              " '{}','{}', '{}', '{}')".format(q1, q2, q3, q4, q5, q6, q7, q8, q9, q10)
+        cursor.execute(sql)
+        conexion.commit()
+        print("Guardado exitoso")
+        conexion.close()
