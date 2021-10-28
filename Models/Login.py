@@ -36,7 +36,7 @@ class Login(QMainWindow):
                 imageLogin.move(150, 50)
                 imageLogin.resize(100, 100)
         except FileNotFoundError:
-            print("No se encontró la ruta")
+            print("No se encontró la uta")
 
         # Text Boxes
         self.emailBox = QLineEdit(self)

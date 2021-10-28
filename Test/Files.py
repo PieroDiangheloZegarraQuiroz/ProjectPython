@@ -56,7 +56,7 @@ class Download(QWidget):
     def download(self):
         files, quantity, name = ConnectionDB.Connection().listFile()
         remote_url = str(files[1][1])
-        local_file = QFileDialog.getSaveFileName(self, "Seleccionar ruta", "", "Archivo PDF (*.pdf)")
+        local_file = QFileDialog.getSaveFileName(self, "Seleccionar uta", "", "Archivo PDF (*.pdf)")
         request.urlretrieve(remote_url, local_file[0])
 
         if local_file:

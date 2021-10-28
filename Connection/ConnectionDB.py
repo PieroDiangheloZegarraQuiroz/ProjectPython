@@ -131,3 +131,21 @@ class Connection:
         conexion.commit()
         print("Guardado exitoso")
         conexion.close()
+
+    def insertFiles2(self, pdf):
+        conexion = self.startConnection()
+        cursor = conexion.cursor()
+        sql = """INSERT INTO test (pdf) VALUES (%s)"""
+        cursor.execute(sql, (pdf,))
+        conexion.commit()
+        conexion.close()
+
+    def listFile22(self):
+        conexion = self.startConnection()
+        cursor = conexion.cursor()
+        cursor.execute("SELECT * FROM test")
+        results = cursor.fetchall()
+        quantity = cursor.rowcount
+        conexion.close()
+        return results, quantity
+

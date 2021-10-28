@@ -9,7 +9,7 @@ class Url(QWidget):
 
     def downloadUrl(self, urls):
         remote_url = urls
-        local_file = QFileDialog.getSaveFileName(self, "Seleccionar ruta", "", "Archivo PDF (*.pdf)")
+        local_file = QFileDialog.getSaveFileName(self, "Seleccionar uta", "", "Archivo PDF (*.pdf)")
         request.urlretrieve(remote_url, local_file[0])
         if local_file:
             QMessageBox.information(self, "Succeful", f"Se ha descargado el archivo", QMessageBox.Ok, QMessageBox.Ok)
