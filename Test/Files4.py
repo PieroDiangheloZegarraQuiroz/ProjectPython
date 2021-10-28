@@ -8,11 +8,11 @@ from Test import *
 import sys
 
 
-
 class QLabelClick(QLabel):
     clicked = pyqtSignal()
 
     def mousePressEvent(self, event):
+        print(self.text())
         # self.clicked.emit()
         url = self.text()
         remote_url = url
@@ -88,6 +88,7 @@ class Download(QWidget):
 
         layout = QVBoxLayout(self)
         layout.addWidget(scroll)
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

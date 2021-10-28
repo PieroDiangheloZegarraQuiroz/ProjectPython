@@ -2,16 +2,18 @@ from PyQt5.QtCore import QDir
 from urllib import request
 
 from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QFileDialog, QTextEdit, QLineEdit, QMessageBox, QLabel
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QFileDialog, QTextEdit, QLineEdit, QMessageBox, QLabel, \
+    QDialog
 import Test.urlDow
 from Connection import ConnectionDB
 from Test import *
+import pyshorteners
 import sys
 
 
-class Download(QWidget):
+class UploadUrl(QDialog):
     def __init__(self):
-        super(Download, self).__init__()
+        super(UploadUrl, self).__init__()
         self.initialize()
         self.urlClass = Test.urlDow.Url()  # Llamando a otra clase
 
@@ -109,7 +111,10 @@ class Download(QWidget):
         name = self.nameBox.text()
         description = self.descriptionBox.toPlainText()
         remote_url = self.urlBox.text()
-        saved = ConnectionDB.Connection().insertFile(remote_url, name, description, 1)
+        shrt = pyshorteners.Shortener()
+        nurl = shrt.tinyurl.short(remote_url)
+        print(nurl)
+        ConnectionDB.Connection().insertFile(nurl, name, description, 1)
         QMessageBox.information(self, "Succeful",
                                 "El Archivo ha sido subido",
                                 QMessageBox.Ok, QMessageBox.Ok)
@@ -123,6 +128,6 @@ class Download(QWidget):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = Download()
+    window = UploadUrl()
     window.show()
     sys.exit(app.exec_())

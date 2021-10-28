@@ -1,13 +1,13 @@
 import Connection.ConnectionDB
 from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QMessageBox, QComboBox, QMainWindow, \
-    QFileDialog
+    QFileDialog, QDialog
 from PyQt5.QtGui import QFont, QPixmap, QPalette, QBrush, QIcon
 import sys
 
 from Connection import ConnectionDB
 
 
-class insertando(QMainWindow):
+class insertando(QDialog):
 
     def __init__(self):
         super(insertando, self).__init__()

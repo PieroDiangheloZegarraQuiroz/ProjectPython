@@ -1,12 +1,13 @@
-import sys
+from PyQt5.QtCore import *
 from urllib import request
 
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import QApplication, QWidget, QFileDialog, QMessageBox, QLabel, \
-    QScrollArea, QVBoxLayout, QFormLayout, QGroupBox
-
-
+from PyQt5.QtGui import QPixmap, QFont
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QFileDialog, QTextEdit, QLineEdit, QMessageBox, QLabel, \
+    QScrollArea, QVBoxLayout, QFormLayout, QGroupBox, QDialog
+import Test.urlDow
 from Connection import ConnectionDB
+from Test import *
+import sys
 
 
 class QLabelClick(QLabel):
@@ -14,25 +15,29 @@ class QLabelClick(QLabel):
 
     def mousePressEvent(self, event):
         url = self.text()
-        with open(f'tarea.pdf', 'wb') as f:
-            f.write(url)
-            return url
-        remote_url = url
+        indice0 = url.index('https')
+        indicef = url.index("'><img")
+        subcadena = url[indice0:indicef]
+
+        remote_url = subcadena
         local_file = QFileDialog.getSaveFileName(self, "Seleccionar uta", "", "Archivo PDF (*.pdf)")
         request.urlretrieve(remote_url, local_file[0])
-        if local_file:
+        if local_file[0] != "":
             QMessageBox.information(self, "Succeful", f"Se ha descargado el archivo", QMessageBox.Ok, QMessageBox.Ok)
+        elif local_file[0] == "":
+            QMessageBox.warning(self, "Message", f"No se ha descargado el archivo", QMessageBox.Ok, QMessageBox.Ok)
 
 
-class Download(QWidget):
+class Download(QDialog):
     def __init__(self):
         super(Download, self).__init__()
         self.initialize()
+        self.urlClass = Test.urlDow.Url()
 
     def initialize(self):
         # self.resize(600, 500)
         self.setGeometry(100, 100, 600, 400)
-        self.setWindowTitle("Download")
+        self.setWindowTitle("Lecturas recomendadas")
         self.display_widgets()
 
     def display_widgets(self):
@@ -40,41 +45,44 @@ class Download(QWidget):
         formLayout = QFormLayout()
         groupBox = QGroupBox()
 
-        files, quantity = ConnectionDB.Connection().listFile22()
+        files, quantity = ConnectionDB.Connection().listFile()
         #
         self.urls = []
         for u in files:
-            self.urls.append(u[2])
+            self.urls.append(u[1])
         #
         self.names = []
         for n in files:
-            self.names.append(n[1])
+            self.names.append(n[2])
         #
-        # self.descriptions = []
-        # for d in files:
-        #     self.descriptions.append(d[3])
+        self.descriptions = []
+        for d in files:
+            self.descriptions.append(d[3])
         #
         self.vars = []
         for i in range(quantity):
             self.vars.append(f'labs{i + 1}')
         #
-        # self.descs = []
-        # for i in range(quantity):
-        #     self.descs.append(f'des{i + 1}')
+        self.descs = []
+        for i in range(quantity):
+            self.descs.append(f'des{i + 1}')
         #
         self.varsu = []
         for i in range(quantity):
             self.varsu.append(f'lab{i + 1}')
 
         for i in range(quantity):
-            self.vars = QLabel(f'{self.names[i]}', self)
+            self.vars = QLabel(f'<b>Titulo</b>: {self.names[i]}', self)
+            self.vars.setFont(QFont("Comic Sans MS", 10))
             self.vars.move(30, 50 * (i + 1))
 
-            # self.descs = QLabel(f'{self.descriptions[i]}', self)
-            # self.descs.move(120, 50 * (i + 1))
+            self.descs = QLabel(f'{self.descriptions[i]}', self)
+            self.descs.move(120, 50 * (i + 1))
 
-            self.varsu = QLabelClick(f'{self.urls[i]}', self)
+            image = r'../../Images/Others/icono.png'
+            self.varsu = QLabelClick(f"<a href='{self.urls[i]}'><img src='{image}' alt='Los Tejos' /></a>", self)
             self.varsu.move(210, 50 * (i + 1))
+
             formLayout.setContentsMargins(100, 10, 5, 5)
             formLayout.setHorizontalSpacing(50)
             formLayout.setVerticalSpacing(50)

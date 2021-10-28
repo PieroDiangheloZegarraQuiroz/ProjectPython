@@ -5,9 +5,9 @@ from Connection import ConnectionDB
 import sys
 
 
-class Download(QDialog):
+class Form(QDialog):
     def __init__(self):
-        super(Download, self).__init__()
+        super(Form, self).__init__()
         self.initialize()
         self.urlClass = Test.urlDow.Url()  # Llamando a otra clase
 
@@ -34,7 +34,7 @@ class Download(QDialog):
         self.buttonInsert.clicked.connect(self.buttonEnabled)
         self.buttonInsert.setFont(QFont("Comic Sans MS", 12))
         self.buttonInsert.setStyleSheet("border-radius: 5px;"
-                                        "background-color: blue;"
+                                        "background-color: rgb(14, 150, 232);"
                                         "color: white;")
 
         self.buttonSave = QPushButton("Insertar", self)
@@ -235,6 +235,6 @@ class Download(QDialog):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = Download()
+    window = Form()
     window.show()
     sys.exit(app.exec_())
