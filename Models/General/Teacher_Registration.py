@@ -1,9 +1,13 @@
-from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QLineEdit, QPushButton, QMessageBox, QDialog
-from PyQt5.QtGui import QFont, QPixmap, QPalette, QBrush, QIcon
+import uuid
+
 from PyQt5.QtCore import *
-from Models import Login
+from PyQt5.QtGui import QFont, QPixmap, QPalette, QBrush
+from PyQt5.QtWidgets import QLabel, QLineEdit, QPushButton, QMessageBox, QDialog
+import smtplib
+import ssl
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 from Connection import ConnectionDB
-import sys
 
 
 class QLabelClick(QLabel):
@@ -20,7 +24,6 @@ class User_Register(QDialog):
 
     def initialize(self):
         self.setGeometry(500, 250, 500, 500)
-        #self.setWindowFlag(Qt.FramelessWindowHint)
         self.setWindowTitle("Teacher Registration")
         self.display_widgets()
         window_palette = QPalette()
@@ -79,6 +82,11 @@ class User_Register(QDialog):
         self.password.move(30, 300)
         self.password.setStyleSheet("color: white;")
 
+        self.codel = QLabel("Código", self)
+        self.codel.setFont(QFont("Arial", 10))
+        self.codel.move(30, 330)
+        self.codel.setStyleSheet("color: white;")
+
         # Text Boxes
         self.nameBox = QLineEdit(self)
         self.nameBox.setAlignment(Qt.AlignCenter)
@@ -121,6 +129,15 @@ class User_Register(QDialog):
                                        "background-color: rgba(255, 225, 255, 0.5);"
                                        "font-weight: bold; ")
 
+        self.codeBox = QLineEdit(self)
+        self.codeBox.setAlignment(Qt.AlignCenter)
+        self.codeBox.move(150, 330)
+        self.codeBox.resize(200, 25)
+        self.codeBox.setEnabled(False)
+        self.codeBox.setStyleSheet("border-radius: 10px;"
+                                   "background-color: rgba(255, 225, 255, 0.5);"
+                                   "font-weight: bold; ")
+
         # Buttons
         self.buttonRegister = QPushButton("Crear Cuenta", self)
         self.buttonRegister.resize(200, 40)
@@ -128,6 +145,14 @@ class User_Register(QDialog):
         self.buttonRegister.clicked.connect(self.registro)
         self.buttonRegister.setStyleSheet("border-radius: 10px;"
                                           "background-color: #38EB47;")
+
+        self.buttonCode = QPushButton("Generar", self)
+        self.buttonCode.resize(70, 25)
+        self.buttonCode.move(360, 330)
+        self.buttonCode.setFont(QFont('Comic Sans MS', 10))
+        self.buttonCode.clicked.connect(self.code)
+        self.buttonCode.setStyleSheet("border-radius: 10px;"
+                                      "background-color: rgb(14, 150, 232);")
 
     # Methods
     def registro(self):
@@ -137,11 +162,51 @@ class User_Register(QDialog):
         text_email = self.emailBox.text()
         text_password = self.passwordBox.text()
         text_perfil = 'perfil.png'
-        insertUser = ConnectionDB.Connection().insertUser(text_email, text_password, text_perfil, 1)
+        text_code = self.codeBox.text()
+        ConnectionDB.Connection().insertUser(text_email, text_password, text_perfil, text_code, 1)
         lastId = ConnectionDB.Connection().getLastIdUser()
-        insertUsTeacher = ConnectionDB.Connection().insertUser_Teacher(text_name, text_lastname, text_cellphone, lastId)
+        ConnectionDB.Connection().insertUser_Teacher(text_name, text_lastname, text_cellphone, lastId)
         QMessageBox.information(self, "Succeful", "Registro exitoso", QMessageBox.Ok, QMessageBox.Ok)
+        self.sendEmail()
+        QMessageBox.information(self, "Aviso", "Se le ha enviado un correo", QMessageBox.Ok, QMessageBox.Ok)
         self.close()
+
+    def sendEmail(self):
+        email = 'sebastianaronyactayo@gmail.com'  # input("Ingrese su correo: ")
+        password = 'Aron2001.'  # input("Ingrese su password: ")
+        destination = self.emailBox.text()  # input("Ingrese el destination: ")
+        subject = 'Registro exitoso'  # input("Ingrese el subject: ")
+
+        mensaje = MIMEMultipart("alternativa")
+        mensaje["Subject"] = subject
+        mensaje["From"] = email
+        mensaje["To"] = destination
+
+        html = f"""
+        <html>
+        <body>
+        <h1>Hola {self.nameBox.text()}</h1>
+        <p>Tu correo es: {destination}</p>
+        <p>Tu contraseña es: {self.passwordBox.text()}</p>
+        <p>Tu codigo de profesor es: {self.codeBox.text()}</p>
+        </body>
+        </html>
+        """
+
+        parte_html = MIMEText(html, "html")
+        mensaje.attach(parte_html)
+        context = ssl.create_default_context()
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
+            server.login(email, password)
+            server.sendmail(email, destination, mensaje.as_string())
+
+    def code(self):
+        self.codeBox.setEnabled(True)
+        u = uuid.uuid1()
+        rs = str(u)
+        rs2 = rs.replace('-', '')
+        self.codeBox.setText(rs2[:12])
+        self.codeBox.setEnabled(False)
 
     def login(self):
         self.close()

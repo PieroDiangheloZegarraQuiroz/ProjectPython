@@ -22,13 +22,13 @@ class Connection:
         cursor.execute(
             "SELECT * FROM user WHERE email='" + email + "' AND password='" + password + "'")
         result = False
-        resultado = cursor.fetchone()
-        if resultado:
+        user = cursor.fetchone()
+        if user:
             result = True
-        elif not resultado:
+        elif not user:
             result = False
         conexion.close()
-        return resultado, result
+        return user, result
 
     def getDataUserStudent(self, idUser):
         conexion = self.startConnection()
@@ -53,11 +53,11 @@ class Connection:
         return valores
 
     # === Methods Register ===
-    def insertUser(self, email, password, avatar, flagType):
+    def insertUser(self, email, password, avatar, code, flagType):
         conexion = self.startConnection()
         cursor = conexion.cursor()
-        sql = "INSERT INTO user (email, password, avatar, flagType) VALUES ('{}', '{}', '{}', '{}')" \
-            .format(email, password, avatar, flagType)
+        sql = "INSERT INTO user (email, password, avatar, code, flagType) VALUES ('{}','{}', '{}', '{}', '{}')" \
+            .format(email, password, avatar, code, flagType)
         cursor.execute(sql)
         conexion.commit()
         print("Ingreso exitoso user")
@@ -148,4 +148,3 @@ class Connection:
         quantity = cursor.rowcount
         conexion.close()
         return results, quantity
-

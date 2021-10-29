@@ -36,8 +36,6 @@ class General_Interface(QDialog):  # Cambiar
                                 "background-color: red;"
                                 "font-weight: bold; ")
 
-
-
         user_image = r"../Images/Profile/perfil.png"
         try:
             with open(user_image):
@@ -49,10 +47,11 @@ class General_Interface(QDialog):  # Cambiar
         except FileNotFoundError:
             print("Nose encontro el archivo")
 
-        results = ConnectionDB.Connection().getDataUserStudent("1")
-        names = (results[1] + " " + results[2])
+        results = ConnectionDB.Connection().getDataUserStudent(self.idUser)
+        names = (results[1] + "\n" + results[2])
         print(names)
         self.user = QLabel(f'{names}', self)
+        self.user.setAlignment(Qt.AlignCenter)
         self.user.setFont(QFont("Arial", 15))
         self.user.move(60, 180)
         self.user.setStyleSheet("color: white;")
@@ -108,12 +107,6 @@ class General_Interface(QDialog):  # Cambiar
 
     def sessionClose(self):
         pass
-        # General_Interface.close(self)
-        # Login.Login().exec_()
 
 
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = General_Interface(1)
-    window.show()
-    sys.exit(app.exec_())
+

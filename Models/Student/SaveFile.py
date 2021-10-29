@@ -1,12 +1,11 @@
 from PyQt5.QtCore import *
 from urllib import request
 
-from PyQt5.QtGui import QPixmap, QFont
+from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QFileDialog, QTextEdit, QLineEdit, QMessageBox, QLabel, \
     QScrollArea, QVBoxLayout, QFormLayout, QGroupBox, QDialog
 import Test.urlDow
 from Connection import ConnectionDB
-from Test import *
 import sys
 
 
@@ -35,6 +34,7 @@ class Download(QDialog):
         self.urlClass = Test.urlDow.Url()
 
     def initialize(self):
+        self.setStyleSheet("background-color: white;")
         # self.resize(600, 500)
         self.setGeometry(100, 100, 600, 400)
         self.setWindowTitle("Lecturas recomendadas")
@@ -83,8 +83,8 @@ class Download(QDialog):
             self.varsu = QLabelClick(f"<a href='{self.urls[i]}'><img src='{image}' alt='Los Tejos' /></a>", self)
             self.varsu.move(210, 50 * (i + 1))
 
-            formLayout.setContentsMargins(100, 10, 5, 5)
-            formLayout.setHorizontalSpacing(50)
+            formLayout.setContentsMargins(50, 10, 5, 5)
+            formLayout.setHorizontalSpacing(200)
             formLayout.setVerticalSpacing(50)
             formLayout.addRow(self.vars, self.varsu)
             formLayout.setAlignment(Qt.AlignCenter)

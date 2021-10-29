@@ -88,15 +88,15 @@ class Login(QMainWindow):
         if largoEmail != 0 and largoPassword != 0:
             user, result = ConnectionDB.Connection().validateUser(text_email, text_password)
             # print(user)
-            if result and user[4] == 0:
-                QMessageBox.information(self, "Succeful", f"Bienvenido {user[2]}", QMessageBox.Ok, QMessageBox.Ok)
+            if result and user[5] == 0:
+                QMessageBox.information(self, "Succeful", f"Bienvenido", QMessageBox.Ok, QMessageBox.Ok)
                 self.hide()
                 idUser = str(user[0])
                 General_Interface.General_Interface(idUser).exec_()
 
-            elif result and user[4] == 1:
+            elif result and user[5] == 1:
                 QMessageBox.information(self, "Succeful",
-                                        f"Bienvenido {user[2]}, la interfaz de profesor esta en progreso..",
+                                        f"Bienvenido, la interfaz de profesor esta en progreso..",
                                         QMessageBox.Ok, QMessageBox.Ok)
             elif not result:
                 QMessageBox.information(self, "Error", "Email o contraseña incorrectas", QMessageBox.Ok, QMessageBox.Ok)
