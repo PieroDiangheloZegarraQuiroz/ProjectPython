@@ -5,18 +5,18 @@ from PyQt5.QtGui import QFont, QPixmap, QPalette, QBrush
 from PyQt5.QtWidgets import QLabel, QPushButton, QDialog, QMainWindow, QApplication
 from Connection import ConnectionDB
 from Models.General import Login
-from Models.Student import SaveFile
+from Models.Teacher import AddUrl, AddForm, LevelStudent
 
 
-class General_Interface(QMainWindow):  # Cambiar
+class General_Interface_Teacher(QMainWindow):
     def __init__(self, idUser):
-        super(General_Interface, self).__init__()
+        super(General_Interface_Teacher, self).__init__()
         self.idUser = str(idUser)
         self.initialize()
 
     def initialize(self):
         self.setGeometry(350, 150, 800, 650)
-        self.setWindowTitle("Registro Usuario")
+        self.setWindowTitle("Interface Teacher")
         window_palette = QPalette()
         window_palette.setBrush(self.backgroundRole(), QBrush(QPixmap("Images/")))
         self.setPalette(window_palette)
@@ -24,7 +24,10 @@ class General_Interface(QMainWindow):  # Cambiar
 
     def display_widgets(self):
         # Imports
-        self.saveFile = SaveFile.Download()
+
+        self.addurl = AddUrl.UploadUrl()
+        self.addform = AddForm.Form()
+        self.lvlstudent = LevelStudent.LvlStudent()
 
         # Labels
         self.booleanJuegos = False
@@ -37,22 +40,8 @@ class General_Interface(QMainWindow):  # Cambiar
                                      "font-weight: bold;")
 
         self.booleanTarea = False
-        self.lblTarea = QLabel(self)
-        self.lblTarea.setGeometry(550, 250, 500, 650)
-        self.lblTarea.move(300, 0)
-        self.lblTarea.hide()
-        self.lblTarea.setStyleSheet("border-radius: 0px;"
-                                    "background-color: blue;"
-                                    "font-weight: bold;")
-
         self.booleanLectura = False
-        self.lblLecutra = QLabel(self)
-        self.lblLecutra.setGeometry(550, 250, 500, 650)
-        self.lblLecutra.move(300, 0)
-        self.lblLecutra.hide()
-        self.lblLecutra.setStyleSheet("border-radius: 0px;"
-                                      "background-color: rgb(231, 252, 17);"
-                                      "font-weight: bold;")
+
 
         user_image = r"../../Images/Profile/perfil.png"
         try:
@@ -74,11 +63,11 @@ class General_Interface(QMainWindow):  # Cambiar
         self.user.setStyleSheet("color: white;")
 
         # Buttons
-        self.btn_games = QPushButton("Juegos", self)
-        self.btn_games.resize(200, 40)
-        self.btn_games.move(50, 240)
-        self.btn_games.clicked.connect(self.Action1)
-        self.btn_games.setStyleSheet("border-radius: 10px;"
+        self.btn_students = QPushButton("Juegos", self)
+        self.btn_students.resize(200, 40)
+        self.btn_students.move(50, 240)
+        self.btn_students.clicked.connect(self.Action1)
+        self.btn_students.setStyleSheet("border-radius: 10px;"
                                      "background-color: white;"
                                      "font-weight: bold; ")
 
@@ -110,8 +99,9 @@ class General_Interface(QMainWindow):  # Cambiar
         self.booleanJuegos = True
         if self.booleanJuegos:
             self.lblJuegos.show()
-            self.lblLecutra.hide()
-            self.lblTarea.hide()
+            self.addform.hide()
+            self.addurl.hide()
+            self.lvlstudent.show()
         self.booleanJuegos = False
         print("boton juego")
 
@@ -119,9 +109,9 @@ class General_Interface(QMainWindow):  # Cambiar
         self.booleanTarea = True
         if self.booleanTarea:
             self.lblJuegos.hide()
-            self.lblLecutra.hide()
-            self.lblTarea.show()
-            self.saveFile.hide()
+            self.addform.show()
+            self.addurl.hide()
+            self.lvlstudent.hide()
         self.booleanTarea = False
         print("boton tarea")
 
@@ -129,22 +119,24 @@ class General_Interface(QMainWindow):  # Cambiar
         self.booleanLectura = True
         if self.booleanLectura:
             self.lblJuegos.hide()
-            self.lblLecutra.show()
-            self.lblTarea.hide()
-            self.saveFile.show()
+            self.addurl.show()
+            self.addform.hide()
+            self.lvlstudent.hide()
         self.booleanLectura = False
 
         print("boton lectura")
 
     def sessionClose(self):
-        self.saveFile.hide()
-        General_Interface.hide(self)
+        self.addform.hide()
+        self.addurl.hide()
+        self.lvlstudent.hide()
+        General_Interface_Teacher.hide(self)
         self.logincito = Login.Login()
         self.logincito.showNormal()
 
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = General_Interface('3')
+    window = General_Interface_Teacher('3')
     window.show()
     sys.exit(app.exec_())
