@@ -37,7 +37,9 @@ class Download(QDialog):
     def initialize(self):
         self.setStyleSheet("background-color: white;")
         # self.resize(600, 500)
-        self.setGeometry(100, 100, 600, 400)
+        self.setWindowFlag(Qt.FramelessWindowHint)
+        self.setGeometry(550, 250, 500, 650)
+        self.move(650, 150)
         self.setWindowTitle("Lecturas recomendadas")
         self.display_widgets()
 
@@ -85,7 +87,7 @@ class Download(QDialog):
             self.varsu.move(210, 50 * (i + 1))
 
             formLayout.setContentsMargins(50, 10, 5, 5)
-            formLayout.setHorizontalSpacing(200)
+            formLayout.setHorizontalSpacing(100)
             formLayout.setVerticalSpacing(50)
             formLayout.addRow(self.vars, self.varsu)
             formLayout.setAlignment(Qt.AlignCenter)

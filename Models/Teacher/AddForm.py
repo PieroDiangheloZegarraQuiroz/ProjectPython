@@ -2,7 +2,7 @@ import sys
 
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QApplication, QPushButton, QLineEdit, QMessageBox, QLabel, QDialog
-
+from PyQt5.QtCore import *
 import Test.urlDow
 from Connection import ConnectionDB
 
@@ -14,7 +14,9 @@ class Form(QDialog):
         self.urlClass = Test.urlDow.Url()  # Llamando a otra clase
 
     def initialize(self):
-        self.resize(500, 650)
+        self.setWindowFlag(Qt.FramelessWindowHint)
+        self.setGeometry(550, 250, 500, 650)
+        self.move(650, 150)
         self.setStyleSheet("background-color: white;")
         self.setWindowTitle("Formulario")
         self.display_widgets()
