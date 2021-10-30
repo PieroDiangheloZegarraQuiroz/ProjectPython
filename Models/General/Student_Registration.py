@@ -1,5 +1,3 @@
-import sys
-
 from PyQt5.QtCore import *
 from PyQt5.QtGui import QFont, QPixmap, QPalette, QBrush
 from PyQt5.QtWidgets import QLabel, QLineEdit, QPushButton, QMessageBox, QDialog, QComboBox, QWidget, QApplication
@@ -174,14 +172,14 @@ class User_Register(QDialog):
         ConnectionDB.Connection().insertUser_Student(text_name, text_lastname, text_age, text_grade, lastId)
         QMessageBox.information(self, "Succeful", "Registro exitoso", QMessageBox.Ok, QMessageBox.Ok)
         self.sendEmail()
-        QMessageBox.information(self, "Aviso", "Se le ha enviado un correo", QMessageBox.Ok, QMessageBox.Ok)
+        QMessageBox.information(self, "Aviso", "Se le ha enviado un correo,\nfavor de revisar la bandeja de spam", QMessageBox.Ok, QMessageBox.Ok)
         self.close()
 
     def sendEmail(self):
-        email = 'sebastianaronyactayo@gmail.com'  # input("Ingrese su correo: ")
-        password = 'Aron2001.'  # input("Ingrese su password: ")
-        destination = self.emailBox.text()  # input("Ingrese el destination: ")
-        subject = 'Registro exitoso'  # input("Ingrese el subject: ")
+        email = 'sebastianaronyactayo@gmail.com'
+        password = 'Aron2001.'
+        destination = self.emailBox.text()
+        subject = 'Registro exitoso'
 
         mensaje = MIMEMultipart("alternativa")
         mensaje["Subject"] = subject
