@@ -27,13 +27,13 @@ class User_Register(QDialog):
         self.setWindowTitle("Teacher Registration")
         self.display_widgets()
         window_palette = QPalette()
-        window_palette.setBrush(self.backgroundRole(), QBrush(QPixmap("../Images/Others/Rfondo2.jpg")))
+        window_palette.setBrush(self.backgroundRole(), QBrush(QPixmap("../../Images/Others/Rfondo2.jpg")))
         self.setPalette(window_palette)
         self.display_widgets()
 
     def display_widgets(self):
         # Images
-        Icon_Return = r"../Images/Others/IconoReturn_1.png"
+        Icon_Return = r"../../Images/Others/IconoReturn_1.png"
         try:
             with open(Icon_Return):
                 Image = QLabelClick(self)
@@ -45,7 +45,7 @@ class User_Register(QDialog):
             print("Nose encontro el archivo")
         Image.clicked.connect(self.login)
 
-        user_image = r"../Images/Others/IconoTeacher.png"
+        user_image = r"../../Images/Others/IconoTeacher.png"
         try:
             with open(user_image):
                 etiqueta_imagen = QLabel(self)

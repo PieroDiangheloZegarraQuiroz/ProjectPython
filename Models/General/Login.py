@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QMessageBox, QComboBox, QMainWindow
 from PyQt5.QtGui import QFont, QPixmap, QPalette, QBrush, QIcon
 from PyQt5.QtCore import Qt
+
 from Models.General import Student_Registration, Teacher_Registration
 from Models.Student import General_Interface
 from Connection import ConnectionDB
@@ -19,15 +20,15 @@ class Login(QMainWindow):
         self.setWindowTitle("Login")
         self.setMinimumSize(400, 500)
         self.setMaximumSize(400, 500)
-        self.setWindowIcon(QIcon("../Images/Others/fondo.jpg"))
+        self.setWindowIcon(QIcon("../../Images/Others/fondo.jpg"))
         wallpaper = QPalette()
-        wallpaper.setBrush(self.backgroundRole(), QBrush(QPixmap("../Images/Others/fondo.jpg")))
+        wallpaper.setBrush(self.backgroundRole(), QBrush(QPixmap("../../Images/Others/fondo.jpg")))
         self.setPalette(wallpaper)
         self.display_widgets()
 
     def display_widgets(self):
         # Images
-        user_png = r"../Images/Others/login.png"
+        user_png = r"../../Images/Others/login.png"
         try:
             with open(user_png):
                 imageLogin = QLabel(self)

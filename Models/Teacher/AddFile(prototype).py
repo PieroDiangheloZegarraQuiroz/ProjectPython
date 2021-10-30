@@ -1,8 +1,7 @@
-import Connection.ConnectionDB
-from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, QPushButton, QMessageBox, QComboBox, QMainWindow, \
-    QFileDialog, QDialog
-from PyQt5.QtGui import QFont, QPixmap, QPalette, QBrush, QIcon
 import sys
+
+from PyQt5.QtGui import QFont
+from PyQt5.QtWidgets import QApplication, QLabel, QPushButton, QMessageBox, QFileDialog, QDialog
 
 from Connection import ConnectionDB
 

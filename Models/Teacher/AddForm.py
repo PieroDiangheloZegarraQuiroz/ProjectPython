@@ -1,8 +1,10 @@
+import sys
+
 from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLineEdit, QMessageBox, QLabel, QDialog
+from PyQt5.QtWidgets import QApplication, QPushButton, QLineEdit, QMessageBox, QLabel, QDialog
+
 import Test.urlDow
 from Connection import ConnectionDB
-import sys
 
 
 class Form(QDialog):

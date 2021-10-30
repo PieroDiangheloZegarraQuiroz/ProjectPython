@@ -1,14 +1,11 @@
-from PyQt5.QtCore import QDir
-from urllib import request
+import sys
 
+import pyshorteners
 from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QFileDialog, QTextEdit, QLineEdit, QMessageBox, QLabel, \
-    QDialog
+from PyQt5.QtWidgets import QApplication, QPushButton, QTextEdit, QLineEdit, QMessageBox, QLabel, QDialog
+
 import Test.urlDow
 from Connection import ConnectionDB
-from Test import *
-import pyshorteners
-import sys
 
 
 class UploadUrl(QDialog):

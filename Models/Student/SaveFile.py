@@ -1,12 +1,13 @@
-from PyQt5.QtCore import *
+import sys
 from urllib import request
 
+from PyQt5.QtCore import *
 from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QFileDialog, QTextEdit, QLineEdit, QMessageBox, QLabel, \
-    QScrollArea, QVBoxLayout, QFormLayout, QGroupBox, QDialog
+from PyQt5.QtWidgets import QApplication, QFileDialog, QMessageBox, QLabel, QScrollArea, QVBoxLayout, QFormLayout, \
+    QGroupBox, QDialog
+
 import Test.urlDow
 from Connection import ConnectionDB
-import sys
 
 
 class QLabelClick(QLabel):
@@ -80,7 +81,7 @@ class Download(QDialog):
             self.descs.move(120, 50 * (i + 1))
 
             image = r'../../Images/Others/icono.png'
-            self.varsu = QLabelClick(f"<a href='{self.urls[i]}'><img src='{image}' alt='Los Tejos' /></a>", self)
+            self.varsu = QLabelClick(f"<a href='{self.urls[i]}'><img src='{image}' alt='PDF' /></a>", self)
             self.varsu.move(210, 50 * (i + 1))
 
             formLayout.setContentsMargins(50, 10, 5, 5)
