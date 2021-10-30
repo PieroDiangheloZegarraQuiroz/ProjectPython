@@ -4,6 +4,7 @@ from PyQt5.QtCore import Qt
 
 from Models.General import Student_Registration, Teacher_Registration
 from Models.Student import General_Interface
+from Models.Teacher import General_Interface_Teacher
 from Connection import ConnectionDB
 import sys
 
@@ -15,7 +16,6 @@ class Login(QMainWindow):
 
     def initialize(self):
         self.setGeometry(500, 250, 400, 500)
-        # self.setWindowFlag(Qt.FramelessWindowHint)
         self.setWindowTitle("Login")
         self.setMinimumSize(400, 500)
         self.setMaximumSize(400, 500)
@@ -85,9 +85,10 @@ class Login(QMainWindow):
         text_password = self.passwordBox.text()
         largoEmail = len(text_email)
         largoPassword = len(text_password)
+
         if largoEmail != 0 and largoPassword != 0:
             user, result = ConnectionDB.Connection().validateUser(text_email, text_password)
-            # print(user)
+
             if result and user[5] == 0:
                 QMessageBox.information(self, "Succeful", f"Bienvenido", QMessageBox.Ok, QMessageBox.Ok)
                 idUser = str(user[0])
@@ -96,18 +97,25 @@ class Login(QMainWindow):
                 self.gen.show()
 
             elif result and user[5] == 1:
-                QMessageBox.information(self, "Succeful",
-                                        f"Bienvenido, la interfaz de profesor esta en progreso..",
-                                        QMessageBox.Ok, QMessageBox.Ok)
+                QMessageBox.information(self, "Succeful", f"Bienvenido", QMessageBox.Ok, QMessageBox.Ok)
+                idUser = str(user[0])
+                print(idUser)
+                self.hide()
+                self.gen2 = General_Interface_Teacher.General_Interface_Teacher(idUser)
+                self.gen2.show()
+
             elif not result:
                 QMessageBox.information(self, "Error", "Email o contraseña incorrectas", QMessageBox.Ok, QMessageBox.Ok)
+
         else:
             QMessageBox.warning(self, "Error", f"Campos vacios", QMessageBox.Ok, QMessageBox.Ok)
 
     def register(self):
         text_register = self.comboRegister.currentText()
+
         if text_register == "Estudiante":
             Student_Registration.User_Register().exec_()
+
         elif text_register == "Profesor":
             Teacher_Registration.User_Register().exec_()
 

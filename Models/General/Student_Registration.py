@@ -1,10 +1,12 @@
-from PyQt5.QtCore import *
-from PyQt5.QtGui import QFont, QPixmap, QPalette, QBrush
-from PyQt5.QtWidgets import QLabel, QLineEdit, QPushButton, QMessageBox, QDialog, QComboBox, QWidget, QApplication
 import smtplib
 import ssl
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+
+from PyQt5.QtCore import *
+from PyQt5.QtGui import QFont, QPixmap, QPalette, QBrush
+from PyQt5.QtWidgets import QLabel, QLineEdit, QPushButton, QMessageBox, QDialog, QComboBox
+
 from Connection import ConnectionDB
 
 

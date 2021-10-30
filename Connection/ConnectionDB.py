@@ -7,7 +7,7 @@ class Connection:
         try:
             conexion = mysql.connector.connect(
                 user="root",
-                password="kimini28",
+                password="sebas2001",
                 host="localhost",
                 database="python",
                 port="3306")
@@ -41,16 +41,12 @@ class Connection:
 
     def getDataUserTeacher(self, idUser):
         conexion = self.startConnection()
-        valores = None
         cursor = conexion.cursor()
-        cursor.execute(
-            "SELECT * FROM teacher AS t INNER JOIN user AS u ON (t.idUser = u.idUser) "
-            "WHERE u.idUser ='" + idUser + "'")
-        resultado = cursor.fetchall()
-        for n in resultado:
-            valores = n[0] + " " + n[1]
+        sql = "SELECT * FROM teacher AS t INNER JOIN user AS u ON (t.idUser = u.idUser) WHERE u.idUser='" + idUser + "'"
+        cursor.execute(sql)
+        resultado = cursor.fetchone()
         conexion.close()
-        return valores
+        return resultado
 
     # === Methods Register ===
     def insertUser(self, email, password, avatar, code, flagType):

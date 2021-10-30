@@ -1,5 +1,3 @@
-import sys
-
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont, QPixmap, QPalette, QBrush
 from PyQt5.QtWidgets import QLabel, QPushButton, QDialog, QMainWindow, QApplication
@@ -8,7 +6,7 @@ from Models.General import Login
 from Models.Student import SaveFile
 
 
-class General_Interface(QMainWindow):  # Cambiar
+class General_Interface(QMainWindow):
     def __init__(self, idUser):
         super(General_Interface, self).__init__()
         self.idUser = str(idUser)
@@ -32,27 +30,18 @@ class General_Interface(QMainWindow):  # Cambiar
         self.lblJuegos.setGeometry(550, 250, 500, 650)
         self.lblJuegos.move(300, 0)
         self.lblJuegos.show()
-        self.lblJuegos.setStyleSheet("border-radius: 0px;"
-                                     "background-color: red;"
-                                     "font-weight: bold;")
 
         self.booleanTarea = False
         self.lblTarea = QLabel(self)
         self.lblTarea.setGeometry(550, 250, 500, 650)
         self.lblTarea.move(300, 0)
         self.lblTarea.hide()
-        self.lblTarea.setStyleSheet("border-radius: 0px;"
-                                    "background-color: blue;"
-                                    "font-weight: bold;")
 
         self.booleanLectura = False
         self.lblLecutra = QLabel(self)
         self.lblLecutra.setGeometry(550, 250, 500, 650)
         self.lblLecutra.move(300, 0)
         self.lblLecutra.hide()
-        self.lblLecutra.setStyleSheet("border-radius: 0px;"
-                                      "background-color: rgb(231, 252, 17);"
-                                      "font-weight: bold;")
 
         user_image = r"../../Images/Profile/perfil.png"
         try:
@@ -141,10 +130,3 @@ class General_Interface(QMainWindow):  # Cambiar
         General_Interface.hide(self)
         self.logincito = Login.Login()
         self.logincito.showNormal()
-
-
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = General_Interface('3')
-    window.show()
-    sys.exit(app.exec_())

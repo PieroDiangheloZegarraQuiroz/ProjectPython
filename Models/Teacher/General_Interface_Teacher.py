@@ -35,13 +35,9 @@ class General_Interface_Teacher(QMainWindow):
         self.lblJuegos.setGeometry(550, 250, 500, 650)
         self.lblJuegos.move(300, 0)
         self.lblJuegos.show()
-        self.lblJuegos.setStyleSheet("border-radius: 0px;"
-                                     "background-color: red;"
-                                     "font-weight: bold;")
 
         self.booleanTarea = False
         self.booleanLectura = False
-
 
         user_image = r"../../Images/Profile/perfil.png"
         try:
@@ -54,12 +50,13 @@ class General_Interface_Teacher(QMainWindow):
         except FileNotFoundError:
             print("Nose encontro el archivo")
 
-        results = ConnectionDB.Connection().getDataUserStudent(self.idUser)
+        results = ConnectionDB.Connection().getDataUserTeacher(self.idUser)
         names = (results[1] + "\n" + results[2])
         self.user = QLabel(f'{names}', self)
         self.user.setAlignment(Qt.AlignCenter)
-        self.user.setFont(QFont("Arial", 15))
+        self.user.setFont(QFont("Arial", 14))
         self.user.move(60, 180)
+        self.user.resize(150, 50)
         self.user.setStyleSheet("color: white;")
 
         # Buttons
@@ -68,8 +65,8 @@ class General_Interface_Teacher(QMainWindow):
         self.btn_students.move(50, 240)
         self.btn_students.clicked.connect(self.Action1)
         self.btn_students.setStyleSheet("border-radius: 10px;"
-                                     "background-color: white;"
-                                     "font-weight: bold; ")
+                                        "background-color: white;"
+                                        "font-weight: bold; ")
 
         self.btn_homework = QPushButton("Tarea", self)
         self.btn_homework.resize(200, 40)
@@ -133,10 +130,3 @@ class General_Interface_Teacher(QMainWindow):
         General_Interface_Teacher.hide(self)
         self.logincito = Login.Login()
         self.logincito.showNormal()
-
-
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = General_Interface_Teacher('3')
-    window.show()
-    sys.exit(app.exec_())
