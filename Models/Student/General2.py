@@ -2,7 +2,8 @@ import sys
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont, QPixmap, QPalette, QBrush
-from PyQt5.QtWidgets import QLabel, QPushButton, QDialog, QMainWindow, QApplication
+from PyQt5.QtWidgets import QLabel, QPushButton, QApplication, QMainWindow
+
 from Connection import ConnectionDB
 from Models.General import Login
 from Models.Student import SaveFile
@@ -23,9 +24,6 @@ class General_Interface(QMainWindow):  # Cambiar
         self.display_widgets()
 
     def display_widgets(self):
-        # Imports
-        self.saveFile = SaveFile.Download()
-
         # Labels
         self.booleanJuegos = False
         self.lblJuegos = QLabel(self)
@@ -63,10 +61,11 @@ class General_Interface(QMainWindow):  # Cambiar
                 etiqueta_imagen.move(100, 40)
                 etiqueta_imagen.resize(180, 120)
         except FileNotFoundError:
-            print("Nose encontro el archivo")
+            print("No se encontro el archivo")
 
-        results = ConnectionDB.Connection().getDataUserStudent(self.idUser)
+        results = ConnectionDB.Connection().getDataUserStudent('3')
         names = (results[1] + "\n" + results[2])
+        print(names)
         self.user = QLabel(f'{names}', self)
         self.user.setAlignment(Qt.AlignCenter)
         self.user.setFont(QFont("Arial", 15))
@@ -98,6 +97,7 @@ class General_Interface(QMainWindow):  # Cambiar
                                     "background-color: white;"
                                     "font-weight: bold; ")
 
+        self.booleanclose = False
         self.btn_closesession = QPushButton("Cerrar Sesión", self)
         self.btn_closesession.resize(200, 40)
         self.btn_closesession.move(50, 420)
@@ -106,11 +106,14 @@ class General_Interface(QMainWindow):  # Cambiar
                                             "background-color: white;"
                                             "font-weight: bold; ")
 
+        self.login = Login.Login()
+
     def Action1(self):
+
         self.booleanJuegos = True
         if self.booleanJuegos:
+            self.savefile.hide()
             self.lblJuegos.show()
-            self.lblLecutra.hide()
             self.lblTarea.hide()
         self.booleanJuegos = False
         print("boton juego")
@@ -119,27 +122,33 @@ class General_Interface(QMainWindow):  # Cambiar
         self.booleanTarea = True
         if self.booleanTarea:
             self.lblJuegos.hide()
-            self.lblLecutra.hide()
+            self.savefile.hide()
             self.lblTarea.show()
-            self.saveFile.hide()
         self.booleanTarea = False
         print("boton tarea")
 
     def Action3(self):
+        self.savefile = SaveFile.Download()
+
         self.booleanLectura = True
         if self.booleanLectura:
             self.lblJuegos.hide()
-            self.lblLecutra.show()
+            self.savefile.show()
             self.lblTarea.hide()
-            self.saveFile.show()
         self.booleanLectura = False
-
         print("boton lectura")
 
     def sessionClose(self):
-        General_Interface.hide(self)
-        self.logincito = Login.Login()
-        self.logincito.showNormal()
+
+        self.booleanclose = True
+        if self.booleanclose:
+            self.lblJuegos.hide()
+            self.savefile.hide()
+            self.lblTarea.hide()
+        self.booleanLectura = False
+
+        General_Interface.close(self)
+        self.login.show()
 
 
 if __name__ == "__main__":

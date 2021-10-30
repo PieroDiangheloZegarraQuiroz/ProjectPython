@@ -60,7 +60,6 @@ class Connection:
             .format(email, password, avatar, code, flagType)
         cursor.execute(sql)
         conexion.commit()
-        print("Ingreso exitoso user")
         conexion.close()
 
     def getLastIdUser(self):
@@ -78,7 +77,6 @@ class Connection:
             .format(name, lastname, age, degree, idUser)
         cursor.execute(sql)
         conexion.commit()
-        print("Ingreso exitoso estudiante")
         conexion.close()
 
     def insertUser_Teacher(self, name, lastName, cellphone, idUser):
@@ -88,7 +86,6 @@ class Connection:
             .format(name, lastName, cellphone, idUser)
         cursor.execute(sql)
         conexion.commit()
-        print("Ingreso exitoso teacher")
         conexion.close()
 
     # ===  ===
@@ -109,7 +106,6 @@ class Connection:
             .format(urlFile, name, description, idUser)
         cursor.execute(sql)
         conexion.commit()
-        print("Guardado exitoso")
         conexion.close()
 
     def listFile(self):
@@ -129,7 +125,6 @@ class Connection:
               " '{}','{}', '{}', '{}')".format(q1, q2, q3, q4, q5, q6, q7, q8, q9, q10)
         cursor.execute(sql)
         conexion.commit()
-        print("Guardado exitoso")
         conexion.close()
 
     def insertFiles2(self, pdf):

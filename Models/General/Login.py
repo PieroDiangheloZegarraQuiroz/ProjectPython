@@ -14,7 +14,6 @@ class Login(QMainWindow):
         self.initialize()
 
     def initialize(self):
-        # self.setStyleSheet("background-color: white;")
         self.setGeometry(500, 250, 400, 500)
         # self.setWindowFlag(Qt.FramelessWindowHint)
         self.setWindowTitle("Login")
@@ -37,7 +36,7 @@ class Login(QMainWindow):
                 imageLogin.move(150, 50)
                 imageLogin.resize(100, 100)
         except FileNotFoundError:
-            print("No se encontró la uta")
+            print("No se encontró la ruta")
 
         # Text Boxes
         self.emailBox = QLineEdit(self)
@@ -91,9 +90,10 @@ class Login(QMainWindow):
             # print(user)
             if result and user[5] == 0:
                 QMessageBox.information(self, "Succeful", f"Bienvenido", QMessageBox.Ok, QMessageBox.Ok)
-                self.hide()
                 idUser = str(user[0])
-                General_Interface.General_Interface(idUser).exec_()
+                self.hide()
+                self.gen = General_Interface.General_Interface(idUser)
+                self.gen.show()
 
             elif result and user[5] == 1:
                 QMessageBox.information(self, "Succeful",
