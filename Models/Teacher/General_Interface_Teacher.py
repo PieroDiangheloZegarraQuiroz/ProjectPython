@@ -2,7 +2,7 @@ import sys
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont, QPixmap, QPalette, QBrush
-from PyQt5.QtWidgets import QLabel, QPushButton, QDialog, QMainWindow, QApplication
+from PyQt5.QtWidgets import QLabel, QPushButton, QDialog, QMainWindow, QApplication, QMessageBox
 from Connection import ConnectionDB
 from Models.General import Login
 from Models.Teacher import AddUrl, AddForm, LevelStudent
@@ -16,7 +16,7 @@ class General_Interface_Teacher(QMainWindow):
 
     def initialize(self):
         self.setGeometry(350, 150, 800, 650)
-        self.setWindowTitle("Interface Teacher")
+        self.setWindowTitle("General Interface Teacher")
         window_palette = QPalette()
         window_palette.setBrush(self.backgroundRole(), QBrush(QPixmap("Images/")))
         self.setPalette(window_palette)
@@ -130,3 +130,16 @@ class General_Interface_Teacher(QMainWindow):
         General_Interface_Teacher.hide(self)
         self.logincito = Login.Login()
         self.logincito.showNormal()
+
+    def closeEvent(self, event):
+        cuadro = QMessageBox.warning(self, "Cerrar", "¿Estas seguro de cerrar la ventana?",
+                                     QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
+
+        if cuadro == QMessageBox.Yes:
+            print("Se ha cerrado la ventana")
+            self.lvlstudent.hide()
+            self.addurl.hide()
+            self.addform.hide()
+            event.accept()
+        elif cuadro == QMessageBox.No:
+            event.ignore()
