@@ -1,158 +1,72 @@
+from PyQt5.QtWidgets import *
+from PyQt5 import QtCore, QtGui
+from PyQt5.QtGui import *
+from PyQt5.QtCore import *
 import sys
 
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QFont, QPixmap, QPalette, QBrush
-from PyQt5.QtWidgets import QLabel, QPushButton, QApplication, QMainWindow
 
-from Connection import ConnectionDB
-from Models.General import Login
-from Models.Student import SaveFile
+class Window(QMainWindow):
 
+    def __init__(self):
+        super().__init__()
 
-class General_Interface(QMainWindow):  # Cambiar
-    def __init__(self, idUser):
-        super(General_Interface, self).__init__()
-        self.idUser = str(idUser)
-        self.initialize()
+        self.setWindowTitle("Python ")
 
-    def initialize(self):
-        self.setGeometry(350, 150, 800, 650)
-        self.setWindowTitle("Registro Usuario")
-        window_palette = QPalette()
-        window_palette.setBrush(self.backgroundRole(), QBrush(QPixmap("Images/")))
-        self.setPalette(window_palette)
-        self.display_widgets()
+        self.setGeometry(100, 100, 400, 600)
 
-    def display_widgets(self):
-        # Labels
-        self.booleanJuegos = False
-        self.lblJuegos = QLabel(self)
-        self.lblJuegos.setGeometry(550, 250, 500, 650)
-        self.lblJuegos.move(300, 0)
-        self.lblJuegos.show()
-        self.lblJuegos.setStyleSheet("border-radius: 0px;"
-                                     "background-color: red;"
-                                     "font-weight: bold;")
+        self.UiComponents()
 
-        self.booleanTarea = False
-        self.lblTarea = QLabel(self)
-        self.lblTarea.setGeometry(550, 250, 500, 650)
-        self.lblTarea.move(300, 0)
-        self.lblTarea.hide()
-        self.lblTarea.setStyleSheet("border-radius: 0px;"
-                                    "background-color: blue;"
-                                    "font-weight: bold;")
+        self.show()
 
-        self.booleanLectura = False
-        self.lblLecutra = QLabel(self)
-        self.lblLecutra.setGeometry(550, 250, 500, 650)
-        self.lblLecutra.move(300, 0)
-        self.lblLecutra.hide()
-        self.lblLecutra.setStyleSheet("border-radius: 0px;"
-                                      "background-color: rgb(231, 252, 17);"
-                                      "font-weight: bold;")
+    def UiComponents(self):
 
-        user_image = r"../../Images/Profile/perfil.png"
-        try:
-            with open(user_image):
-                etiqueta_imagen = QLabel(self)
-                pixmap = QPixmap(user_image)
-                etiqueta_imagen.setPixmap(pixmap)
-                etiqueta_imagen.move(100, 40)
-                etiqueta_imagen.resize(180, 120)
-        except FileNotFoundError:
-            print("No se encontro el archivo")
+        # button = QPushButton("Set time(s)", self)
+        #
+        # button.setGeometry(125, 100, 150, 50)
+        #
+        # button.clicked.connect(self.get_seconds)
 
-        results = ConnectionDB.Connection().getDataUserStudent('3')
-        names = (results[1] + "\n" + results[2])
-        print(names)
-        self.user = QLabel(f'{names}', self)
-        self.user.setAlignment(Qt.AlignCenter)
-        self.user.setFont(QFont("Arial", 15))
-        self.user.move(60, 180)
-        self.user.setStyleSheet("color: white;")
+        self.label = QLabel("//TIMER//", self)
 
-        # Buttons
-        self.btn_games = QPushButton("Juegos", self)
-        self.btn_games.resize(200, 40)
-        self.btn_games.move(50, 240)
-        self.btn_games.clicked.connect(self.Action1)
-        self.btn_games.setStyleSheet("border-radius: 10px;"
-                                     "background-color: white;"
-                                     "font-weight: bold; ")
+        self.label.setGeometry(100, 200, 200, 50)
 
-        self.btn_homework = QPushButton("Tarea", self)
-        self.btn_homework.resize(200, 40)
-        self.btn_homework.move(50, 300)
-        self.btn_homework.clicked.connect(self.Action2)
-        self.btn_homework.setStyleSheet("border-radius: 10px;"
-                                        "background-color: white;"
-                                        "font-weight: bold;")
+        self.label.setStyleSheet("border : 3px solid black")
 
-        self.btn_read = QPushButton("Lecturas Recomendadas", self)
-        self.btn_read.resize(200, 40)
-        self.btn_read.move(50, 360)
-        self.btn_read.clicked.connect(self.Action3)
-        self.btn_read.setStyleSheet("border-radius: 10px;"
-                                    "background-color: white;"
-                                    "font-weight: bold; ")
+        self.label.setFont(QFont('Times', 15))
 
-        self.booleanclose = False
-        self.btn_closesession = QPushButton("Cerrar Sesión", self)
-        self.btn_closesession.resize(200, 40)
-        self.btn_closesession.move(50, 420)
-        self.btn_closesession.clicked.connect(self.sessionClose)
-        self.btn_closesession.setStyleSheet("border-radius: 10px;"
-                                            "background-color: white;"
-                                            "font-weight: bold; ")
+        self.label.setAlignment(Qt.AlignCenter)
 
-        self.login = Login.Login()
+        start_button = QPushButton("Start", self)
 
-    def Action1(self):
-
-        self.booleanJuegos = True
-        if self.booleanJuegos:
-            self.savefile.hide()
-            self.lblJuegos.show()
-            self.lblTarea.hide()
-        self.booleanJuegos = False
-        print("boton juego")
-
-    def Action2(self):
-        self.booleanTarea = True
-        if self.booleanTarea:
-            self.lblJuegos.hide()
-            self.savefile.hide()
-            self.lblTarea.show()
-        self.booleanTarea = False
-        print("boton tarea")
-
-    def Action3(self):
-        self.savefile = SaveFile.Download()
-
-        self.booleanLectura = True
-        if self.booleanLectura:
-            self.lblJuegos.hide()
-            self.savefile.show()
-            self.lblTarea.hide()
-        self.booleanLectura = False
-        print("boton lectura")
-
-    def sessionClose(self):
-
-        self.booleanclose = True
-        if self.booleanclose:
-            self.lblJuegos.hide()
-            self.savefile.hide()
-            self.lblTarea.hide()
-        self.booleanLectura = False
-
-        General_Interface.close(self)
-        self.login.show()
+        start_button.setGeometry(125, 350, 150, 40)
 
 
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = General_Interface('3')
-    window.show()
-    sys.exit(app.exec_())
+
+        self.count = 200
+        self.start = False
+        timer = QTimer(self)
+        timer.timeout.connect(self.showTime)
+        timer.start(100)
+        start_button.clicked.connect(self.start_action)
+
+    def showTime(self):
+        if self.start:
+            self.count -= 1
+            if self.count == 0:
+                self.start = False
+                self.label.setText("Completed !!!! ")
+        if self.start:
+            text = str(self.count / 10) + " s"
+            self.label.setText(text)
+
+    def start_action(self):
+        self.start = True
+        if self.count == 0:
+            self.start = False
+
+
+App = QApplication(sys.argv)
+
+window = Window()
+
+sys.exit(App.exec())

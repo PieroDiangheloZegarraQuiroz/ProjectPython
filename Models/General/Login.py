@@ -15,6 +15,7 @@ class Login(QMainWindow):
         self.initialize()
 
     def initialize(self):
+        self.setWindowFlag(Qt.FramelessWindowHint)
         self.setGeometry(500, 250, 400, 500)
         self.setWindowTitle("Login")
         self.setMinimumSize(400, 500)
@@ -99,7 +100,6 @@ class Login(QMainWindow):
             elif result and user[5] == 1:
                 QMessageBox.information(self, "Succeful", f"Bienvenido", QMessageBox.Ok, QMessageBox.Ok)
                 idUser = str(user[0])
-                print(idUser)
                 self.hide()
                 self.gen2 = General_Interface_Teacher.General_Interface_Teacher(idUser)
                 self.gen2.show()

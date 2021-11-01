@@ -58,8 +58,9 @@ class General_Interface(QMainWindow):
         names = (results[1] + "\n" + results[2])
         self.user = QLabel(f'{names}', self)
         self.user.setAlignment(Qt.AlignCenter)
-        self.user.setFont(QFont("Arial", 15))
+        self.user.setFont(QFont("Arial", 14))
         self.user.move(60, 180)
+        self.user.resize(150, 50)
         self.user.setStyleSheet("color: white;")
 
         # Buttons

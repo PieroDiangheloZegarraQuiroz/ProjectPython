@@ -5,7 +5,7 @@ from PyQt5.QtGui import QFont, QPixmap, QPalette, QBrush
 from PyQt5.QtWidgets import QLabel, QPushButton, QDialog, QMainWindow, QApplication, QMessageBox
 from Connection import ConnectionDB
 from Models.General import Login
-from Models.Teacher import AddUrl, AddForm, LevelStudent
+from Models.Teacher import AddUrl, AddForm, ViewDegree
 
 
 class General_Interface_Teacher(QMainWindow):
@@ -15,6 +15,7 @@ class General_Interface_Teacher(QMainWindow):
         self.initialize()
 
     def initialize(self):
+        self.setWindowFlag(Qt.FramelessWindowHint)
         self.setGeometry(350, 150, 800, 650)
         self.setWindowTitle("General Interface Teacher")
         window_palette = QPalette()
@@ -23,22 +24,13 @@ class General_Interface_Teacher(QMainWindow):
         self.display_widgets()
 
     def display_widgets(self):
-        # Imports
 
-        self.addurl = AddUrl.UploadUrl()
-        self.addform = AddForm.Form()
-        self.lvlstudent = LevelStudent.LvlStudent()
+        # Data
+        self.booleanViewStudents = False
+        self.booleanUpTask = False
+        self.booleanUpRead = False
 
         # Labels
-        self.booleanJuegos = False
-        self.lblJuegos = QLabel(self)
-        self.lblJuegos.setGeometry(550, 250, 500, 650)
-        self.lblJuegos.move(300, 0)
-        self.lblJuegos.show()
-
-        self.booleanTarea = False
-        self.booleanLectura = False
-
         user_image = r"../../Images/Profile/perfil.png"
         try:
             with open(user_image):
@@ -52,15 +44,22 @@ class General_Interface_Teacher(QMainWindow):
 
         results = ConnectionDB.Connection().getDataUserTeacher(self.idUser)
         names = (results[1] + "\n" + results[2])
+        self.code = str(results[9])
+
         self.user = QLabel(f'{names}', self)
         self.user.setAlignment(Qt.AlignCenter)
-        self.user.setFont(QFont("Arial", 14))
+        self.user.setFont(QFont("Arial", 12))
         self.user.move(60, 180)
         self.user.resize(150, 50)
         self.user.setStyleSheet("color: white;")
 
+        # Imports
+        self.addform = AddForm.Form(self.idUser)
+        self.addurl = AddUrl.UploadUrl(self.idUser)
+        self.orderStudent = ViewDegree.ViewStudents(self.code)
+
         # Buttons
-        self.btn_students = QPushButton("Juegos", self)
+        self.btn_students = QPushButton("Ver alumnos", self)
         self.btn_students.resize(200, 40)
         self.btn_students.move(50, 240)
         self.btn_students.clicked.connect(self.Action1)
@@ -68,7 +67,7 @@ class General_Interface_Teacher(QMainWindow):
                                         "background-color: white;"
                                         "font-weight: bold; ")
 
-        self.btn_homework = QPushButton("Tarea", self)
+        self.btn_homework = QPushButton("Subir Tarea", self)
         self.btn_homework.resize(200, 40)
         self.btn_homework.move(50, 300)
         self.btn_homework.clicked.connect(self.Action2)
@@ -76,7 +75,7 @@ class General_Interface_Teacher(QMainWindow):
                                         "background-color: white;"
                                         "font-weight: bold;")
 
-        self.btn_read = QPushButton("Lecturas Recomendadas", self)
+        self.btn_read = QPushButton("Subir Lecturas", self)
         self.btn_read.resize(200, 40)
         self.btn_read.move(50, 360)
         self.btn_read.clicked.connect(self.Action3)
@@ -93,53 +92,34 @@ class General_Interface_Teacher(QMainWindow):
                                             "font-weight: bold; ")
 
     def Action1(self):
-        self.booleanJuegos = True
-        if self.booleanJuegos:
-            self.lblJuegos.show()
+        self.booleanViewStudents = True
+        if self.booleanViewStudents:
+            self.orderStudent.show()
             self.addform.hide()
             self.addurl.hide()
-            self.lvlstudent.show()
-        self.booleanJuegos = False
-        print("boton juego")
+        self.booleanViewStudents = False
 
     def Action2(self):
-        self.booleanTarea = True
-        if self.booleanTarea:
-            self.lblJuegos.hide()
+        self.booleanUpTask = True
+        if self.booleanUpTask:
             self.addform.show()
             self.addurl.hide()
-            self.lvlstudent.hide()
-        self.booleanTarea = False
-        print("boton tarea")
+            self.orderStudent.hide()
+        self.booleanUpTask = False
 
     def Action3(self):
-        self.booleanLectura = True
-        if self.booleanLectura:
-            self.lblJuegos.hide()
+        self.booleanUpRead = True
+        if self.booleanUpRead:
             self.addurl.show()
             self.addform.hide()
-            self.lvlstudent.hide()
-        self.booleanLectura = False
-
-        print("boton lectura")
+            self.orderStudent.hide()
+        self.booleanUpRead = False
 
     def sessionClose(self):
-        self.addform.hide()
-        self.addurl.hide()
-        self.lvlstudent.hide()
+        self.addform.close()
+        self.addurl.close()
+        self.orderStudent.close()
         General_Interface_Teacher.hide(self)
         self.logincito = Login.Login()
-        self.logincito.showNormal()
+        self.logincito.show()
 
-    def closeEvent(self, event):
-        cuadro = QMessageBox.warning(self, "Cerrar", "¿Estas seguro de cerrar la ventana?",
-                                     QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
-
-        if cuadro == QMessageBox.Yes:
-            print("Se ha cerrado la ventana")
-            self.lvlstudent.hide()
-            self.addurl.hide()
-            self.addform.hide()
-            event.accept()
-        elif cuadro == QMessageBox.No:
-            event.ignore()

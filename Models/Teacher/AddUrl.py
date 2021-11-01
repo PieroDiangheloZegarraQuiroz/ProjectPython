@@ -2,17 +2,17 @@ import sys
 
 import pyshorteners
 from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import QApplication, QPushButton, QTextEdit, QLineEdit, QMessageBox, QLabel, QDialog
+from PyQt5.QtWidgets import QApplication, QPushButton, QTextEdit, QLineEdit, QMessageBox, QLabel, QDialog, QWidget
 from PyQt5.QtCore import *
 import Test.urlDow
 from Connection import ConnectionDB
 
 
 class UploadUrl(QDialog):
-    def __init__(self):
+    def __init__(self, idUser):
         super(UploadUrl, self).__init__()
+        self.idUser = str(idUser)
         self.initialize()
-        self.urlClass = Test.urlDow.Url()  # Llamando a otra clase
 
     def initialize(self):
         self.setWindowFlag(Qt.FramelessWindowHint)
@@ -113,7 +113,7 @@ class UploadUrl(QDialog):
         shrt = pyshorteners.Shortener()
         nurl = shrt.tinyurl.short(remote_url)
         print(nurl)
-        ConnectionDB.Connection().insertFile(nurl, name, description, 1)
+        ConnectionDB.Connection().insertFile(nurl, name, description, self.idUser)
         QMessageBox.information(self, "Succeful",
                                 "El Archivo ha sido subido",
                                 QMessageBox.Ok, QMessageBox.Ok)

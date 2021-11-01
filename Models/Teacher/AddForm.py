@@ -8,27 +8,26 @@ from Connection import ConnectionDB
 
 
 class Form(QDialog):
-    def __init__(self):
+    def __init__(self, idUser):
         super(Form, self).__init__()
+        self.idUser = str(idUser)
         self.initialize()
-        self.urlClass = Test.urlDow.Url()  # Llamando a otra clase
 
     def initialize(self):
         self.setWindowFlag(Qt.FramelessWindowHint)
         self.setGeometry(550, 250, 500, 650)
         self.move(650, 150)
         self.setStyleSheet("background-color: white;")
-        self.setWindowTitle("Formulario")
         self.display_widgets()
 
     def display_widgets(self):
+        # Var
+        self.contador = 0
+
         # Label
         self.label1 = QLabel("Formulario", self)
         self.label1.setFont(QFont("Comic Sans MS", 18, QFont.Bold))
         self.label1.move(170, 20)
-
-        # Var
-        self.contador = 0
 
         # Buttons
         self.buttonInsert = QPushButton("Añadir", self)
@@ -159,17 +158,23 @@ class Form(QDialog):
                                     QMessageBox.Ok, QMessageBox.Ok)
 
     def saveForm(self):
-        q1 = self.textBox1.text()
-        q2 = self.textBox2.text()
-        q3 = self.textBox3.text()
-        q4 = self.textBox4.text()
-        q5 = self.textBox5.text()
-        q6 = self.textBox6.text()
-        q7 = self.textBox7.text()
-        q8 = self.textBox8.text()
-        q9 = self.textBox9.text()
-        q10 = self.textBox10.text()
-        ConnectionDB.Connection().insertQuestions(q1, q2, q3, q4, q5, q6, q7, q8, q9, q10)
+        ConnectionDB.Connection().insertQuestions(self.textBox1.text(), self.textBox2.text(), self.textBox3.text(),
+                                                  self.textBox4.text(), self.textBox5.text(), self.textBox6.text(),
+                                                  self.textBox7.text(), self.textBox8.text(), self.textBox9.text(),
+                                                  self.textBox10.text(), self.idUser)
+        QMessageBox.information(self, "Succeful",
+                                "Se ha ingresado el formulario",
+                                QMessageBox.Ok, QMessageBox.Ok)
+        self.textBox1.clear()
+        self.textBox2.clear()
+        self.textBox3.clear()
+        self.textBox4.clear()
+        self.textBox5.clear()
+        self.textBox6.clear()
+        self.textBox7.clear()
+        self.textBox8.clear()
+        self.textBox9.clear()
+        self.textBox10.clear()
 
     def buttonEnabled(self):
         self.stylo2 = "border-radius: 5px;" \
@@ -237,8 +242,4 @@ class Form(QDialog):
                                           "color: white;")
 
 
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = Form()
-    window.show()
-    sys.exit(app.exec_())
+

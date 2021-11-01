@@ -2,7 +2,7 @@ import random
 import sys
 
 from PyQt5 import QtTest
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtGui import QFont, QMovie
 from PyQt5.QtWidgets import QApplication, QPushButton, QLineEdit, QMessageBox, QLabel, QDialog, QWidget
 
@@ -21,6 +21,12 @@ class GameOne(QWidget):
     def display_widgets(self):
 
         # Data
+        self.count = 200
+        self.start = False
+        timer = QTimer(self)
+        timer.timeout.connect(self.timeV)
+        timer.start(100)
+
         self.time = 20
         self.contador = 5
         self.intentos = 1
@@ -96,23 +102,17 @@ class GameOne(QWidget):
                                            "color: white;")
 
     def timeV(self):
-        while self.time != 0:
-            QtTest.QTest.qWait(1000)
-            if self.time < 10:
-                self.labelTime.setText(f'00:0{self.time}')
-            else:
-                self.labelTime.setText(f'00:{self.time}')
-            self.time = self.time - 1
-
-        if self.time == 0:
-            QMessageBox.information(self, "Lose", "Usted ha perdido.", QMessageBox.Ok, QMessageBox.Ok)
-            self.numRan = random.randint(0, 10)
-            self.contador = 5
-            self.intentos = 1
-            self.time = 20
-            self.labelContador.setText(f"Le quedan <b>{self.contador}</b> intentos")
+        if self.start:
+            self.count -= 1
+            if self.count == 0:
+                self.start = False
+                self.label.setText("Completed !!!! ")
+        if self.start:
+            text = str(self.count / 10) + " s"
+            self.label.setText(text)
 
     def checkNumber(self):
+        self.start = True
         self.text_num = int(self.numberBox.text())
         self.text_ran = self.numRan
 

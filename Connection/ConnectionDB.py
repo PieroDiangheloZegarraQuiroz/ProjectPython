@@ -7,7 +7,7 @@ class Connection:
         try:
             conexion = mysql.connector.connect(
                 user="root",
-                password="kimini28",
+                password="sebas2001",
                 host="localhost",
                 database="python",
                 port="3306")
@@ -84,15 +84,40 @@ class Connection:
         conexion.commit()
         conexion.close()
 
-    # ===  ===
-    def listUser(self):
+    # === List Students ===
+    def listStudent4(self, code):
         conexion = self.startConnection()
         cursor = conexion.cursor()
-        cursor.execute("SELECT * FROM user")
-        resultado = cursor.fetchall()
-        for r in resultado:
-            print(r[0], r[1], r[2], r[3])
+        cursor.execute(
+            "SELECT s.name, s.lastName, s.age, u.email FROM student AS s INNER JOIN user AS u ON (s.idUser = u.idUser)"
+            " WHERE u.code = '" + code + "' and s.degree = '4toº Primaria'")
+        results = cursor.fetchall()
+        quantity = cursor.rowcount
+        print(results)
         conexion.close()
+        return results, quantity
+
+    def listStudent5(self, code):
+        conexion = self.startConnection()
+        cursor = conexion.cursor()
+        cursor.execute(
+            "SELECT s.name, s.lastName, s.age, u.email FROM student AS s INNER JOIN user AS u ON (s.idUser = u.idUser)"
+            " WHERE u.code = '" + code + "' and s.degree ='5toº Primaria'")
+        results = cursor.fetchall()
+        quantity = cursor.rowcount
+        conexion.close()
+        return results, quantity
+
+    def listStudent6(self, code):
+        conexion = self.startConnection()
+        cursor = conexion.cursor()
+        cursor.execute(
+            "SELECT s.name, s.lastName, s.age, u.email FROM student AS s INNER JOIN user AS u ON (s.idUser = u.idUser)"
+            " WHERE u.code = '" + code + "' and s.degree = '6toº Primaria'")
+        results = cursor.fetchall()
+        print(results)
+        conexion.close()
+        return results
 
     # === Files ===
     def insertFile(self, urlFile, name, description, idUser):
@@ -114,11 +139,11 @@ class Connection:
         return results, quantity
 
     # === Questions ===
-    def insertQuestions(self, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10):
+    def insertQuestions(self, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, idUser):
         conexion = self.startConnection()
         cursor = conexion.cursor()
-        sql = "INSERT INTO form (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10) VALUES ('{}', '{}', '{}', '{}', '{}', '{}'," \
-              " '{}','{}', '{}', '{}')".format(q1, q2, q3, q4, q5, q6, q7, q8, q9, q10)
+        sql = "INSERT INTO form (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, idUser) VALUES ('{}', '{}', '{}', '{}', " \
+              "'{}', '{}', '{}', '{}', '{}', '{}', '{}')".format(q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, idUser)
         cursor.execute(sql)
         conexion.commit()
         conexion.close()
