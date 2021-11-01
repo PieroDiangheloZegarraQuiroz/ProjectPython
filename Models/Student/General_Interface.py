@@ -43,7 +43,12 @@ class General_Interface(QMainWindow):
         self.lblLecutra.move(300, 0)
         self.lblLecutra.hide()
 
-        user_image = r"../../Images/Profile/perfil.png"
+        results = ConnectionDB.Connection().getDataUserStudent(self.idUser)
+        names = (results[1] + "\n" + results[2])
+        perfil = str(results[9])
+        print(results)
+
+        user_image = f"../../Images/Profile/{perfil}"
         try:
             with open(user_image):
                 etiqueta_imagen = QLabel(self)
@@ -54,11 +59,9 @@ class General_Interface(QMainWindow):
         except FileNotFoundError:
             print("Nose encontro el archivo")
 
-        results = ConnectionDB.Connection().getDataUserStudent(self.idUser)
-        names = (results[1] + "\n" + results[2])
         self.user = QLabel(f'{names}', self)
         self.user.setAlignment(Qt.AlignCenter)
-        self.user.setFont(QFont("Arial", 14))
+        self.user.setFont(QFont("Arial", 12))
         self.user.move(60, 180)
         self.user.resize(150, 50)
         self.user.setStyleSheet("color: white;")
