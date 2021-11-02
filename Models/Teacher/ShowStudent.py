@@ -82,5 +82,3 @@ class ShowStudentFive(QDialog):
 
         layout = QVBoxLayout(self)
         layout.addWidget(scroll)
-
-

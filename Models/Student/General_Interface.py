@@ -1,9 +1,13 @@
+import time
+
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont, QPixmap, QPalette, QBrush
-from PyQt5.QtWidgets import QLabel, QPushButton, QDialog, QMainWindow, QApplication, QMessageBox
+from PyQt5.QtWidgets import QLabel, QPushButton, QMainWindow, QMessageBox
+
 from Connection import ConnectionDB
 from Models.General import Login
 from Models.Student import SaveFile
+from Models.General import Profile
 
 
 class General_Interface(QMainWindow):
@@ -43,19 +47,19 @@ class General_Interface(QMainWindow):
         self.lblLecutra.move(300, 0)
         self.lblLecutra.hide()
 
-        results = ConnectionDB.Connection().getDataUserStudent(self.idUser)
-        names = (results[1] + "\n" + results[2])
-        perfil = str(results[9])
-        print(results)
-
-        user_image = f"../../Images/Profile/{perfil}"
+        self.results = ConnectionDB.Connection().getDataUserStudent(self.idUser)
+        names = (self.results[1] + "\n" + self.results[2])
+        self.perfil = str(self.results[9])
+        self.flagType = self.results[11]
+        print("gen", self.results)
+        self.user_image = f"../../Images/Profile/{self.perfil}"
         try:
-            with open(user_image):
-                etiqueta_imagen = QLabel(self)
-                pixmap = QPixmap(user_image)
-                etiqueta_imagen.setPixmap(pixmap)
-                etiqueta_imagen.move(100, 40)
-                etiqueta_imagen.resize(180, 120)
+            with open(self.user_image):
+                self.etiqueta_imagen = QLabel(self)
+                self.pixmap = QPixmap(self.user_image)
+                self.etiqueta_imagen.setPixmap(self.pixmap)
+                self.etiqueta_imagen.move(100, 40)
+                self.etiqueta_imagen.resize(180, 120)
         except FileNotFoundError:
             print("Nose encontro el archivo")
 
@@ -98,6 +102,36 @@ class General_Interface(QMainWindow):
         self.btn_closesession.setStyleSheet("border-radius: 10px;"
                                             "background-color: white;"
                                             "font-weight: bold; ")
+        self.btn_cProfile = QPushButton("+", self)
+        self.btn_cProfile.setFont(QFont("Arial", 14))
+        self.btn_cProfile.setGeometry(190, 30, 25, 25)
+        self.btn_cProfile.clicked.connect(self.enviarAbrir)
+        self.btn_cProfile.setStyleSheet("border: 1px solid gray;"
+                                        "border-radius: 10px;"
+                                        "background-color : gray;"
+                                        "color : white;")
+
+        Profile.selectProfile.Image_Generic(self)
+
+    def enviarAbrir(self):
+        Profile.selectProfile(self.idUser, self.flagType).exec_()
+        self.results = ConnectionDB.Connection().getDataUserStudent(self.idUser)
+        print("env", self.results)
+        self.user_image = f"../../Images/Profile/{self.perfil}"
+        self.perfil = self.results[9]
+        print(self.perfil)
+        try:
+            with open(self.user_image):
+                self.etiqueta_imagen = QLabel(self)
+                self.pixmap = QPixmap(self.user_image)
+                self.etiqueta_imagen.setPixmap(self.pixmap)
+                self.etiqueta_imagen.move(100, 40)
+                self.etiqueta_imagen.resize(180, 120)
+        except FileNotFoundError:
+            print("Nose encontro el archivo")
+        General_Interface.close(self)
+        self.display_widgets()
+        General_Interface.show(self)
 
     def Action1(self):
         self.booleanJuegos = True
@@ -135,13 +169,13 @@ class General_Interface(QMainWindow):
         self.logincito = Login.Login()
         self.logincito.showNormal()
 
-    def closeEvent(self, event):
-        cuadro = QMessageBox.warning(self, "Cerrar", "¿Estas seguro de cerrar la ventana?",
-                                     QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
-
-        if cuadro == QMessageBox.Yes:
-            print("Se ha cerrado la ventana")
-            self.saveFile.hide()
-            event.accept()
-        elif cuadro == QMessageBox.No:
-            event.ignore()
+    # def closeEvent(self, event):
+    #     cuadro = QMessageBox.warning(self, "Cerrar", "¿Estas seguro de cerrar la ventana?",
+    #                                  QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
+    #
+    #     if cuadro == QMessageBox.Yes:
+    #         print("Se ha cerrado la ventana")
+    #         self.saveFile.hide()
+    #         event.accept()
+    #     elif cuadro == QMessageBox.No:
+    #         event.ignore()

@@ -15,6 +15,16 @@ class Connection:
         except Error:
             print("Error de conexión")
 
+    # === Avatar ===
+    def changeAvatar(self, idUser, avatar):
+        conexion = self.startConnection()
+        cursor = conexion.cursor()
+
+        sql = "UPDATE user set avatar = '{}' WHERE user.idUser = '{}'".format(avatar, idUser)
+        cursor.execute(sql)
+        conexion.commit()
+        conexion.close()
+
     # === Methods Login ===
     def validateUser(self, email, password):
         conexion = self.startConnection()
@@ -155,12 +165,3 @@ class Connection:
         cursor.execute(sql, (pdf,))
         conexion.commit()
         conexion.close()
-
-    def listFile22(self):
-        conexion = self.startConnection()
-        cursor = conexion.cursor()
-        cursor.execute("SELECT * FROM test")
-        results = cursor.fetchall()
-        quantity = cursor.rowcount
-        conexion.close()
-        return results, quantity
