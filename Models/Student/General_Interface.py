@@ -66,6 +66,7 @@ class General_Interface(QMainWindow):
                                                    ")
                 self.etiqueta_imagen.setMargin(20)
                 self.etiqueta_imagen.setScaledContents(True)
+                self.etiqueta_imagen.show()
 
         except FileNotFoundError:
             print("Nose encontro el archivo")
@@ -111,7 +112,7 @@ class General_Interface(QMainWindow):
                                             "font-weight: bold; ")
         self.btn_cProfile = QPushButton("+", self)
         self.btn_cProfile.setFont(QFont("Arial", 14))
-        self.btn_cProfile.setGeometry(190, 30, 25, 25)
+        self.btn_cProfile.setGeometry(190, 10, 25, 25)
         self.btn_cProfile.clicked.connect(self.enviarAbrir)
         self.btn_cProfile.setStyleSheet("border: 1px solid gray;"
                                         "border-radius: 10px;"
@@ -120,6 +121,7 @@ class General_Interface(QMainWindow):
 
     def enviarAbrir(self):
         Profile.selectProfile(self.idUser).exec_()
+        General_Interface.display_widgets(self)
 
     def Action1(self):
         self.booleanJuegos = True

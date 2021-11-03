@@ -67,8 +67,7 @@ class selectProfile(QDialog):
         foto.save(f"../../Images/Profile/{OnlyNamePfp_Guardar}", quality=100)
 
         ConnectionDB.Connection().changeAvatar(self.idUser, OnlyNamePfp_Guardar)
-        QMessageBox.information(self, "Guardar imagen", "Imagen Guardada, por favor \n"
-                                                        "Vuelva a iniciar sesión", QMessageBox.Ok)
+        QMessageBox.information(self, "Guardar imagen", "Imagen Guardada", QMessageBox.Ok)
         self.close()
 
 
