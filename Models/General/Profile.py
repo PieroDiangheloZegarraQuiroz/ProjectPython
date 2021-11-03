@@ -1,18 +1,19 @@
 from io import open
 from os import getcwd, makedirs, path
 from Connection import ConnectionDB
-from PyQt5.QtCore import Qt, pyqtSignal, QFile
+from PyQt5.QtCore import *
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import (QDialog, QPushButton,
                              QLabel, QFileDialog, QMessageBox)
 
+from Models.Student import General_Interface
+
 
 class selectProfile(QDialog):
-    def __init__(self, idUser, flagType, parent=None):
+    def __init__(self, idUser, parent=None):
         super(selectProfile, self).__init__()
         self.parent = parent
         self.idUser = idUser
-        self.flagType = flagType
         self.setWindowTitle("Selecciona una imagen...")
         self.setWindowFlags(Qt.WindowCloseButtonHint | Qt.MSWindowsFixedSizeDialogHint)
         self.setFixedSize(200, 275)
@@ -64,9 +65,10 @@ class selectProfile(QDialog):
         if not QFile.exists("../Images/Profile"):
             makedirs("../Images/Profile")
         foto.save(f"../../Images/Profile/{OnlyNamePfp_Guardar}", quality=100)
-        self.labelImagen.clear()
+
         ConnectionDB.Connection().changeAvatar(self.idUser, OnlyNamePfp_Guardar)
-        QMessageBox.information(self, "Guardar imagen", "Imagen Guardada", QMessageBox.Ok)
+        QMessageBox.information(self, "Guardar imagen", "Imagen Guardada, por favor \n"
+                                                        "Vuelva a iniciar sesión", QMessageBox.Ok)
         self.close()
 
 

@@ -1,7 +1,7 @@
 import time
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QFont, QPixmap, QPalette, QBrush
+from PyQt5.QtGui import QFont, QPixmap, QPalette, QBrush, QWindow, QImage
 from PyQt5.QtWidgets import QLabel, QPushButton, QMainWindow, QMessageBox
 
 from Connection import ConnectionDB
@@ -14,6 +14,7 @@ class General_Interface(QMainWindow):
     def __init__(self, idUser):
         super(General_Interface, self).__init__()
         self.idUser = str(idUser)
+
         self.initialize()
 
     def initialize(self):
@@ -48,22 +49,28 @@ class General_Interface(QMainWindow):
         self.lblLecutra.hide()
 
         self.results = ConnectionDB.Connection().getDataUserStudent(self.idUser)
-        names = (self.results[1] + "\n" + self.results[2])
         self.perfil = str(self.results[9])
-        self.flagType = self.results[11]
-        print("gen", self.results)
+        self.names = (self.results[1] + "\n" + self.results[2])
         self.user_image = f"../../Images/Profile/{self.perfil}"
         try:
             with open(self.user_image):
                 self.etiqueta_imagen = QLabel(self)
-                self.pixmap = QPixmap(self.user_image)
-                self.etiqueta_imagen.setPixmap(self.pixmap)
-                self.etiqueta_imagen.move(100, 40)
+                # self.pixmap = QPixmap(self.user_image)
+                # self.etiqueta_imagen.setPixmap(self.pixmap)
+                self.etiqueta_imagen.move(60, 40)
                 self.etiqueta_imagen.resize(180, 120)
+                self.etiqueta_imagen.setStyleSheet(f" \
+                                                   border-image: url('{self.user_image}'); \
+                                                   background-color: black; \
+                                                   border-radius: 50%; \
+                                                   ")
+                self.etiqueta_imagen.setMargin(20)
+                self.etiqueta_imagen.setScaledContents(True)
+
         except FileNotFoundError:
             print("Nose encontro el archivo")
 
-        self.user = QLabel(f'{names}', self)
+        self.user = QLabel(f'{self.names}', self)
         self.user.setAlignment(Qt.AlignCenter)
         self.user.setFont(QFont("Arial", 12))
         self.user.move(60, 180)
@@ -111,27 +118,8 @@ class General_Interface(QMainWindow):
                                         "background-color : gray;"
                                         "color : white;")
 
-        Profile.selectProfile.Image_Generic(self)
-
     def enviarAbrir(self):
-        Profile.selectProfile(self.idUser, self.flagType).exec_()
-        self.results = ConnectionDB.Connection().getDataUserStudent(self.idUser)
-        print("env", self.results)
-        self.user_image = f"../../Images/Profile/{self.perfil}"
-        self.perfil = self.results[9]
-        print(self.perfil)
-        try:
-            with open(self.user_image):
-                self.etiqueta_imagen = QLabel(self)
-                self.pixmap = QPixmap(self.user_image)
-                self.etiqueta_imagen.setPixmap(self.pixmap)
-                self.etiqueta_imagen.move(100, 40)
-                self.etiqueta_imagen.resize(180, 120)
-        except FileNotFoundError:
-            print("Nose encontro el archivo")
-        General_Interface.close(self)
-        self.display_widgets()
-        General_Interface.show(self)
+        Profile.selectProfile(self.idUser).exec_()
 
     def Action1(self):
         self.booleanJuegos = True
