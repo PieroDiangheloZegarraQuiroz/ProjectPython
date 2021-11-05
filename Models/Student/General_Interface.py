@@ -1,6 +1,6 @@
 import time
 
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import *
 from PyQt5.QtGui import QFont, QPixmap, QPalette, QBrush, QWindow, QImage
 from PyQt5.QtWidgets import QLabel, QPushButton, QMainWindow, QMessageBox
 
@@ -8,6 +8,13 @@ from Connection import ConnectionDB
 from Models.General import Login
 from Models.Student import SaveFile
 from Models.General import Profile
+
+
+class QLabelClick(QLabel):
+    clicked = pyqtSignal()
+
+    def mousePressEvent(self, event):
+        self.clicked.emit()
 
 
 class General_Interface(QMainWindow):
@@ -21,9 +28,10 @@ class General_Interface(QMainWindow):
         self.setWindowFlag(Qt.FramelessWindowHint)
         self.setGeometry(350, 150, 800, 650)
         self.setWindowTitle("General Interface Student")
-        window_palette = QPalette()
-        window_palette.setBrush(self.backgroundRole(), QBrush(QPixmap("Images/")))
-        self.setPalette(window_palette)
+        # self.setStyleSheet("background-color: black")
+        # window_palette = QPalette()
+        # window_palette.setBrush(self.backgroundRole(), QBrush(QPixmap("Images/")))
+        # self.setPalette(window_palette)
         self.display_widgets()
 
     def display_widgets(self):
@@ -31,6 +39,11 @@ class General_Interface(QMainWindow):
         self.saveFile = SaveFile.Download()
 
         # Labels
+        self.back = QLabelClick(self)
+        self.back.resize(800, 650)
+        self.back.setStyleSheet("background-color: black")
+        self.back.clicked.connect(self.importadosClose)
+
         self.booleanJuegos = False
         self.lblJuegos = QLabel(self)
         self.lblJuegos.setGeometry(550, 250, 500, 650)
@@ -56,8 +69,6 @@ class General_Interface(QMainWindow):
         try:
             with open(self.user_image):
                 self.etiqueta_imagen = QLabel(self)
-                # self.pixmap = QPixmap(self.user_image)
-                # self.etiqueta_imagen.setPixmap(self.pixmap)
                 self.etiqueta_imagen.move(60, 40)
                 self.etiqueta_imagen.resize(180, 120)
                 self.etiqueta_imagen.setStyleSheet(f" \
@@ -68,7 +79,6 @@ class General_Interface(QMainWindow):
                 self.etiqueta_imagen.setMargin(20)
                 self.etiqueta_imagen.setScaledContents(True)
                 self.etiqueta_imagen.show()
-
         except FileNotFoundError:
             print("Nose encontro el archivo")
 
@@ -159,6 +169,9 @@ class General_Interface(QMainWindow):
         General_Interface.hide(self)
         self.logincito = Login.Login()
         self.logincito.showNormal()
+
+    def importadosClose(self):
+        self.saveFile.close()
 
     # def closeEvent(self, event):
     #     cuadro = QMessageBox.warning(self, "Cerrar", "¿Estas seguro de cerrar la ventana?",

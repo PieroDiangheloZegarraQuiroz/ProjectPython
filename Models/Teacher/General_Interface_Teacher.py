@@ -1,11 +1,19 @@
 import sys
 
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import *
 from PyQt5.QtGui import QFont, QPixmap, QPalette, QBrush
 from PyQt5.QtWidgets import QLabel, QPushButton, QDialog, QMainWindow, QApplication, QMessageBox
 from Connection import ConnectionDB
 from Models.General import Login
+from Models.General import Profile
 from Models.Teacher import AddUrl, AddForm, ViewDegree
+
+
+class QLabelClick(QLabel):
+    clicked = pyqtSignal()
+
+    def mousePressEvent(self, event):
+        self.clicked.emit()
 
 
 class General_Interface_Teacher(QMainWindow):
@@ -18,9 +26,9 @@ class General_Interface_Teacher(QMainWindow):
         self.setWindowFlag(Qt.FramelessWindowHint)
         self.setGeometry(350, 150, 800, 650)
         self.setWindowTitle("General Interface Teacher")
-        window_palette = QPalette()
-        window_palette.setBrush(self.backgroundRole(), QBrush(QPixmap("Images/")))
-        self.setPalette(window_palette)
+        # window_palette = QPalette()
+        # window_palette.setBrush(self.backgroundRole(), QBrush(QPixmap("Images/")))
+        # self.setPalette(window_palette)
         self.display_widgets()
 
     def display_widgets(self):
@@ -31,22 +39,34 @@ class General_Interface_Teacher(QMainWindow):
         self.booleanUpRead = False
 
         # Labels
-        user_image = r"../../Images/Profile/perfil.png"
+        self.back = QLabelClick(self)
+        self.back.resize(800, 650)
+        self.back.setStyleSheet("background-color: black")
+        self.back.clicked.connect(self.importadosClose)
+
+        self.results = ConnectionDB.Connection().getDataUserTeacher(self.idUser)
+        print(self.results)
+        self.perfil = str(self.results[8])
+        self.names = (self.results[1] + "\n" + self.results[2])
+        self.code = str(self.results[9])
+        self.user_image = f"../../Images/Profile/{self.perfil}"
         try:
-            with open(user_image):
-                etiqueta_imagen = QLabel(self)
-                pixmap = QPixmap(user_image)
-                etiqueta_imagen.setPixmap(pixmap)
-                etiqueta_imagen.move(100, 40)
-                etiqueta_imagen.resize(180, 120)
+            with open(self.user_image):
+                self.etiqueta_imagen = QLabel(self)
+                self.etiqueta_imagen.move(60, 40)
+                self.etiqueta_imagen.resize(180, 120)
+                self.etiqueta_imagen.setStyleSheet(f" \
+                                                   border-image: url('{self.user_image}'); \
+                                                   background-color: black; \
+                                                   border-radius: 50%; \
+                                                   ")
+                self.etiqueta_imagen.setMargin(20)
+                self.etiqueta_imagen.setScaledContents(True)
+                self.etiqueta_imagen.show()
         except FileNotFoundError:
             print("Nose encontro el archivo")
 
-        results = ConnectionDB.Connection().getDataUserTeacher(self.idUser)
-        names = (results[1] + "\n" + results[2])
-        self.code = str(results[9])
-
-        self.user = QLabel(f'{names}', self)
+        self.user = QLabel(f'{self.names}', self)
         self.user.setAlignment(Qt.AlignCenter)
         self.user.setFont(QFont("Arial", 12))
         self.user.move(60, 180)
@@ -91,6 +111,19 @@ class General_Interface_Teacher(QMainWindow):
                                             "background-color: white;"
                                             "font-weight: bold; ")
 
+        self.btn_cProfile = QPushButton("+", self)
+        self.btn_cProfile.setFont(QFont("Arial", 14))
+        self.btn_cProfile.setGeometry(190, 10, 25, 25)
+        self.btn_cProfile.clicked.connect(self.enviarAbrir)
+        self.btn_cProfile.setStyleSheet("border: 1px solid gray;"
+                                        "border-radius: 10px;"
+                                        "background-color : gray;"
+                                        "color : white;")
+
+    def enviarAbrir(self):
+        Profile.selectProfile(self.idUser).exec_()
+        General_Interface_Teacher.display_widgets(self)
+
     def Action1(self):
         self.booleanViewStudents = True
         if self.booleanViewStudents:
@@ -123,3 +156,7 @@ class General_Interface_Teacher(QMainWindow):
         self.logincito = Login.Login()
         self.logincito.show()
 
+    def importadosClose(self):
+        self.addurl.close()
+        self.addform.close()
+        self.orderStudent.close()

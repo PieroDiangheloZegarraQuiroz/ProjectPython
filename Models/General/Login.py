@@ -78,8 +78,6 @@ class Login(QMainWindow):
         self.comboRegister.activated[str].connect(self.register)
         self.comboRegister.setStyleSheet("background-color: #4286F5;"
                                          "color: white")
-        self.emailBox.setText("syactayoc@autonoma.edu.pe")
-        self.passwordBox.setText("sebastian")
 
     # Methods
     def data(self):
