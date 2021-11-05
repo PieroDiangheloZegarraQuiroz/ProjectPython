@@ -25,6 +25,8 @@ class User_Register(QDialog):
     def initialize(self):
         self.setGeometry(500, 250, 500, 500)
         self.setWindowTitle("Teacher Registration")
+        self.setMinimumSize(500, 500)
+        self.setMaximumSize(500, 500)
         self.display_widgets()
         window_palette = QPalette()
         window_palette.setBrush(self.backgroundRole(), QBrush(QPixmap("../../Images/Others/Rfondo2.jpg")))

@@ -7,7 +7,7 @@ from PyQt5.QtGui import QFont, QMovie
 from PyQt5.QtWidgets import QApplication, QPushButton, QLineEdit, QMessageBox, QLabel, QDialog, QWidget
 
 
-class GameOne(QWidget):
+class GameOne(QDialog):
     def __init__(self):
         super(GameOne, self).__init__()
         self.initialize()
@@ -19,20 +19,18 @@ class GameOne(QWidget):
         self.display_widgets()
 
     def display_widgets(self):
-
         # Data
         self.time = 20
         self.contador = 5
         self.intentos = 1
         self.numRan = random.randint(0, 10)
-        print(self.numRan)
 
         # Gif
-        # self.labelGif = QLabel(self)
-        # self.movie = QMovie('../Images/Gif/num.gif')
-        # self.labelGif.setMovie(self.movie)
-        # self.labelGif.move(150, 100)
-        # self.movie.start()
+        self.labelGif = QLabel(self)
+        self.movie = QMovie('../Images/Gif/num.gif')
+        self.labelGif.setMovie(self.movie)
+        self.labelGif.move(150, 100)
+        self.movie.start()
 
         # Labels
         self.label1 = QLabel(f'Adivina el número', self)
@@ -118,11 +116,15 @@ class GameOne(QWidget):
 
         if self.contador > 0 and self.text_num <= 10:
             if self.text_num == self.text_ran:
-                QMessageBox.information(self, "Success", f"!Felicitaciones¡ adivinaste el número {self.text_ran} en "
-                                                         f"\n{self.intentos} intento(s)", QMessageBox.Ok,
-                                        QMessageBox.Ok)
+                rpt = QMessageBox.information(self, "Success",
+                                              f"!Felicitaciones¡ adivinaste el número {self.text_ran} en "
+                                              f"\n{self.intentos} intento(s)", QMessageBox.Yes | QMessageBox.No,
+                                              QMessageBox.Yes)
+                if rpt == QMessageBox.Yes:
+                    print("Mostrando graficos")
+                elif rpt == QMessageBox.No:
+                    print("Reiniciando Juego o pasando")
                 self.numRan = random.randint(0, 10)
-                print(self.numRan)
                 self.contador = 5
                 self.intentos = 1
                 self.time = 20

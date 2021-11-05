@@ -18,6 +18,7 @@ class General_Interface(QMainWindow):
         self.initialize()
 
     def initialize(self):
+        self.setWindowFlag(Qt.FramelessWindowHint)
         self.setGeometry(350, 150, 800, 650)
         self.setWindowTitle("General Interface Student")
         window_palette = QPalette()

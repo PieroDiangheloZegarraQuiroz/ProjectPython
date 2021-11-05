@@ -13,9 +13,10 @@ class ShowStudentFive(QDialog):
         self.initialize()
 
     def initialize(self):
-        self.setWindowFlag(Qt.FramelessWindowHint)
         self.setStyleSheet("background-color: white;")
-        self.setGeometry(550, 250, 510, 650)
+        self.setGeometry(650, 250, 510, 450)
+        self.setMaximumSize(510, 450)
+        self.setMinimumSize(510, 450)
         self.move(650, 150)
         self.setWindowTitle("Alumnos 5to Primaria")
         self.display_widgets()

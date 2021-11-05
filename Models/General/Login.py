@@ -15,7 +15,6 @@ class Login(QMainWindow):
         self.initialize()
 
     def initialize(self):
-        self.setWindowFlag(Qt.FramelessWindowHint)
         self.setGeometry(500, 250, 400, 500)
         self.setWindowTitle("Login")
         self.setMinimumSize(400, 500)
