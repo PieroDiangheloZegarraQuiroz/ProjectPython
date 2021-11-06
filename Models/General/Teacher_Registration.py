@@ -94,6 +94,7 @@ class User_Register(QDialog):
         self.nameBox.setAlignment(Qt.AlignCenter)
         self.nameBox.move(150, 180)
         self.nameBox.resize(200, 25)
+        self.nameBox.textChanged.connect(self.buttonEnabled)
         self.nameBox.setStyleSheet("border-radius: 10px;"
                                    "background-color: rgba(255, 215, 210, 30);"
                                    "font-weight: bold; ")
@@ -102,6 +103,7 @@ class User_Register(QDialog):
         self.lastnameBox.setAlignment(Qt.AlignCenter)
         self.lastnameBox.move(150, 210)
         self.lastnameBox.resize(200, 25)
+        self.lastnameBox.textChanged.connect(self.buttonEnabled)
         self.lastnameBox.setStyleSheet("border-radius: 10px;"
                                        "background-color: rgba(255, 255, 255, 50);"
                                        "font-weight: bold; ")
@@ -110,6 +112,7 @@ class User_Register(QDialog):
         self.mobileBox.setAlignment(Qt.AlignCenter)
         self.mobileBox.move(150, 240)
         self.mobileBox.resize(200, 25)
+        self.mobileBox.textChanged.connect(self.buttonEnabled)
         self.mobileBox.setStyleSheet("border-radius: 10px;"
                                      "background-color: rgba(255, 225, 255, 0.5);"
                                      "font-weight: bold; ")
@@ -118,6 +121,7 @@ class User_Register(QDialog):
         self.emailBox.setAlignment(Qt.AlignCenter)
         self.emailBox.move(150, 270)
         self.emailBox.resize(200, 25)
+        self.emailBox.textChanged.connect(self.buttonEnabled)
         self.emailBox.setStyleSheet("border-radius: 10px;"
                                     "background-color: rgba(255, 225, 255, 0.5);"
                                     "font-weight: bold; ")
@@ -127,6 +131,7 @@ class User_Register(QDialog):
         self.passwordBox.setEchoMode(QLineEdit.Password)
         self.passwordBox.move(150, 300)
         self.passwordBox.resize(200, 25)
+        self.passwordBox.textChanged.connect(self.buttonEnabled)
         self.passwordBox.setStyleSheet("border-radius: 10px;"
                                        "background-color: rgba(255, 225, 255, 0.5);"
                                        "font-weight: bold; ")
@@ -136,6 +141,7 @@ class User_Register(QDialog):
         self.codeBox.move(150, 330)
         self.codeBox.resize(200, 25)
         self.codeBox.setEnabled(False)
+        self.codeBox.textChanged.connect(self.buttonEnabled)
         self.codeBox.setStyleSheet("border-radius: 10px;"
                                    "background-color: rgba(255, 225, 255, 0.5);"
                                    "font-weight: bold; ")
@@ -144,9 +150,10 @@ class User_Register(QDialog):
         self.buttonRegister = QPushButton("Crear Cuenta", self)
         self.buttonRegister.resize(200, 40)
         self.buttonRegister.move(150, 390)
+        self.buttonRegister.setEnabled(False)
         self.buttonRegister.clicked.connect(self.registro)
         self.buttonRegister.setStyleSheet("border-radius: 10px;"
-                                          "background-color: #38EB47;")
+                                          "background-color: gray;")
 
         self.buttonCode = QPushButton("Generar", self)
         self.buttonCode.resize(70, 25)
@@ -155,6 +162,17 @@ class User_Register(QDialog):
         self.buttonCode.clicked.connect(self.code)
         self.buttonCode.setStyleSheet("border-radius: 10px;"
                                       "background-color: rgb(14, 150, 232);")
+
+    def buttonEnabled(self):
+        if self.nameBox.text() != "" and self.lastnameBox.text() != "" and self.mobileBox.text() != "" \
+                and self.email.text() != "" and self.passwordBox.text() != "" and self.codeBox.text() != "":
+            self.buttonRegister.setEnabled(True)
+            self.buttonRegister.setStyleSheet("border-radius: 10px;"
+                                              "background-color: #38EB47;")
+        else:
+            self.buttonRegister.setEnabled(False)
+            self.buttonRegister.setStyleSheet("border-radius: 10px;"
+                                              "background-color: gray;")
 
     # Methods
     def registro(self):
@@ -174,10 +192,10 @@ class User_Register(QDialog):
         self.close()
 
     def sendEmail(self):
-        email = 'sebastianaronyactayo@gmail.com'  # input("Ingrese su correo: ")
-        password = 'Aron2001.'  # input("Ingrese su password: ")
-        destination = self.emailBox.text()  # input("Ingrese el destination: ")
-        subject = 'Registro exitoso'  # input("Ingrese el subject: ")
+        email = 'proyectPython2021@gmail.com'
+        password = 'python2021'
+        destination = self.emailBox.text()
+        subject = 'Registro exitoso'
 
         mensaje = MIMEMultipart("alternativa")
         mensaje["Subject"] = subject

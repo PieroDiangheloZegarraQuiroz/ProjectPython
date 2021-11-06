@@ -7,6 +7,7 @@ from PyQt5.QtWidgets import QLabel, QPushButton, QMainWindow, QMessageBox
 from Connection import ConnectionDB
 from Models.General import Login
 from Models.Student import SaveFile
+from Models.Student import ReadQuestions
 from Models.General import Profile
 
 
@@ -35,9 +36,6 @@ class General_Interface(QMainWindow):
         self.display_widgets()
 
     def display_widgets(self):
-        # Imports
-        self.saveFile = SaveFile.Download()
-
         # Labels
         self.back = QLabelClick(self)
         self.back.resize(800, 650)
@@ -66,6 +64,7 @@ class General_Interface(QMainWindow):
         self.perfil = str(self.results[9])
         self.names = (self.results[1] + "\n" + self.results[2])
         self.user_image = f"../../Images/Profile/{self.perfil}"
+        self.code = self.results[10]
         try:
             with open(self.user_image):
                 self.etiqueta_imagen = QLabel(self)
@@ -130,6 +129,10 @@ class General_Interface(QMainWindow):
                                         "background-color : gray;"
                                         "color : white;")
 
+        # Imports
+        self.saveFile = SaveFile.Download()
+        self.readQuestions = ReadQuestions.ReadQuestions(self.code)
+
     def enviarAbrir(self):
         Profile.selectProfile(self.idUser).exec_()
         General_Interface.display_widgets(self)
@@ -139,7 +142,7 @@ class General_Interface(QMainWindow):
         if self.booleanJuegos:
             self.lblJuegos.show()
             self.lblLecutra.hide()
-            self.lblTarea.hide()
+            self.readQuestions.hide()
         self.booleanJuegos = False
         print("boton juego")
 
@@ -148,7 +151,7 @@ class General_Interface(QMainWindow):
         if self.booleanTarea:
             self.lblJuegos.hide()
             self.lblLecutra.hide()
-            self.lblTarea.show()
+            self.readQuestions.show()
             self.saveFile.hide()
         self.booleanTarea = False
         print("boton tarea")
@@ -158,7 +161,7 @@ class General_Interface(QMainWindow):
         if self.booleanLectura:
             self.lblJuegos.hide()
             self.lblLecutra.show()
-            self.lblTarea.hide()
+            self.readQuestions.hide()
             self.saveFile.show()
         self.booleanLectura = False
 
@@ -172,6 +175,7 @@ class General_Interface(QMainWindow):
 
     def importadosClose(self):
         self.saveFile.close()
+        self.readQuestions.close()
 
     # def closeEvent(self, event):
     #     cuadro = QMessageBox.warning(self, "Cerrar", "¿Estas seguro de cerrar la ventana?",

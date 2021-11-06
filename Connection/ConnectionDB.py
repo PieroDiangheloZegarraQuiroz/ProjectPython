@@ -7,7 +7,7 @@ class Connection:
         try:
             conexion = mysql.connector.connect(
                 user="root",
-                password="kimini28",
+                password="sebas2001",
                 host="localhost",
                 database="python",
                 port="3306")
@@ -158,6 +158,27 @@ class Connection:
         cursor.execute(sql)
         conexion.commit()
         conexion.close()
+
+    def listQuestions(self, code):
+        conexion = self.startConnection()
+        cursor = conexion.cursor()
+        sql = "SELECT idForm, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10 FROM form AS f " \
+              "INNER JOIN user AS u ON (f.idUser = u.idUser) WHERE u.code='" + code + "'"
+        cursor.execute(sql)
+        results = cursor.fetchall()
+        quantity = cursor.rowcount
+        conexion.close()
+        return results, quantity
+
+    def readQuestions(self, idForm):
+        conexion = self.startConnection()
+        cursor = conexion.cursor()
+        sql = "SELECT q1, q2, q3, q4, q5, q6, q7, q8, q9, q10 FROM form WHERE form.idForm='" + idForm + "'"
+        cursor.execute(sql)
+        results = cursor.fetchone()
+        quantity = cursor.rowcount
+        conexion.close()
+        return results, quantity
 
     def insertFiles2(self, pdf):
         conexion = self.startConnection()

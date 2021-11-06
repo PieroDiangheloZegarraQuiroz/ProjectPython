@@ -45,7 +45,6 @@ class General_Interface_Teacher(QMainWindow):
         self.back.clicked.connect(self.importadosClose)
 
         self.results = ConnectionDB.Connection().getDataUserTeacher(self.idUser)
-        print(self.results)
         self.perfil = str(self.results[8])
         self.names = (self.results[1] + "\n" + self.results[2])
         self.code = str(self.results[9])

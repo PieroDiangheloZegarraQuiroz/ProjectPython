@@ -6,7 +6,6 @@ from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QApplication, QFileDialog, QMessageBox, QLabel, QScrollArea, QVBoxLayout, QFormLayout, \
     QGroupBox, QDialog
 
-import Test.urlDow
 from Connection import ConnectionDB
 
 
@@ -32,7 +31,6 @@ class Download(QDialog):
     def __init__(self):
         super(Download, self).__init__()
         self.initialize()
-        self.urlClass = Test.urlDow.Url()
 
     def initialize(self):
         self.setStyleSheet("background-color: white;")
