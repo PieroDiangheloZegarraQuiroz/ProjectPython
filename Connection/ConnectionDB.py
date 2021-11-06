@@ -7,7 +7,7 @@ class Connection:
         try:
             conexion = mysql.connector.connect(
                 user="root",
-                password="sebas2001",
+                password="kimini28",
                 host="localhost",
                 database="python",
                 port="3306")
@@ -125,9 +125,10 @@ class Connection:
             "SELECT s.name, s.lastName, s.age, u.email FROM student AS s INNER JOIN user AS u ON (s.idUser = u.idUser)"
             " WHERE u.code = '" + code + "' and s.degree = '6toº Primaria'")
         results = cursor.fetchall()
+        quantity = cursor.rowcount
         print(results)
         conexion.close()
-        return results
+        return results, quantity
 
     # === Files ===
     def insertFile(self, urlFile, name, description, idUser):
