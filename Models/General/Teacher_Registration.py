@@ -203,15 +203,49 @@ class User_Register(QDialog):
         mensaje["To"] = destination
 
         html = f"""
-        <html>
-        <body>
-        <h1>Hola {self.nameBox.text()}</h1>
-        <p>Tu correo es: {destination}</p>
-        <p>Tu contraseña es: {self.passwordBox.text()}</p>
-        <p>Tu codigo de profesor es: {self.codeBox.text()}</p>
-        </body>
-        </html>
-        """
+
+                        <html>
+                            <head>
+                            </head>
+                        <body>
+
+                            <div>
+                                <center>   
+                                    <h2>Hola   {self.nameBox.text()}</h2>
+            
+                                    <h4>Recuerda que para ingresar a la plataforma de aprendizaje .... tiene que ingresar sus datos: </h2>
+                                    <h5>
+                                    <form>
+                                        Correo:
+                                        <input type="email" name="email" required value="{destination}">
+                
+                                        <label>
+                                        Contraseña:
+                                        <input type="email" name="email" required value="{self.passwordBox.text()}">
+                                        </h3>
+                                        </label>
+                
+                                        <label>
+                                        Código de profesor:
+                                        <input type="code" name="code" required value="{self.codeBox.text()}">
+                                        </h3>
+                                        </label>
+                
+                                        <p>Que tenga un buen día</p>
+                                        <br>
+                                    </form>
+                                    <h8> PD: Si no realizó esta acción, ignore este correo electrónico.
+                                    <br>
+                                    Tus amigos de Equipo Wisdom </h8>
+                                </center>
+                                  
+                            </div>
+                             <div>
+                              <center><img src="https://i.ibb.co/pjHnYYg/Loguito.png"></center>
+                           </div>
+                        </body>
+                        </html>
+                        """
 
         parte_html = MIMEText(html, "html")
         mensaje.attach(parte_html)

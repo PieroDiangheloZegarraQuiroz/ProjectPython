@@ -212,14 +212,37 @@ class User_Register(QDialog):
         mensaje["To"] = destination
 
         html = f"""
-        <html>
-        <body>
-        <h1>Hola {self.nameBox.text()}</h1>
-        <p>Tu correo es: {destination}</p>
-        <p>Tu contraseña es: {self.passwordBox.text()}</p>
-        </body>
-        </html>
-        """
+
+                       <html>
+                       <body>
+                       <div>
+                           <center><h2>Hola   {self.nameBox.text()}</h2><center>
+                           <center>
+                           <h4 style="red">Recuerda que para ingresar a la plataforma de aprendizaje .... tienes que ingresar tus datos: </h2>
+                           <h5>
+                           <form>
+                           Correo:
+                           <input type="email" name="email" required value="{destination}">
+                           <label>
+                           Contraseña:
+                           <input type="email" name="email" required value="{self.passwordBox.text()}">
+                           </h3>
+                           </label>
+
+                           <p>Que tengas un buen día</p>
+                           <br>
+                           </form>
+                           <h8> PD: Si no realizó esta acción, ignore este correo electrónico.
+                           <br>
+                           Tus amigos de Equipo Wisdom </h8>
+                           </center>
+                           <div style="margin: 10px 0 0 10px;">
+                               <img src="https://i.ibb.co/pjHnYYg/Loguito.png">
+                           </div>
+                       </div>
+                       </body>
+                       </html>
+                       """
 
         parte_html = MIMEText(html, "html")
         mensaje.attach(parte_html)
