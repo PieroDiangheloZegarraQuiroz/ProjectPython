@@ -171,7 +171,7 @@ class User_Register(QDialog):
 
     def buttonEnabled(self):
         if self.nameBox.text() != "" and self.lastnameBox.text() != "" and self.ageBox.text() != "" \
-                and self.levelComboBox.currentText() != "Selecciona tu grado" and self.email.text() != "" \
+                and self.levelComboBox.currentText() != "Selecciona tu grado" and self.emailBox.text() != "" \
                 and self.passwordBox.text() != "" and self.codeBox.text() != "":
             self.buttonRegister.setEnabled(True)
             self.buttonRegister.setStyleSheet("border-radius: 10px;"
@@ -222,10 +222,10 @@ class User_Register(QDialog):
                            <h5>
                            <form>
                            Correo:
-                           <input type="email" name="email" required value="{destination}">
+                           <input type="email" name="email" required value="{destination} " readonly>
                            <label>
                            Contraseña:
-                           <input type="email" name="email" required value="{self.passwordBox.text()}">
+                           <input type="email" name="email" required value="{self.passwordBox.text()} " readonly>
                            </h3>
                            </label>
 

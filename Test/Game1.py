@@ -1,6 +1,8 @@
 import random
 import sys
-
+import matplotlib.pyplot as plt
+import numpy as np
+from Models.Student import GraphicGameYactayo
 from PyQt5 import QtTest
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont, QMovie
@@ -23,11 +25,11 @@ class GameOne(QDialog):
         self.time = 20
         self.contador = 5
         self.intentos = 1
-        self.numRan = random.randint(0, 10)
+        self.numRan = random.randint(1, 10)
 
         # Gif
         self.labelGif = QLabel(self)
-        self.movie = QMovie('../Images/Gif/num.gif')
+        self.movie = QMovie('../../proyecto/Images/Gif/num.gif')
         self.labelGif.setMovie(self.movie)
         self.labelGif.move(150, 100)
         self.movie.start()
@@ -94,21 +96,24 @@ class GameOne(QDialog):
                                            "color: white;")
 
     def timeV(self):
-        while self.time != 0:
-            QtTest.QTest.qWait(1000)
-            if self.time < 10:
-                self.labelTime.setText(f'00:0{self.time}')
-            else:
-                self.labelTime.setText(f'00:{self.time}')
-            self.time = self.time - 1
+        try:
+            while self.time != 0:
+                QtTest.QTest.qWait(1000)
+                if self.time < 10:
+                    self.labelTime.setText(f'00:0{self.time}')
+                else:
+                    self.labelTime.setText(f'00:{self.time}')
+                self.time = self.time - 1
 
-        if self.time == 0:
-            QMessageBox.information(self, "Lose", "Usted ha perdido.", QMessageBox.Ok, QMessageBox.Ok)
-            self.numRan = random.randint(0, 10)
-            self.contador = 5
-            self.intentos = 1
-            self.time = 20
-            self.labelContador.setText(f"Le quedan <b>{self.contador}</b> intentos")
+            if self.time == 0:
+                QMessageBox.information(self, "Lose", "Usted ha perdido.", QMessageBox.Ok, QMessageBox.Ok)
+                self.numRan = random.randint(1, 10)
+                self.contador = 5
+                self.intentos = 1
+                self.time = 20
+                self.labelContador.setText(f"Le quedan <b>{self.contador}</b> intentos")
+        except KeyboardInterrupt as K:
+            GameOne.closeEvent(self, QCloseEvent)
 
     def checkNumber(self):
         self.text_num = int(self.numberBox.text())
@@ -121,7 +126,8 @@ class GameOne(QDialog):
                                               f"\n{self.intentos} intento(s)", QMessageBox.Yes | QMessageBox.No,
                                               QMessageBox.Yes)
                 if rpt == QMessageBox.Yes:
-                    print("Mostrando graficos")
+                    graphic = prob.Graphic()
+                    graphic.exec_()
                 elif rpt == QMessageBox.No:
                     print("Reiniciando Juego o pasando")
                 self.numRan = random.randint(0, 10)

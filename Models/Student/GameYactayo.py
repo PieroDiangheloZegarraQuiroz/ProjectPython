@@ -1,13 +1,15 @@
 import random
 import sys
-
+import matplotlib.pyplot as plt
+import numpy as np
+from Models.Student import GraphicGameYactayo
 from PyQt5 import QtTest
 from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtGui import QFont, QMovie
 from PyQt5.QtWidgets import QApplication, QPushButton, QLineEdit, QMessageBox, QLabel, QDialog, QWidget
 
 
-class GameOne(QWidget):
+class GameOne(QDialog):
     def __init__(self):
         super(GameOne, self).__init__()
         self.initialize()
@@ -19,35 +21,31 @@ class GameOne(QWidget):
         self.display_widgets()
 
     def display_widgets(self):
-
         # Data
-        self.count = 200
-        self.start = False
-        timer = QTimer(self)
-        timer.timeout.connect(self.timeV)
-        timer.start(100)
+        self.step = 20
+        self.timer = QTimer(self)
+        self.timer.timeout.connect(self.update_func)
 
-        self.time = 20
         self.contador = 5
         self.intentos = 1
-        self.numRan = random.randint(0, 10)
-        print(self.numRan)
+        self.numRan = random.randint(1, 10)
 
         # Gif
-        # self.labelGif = QLabel(self)
-        # self.movie = QMovie('../Images/Gif/num.gif')
-        # self.labelGif.setMovie(self.movie)
-        # self.labelGif.move(150, 100)
-        # self.movie.start()
+        self.labelGif = QLabel(self)
+        self.movie = QMovie('../../Images/Gif/num.gif')
+        self.labelGif.setMovie(self.movie)
+        self.labelGif.move(150, 100)
+        self.movie.start()
 
         # Labels
         self.label1 = QLabel(f'Adivina el número', self)
         self.label1.setFont(QFont("Comic Sans MS", 18, QFont.Bold))
         self.label1.move(140, 50)
 
-        self.labelTime = QLabel(f'00:{self.time}', self)
+        self.labelTime = QLabel('0', self)
         self.labelTime.setFont(QFont("Comic Sans MS", 12))
         self.labelTime.move(30, 10)
+        self.labelTime.resize(40, 20)
 
         self.labelLess = QLabel(f'<b>Pista:</b> Número menor', self)
         self.labelLess.setFont(QFont("Comic Sans MS", 10))
@@ -102,30 +100,41 @@ class GameOne(QWidget):
                                            "color: white;")
 
     def timeV(self):
-        if self.start:
-            self.count -= 1
-            if self.count == 0:
-                self.start = False
-                self.label.setText("Completed !!!! ")
-        if self.start:
-            text = str(self.count / 10) + " s"
-            self.label.setText(text)
+        if not self.timer.isActive():
+            self.timer.start(1000)
+
+    def update_func(self):
+        if self.step > 0:
+            self.step -= 1
+        elif self.step == 0:
+            QMessageBox.information(self, "Lose", "Usted ha perdido.", QMessageBox.Ok, QMessageBox.Ok)
+            self.numRan = random.randint(1, 10)
+            self.contador = 5
+            self.intentos = 1
+            self.step = 20
+            self.timer.stop()
+            self.labelContador.setText(f"Le quedan <b>{self.contador}</b> intentos")
+        self.labelTime.setText(str(self.step))
 
     def checkNumber(self):
-        self.start = True
         self.text_num = int(self.numberBox.text())
         self.text_ran = self.numRan
 
         if self.contador > 0 and self.text_num <= 10:
             if self.text_num == self.text_ran:
-                QMessageBox.information(self, "Success", f"!Felicitaciones¡ adivinaste el número {self.text_ran} en "
-                                                         f"\n{self.intentos} intento(s)", QMessageBox.Ok,
-                                        QMessageBox.Ok)
+                rpt = QMessageBox.information(self, "Success",
+                                              f"!Felicitaciones¡ adivinaste el número {self.text_ran} en "
+                                              f"\n{self.intentos} intento(s)", QMessageBox.Yes | QMessageBox.No,
+                                              QMessageBox.Yes)
+                if rpt == QMessageBox.Yes:
+                    graphic = GraphicGameYactayo.Graphic()
+                    graphic.exec_()
+                elif rpt == QMessageBox.No:
+                    print("Reiniciando Juego o pasando")
                 self.numRan = random.randint(0, 10)
-                print(self.numRan)
                 self.contador = 5
                 self.intentos = 1
-                self.time = 20
+                self.step = 20
                 self.numberBox.clear()
                 self.labelContador.setText(f"Le quedan <b>{self.contador}</b> intentos")
 
@@ -160,7 +169,7 @@ class GameOne(QWidget):
             self.numRan = random.randint(0, 10)
             self.contador = 5
             self.intentos = 1
-            self.time = 20
+            self.step = 20
             self.numberBox.clear()
             self.labelContador.setText(f"Le quedan <b>{self.contador}</b> intentos")
 
