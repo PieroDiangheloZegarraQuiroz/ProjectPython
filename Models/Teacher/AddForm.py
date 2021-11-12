@@ -3,7 +3,7 @@ import sys
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QApplication, QPushButton, QLineEdit, QMessageBox, QLabel, QDialog
 from PyQt5.QtCore import *
-import Test.urlDow
+
 from Connection import ConnectionDB
 
 

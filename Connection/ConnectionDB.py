@@ -140,10 +140,12 @@ class Connection:
         conexion.commit()
         conexion.close()
 
-    def listFile(self):
+    def listFile(self, code):
         conexion = self.startConnection()
         cursor = conexion.cursor()
-        cursor.execute("SELECT * FROM file")
+        sql = "SELECT f.idFile, f.name, f.urlFile FROM file AS f " \
+              "INNER JOIN user AS u ON (f.idUser = u.idUser) WHERE u.code='" + code + "'"
+        cursor.execute(sql)
         results = cursor.fetchall()
         quantity = cursor.rowcount
         conexion.close()

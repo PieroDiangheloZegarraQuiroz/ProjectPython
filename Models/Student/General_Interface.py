@@ -130,7 +130,7 @@ class General_Interface(QMainWindow):
                                         "color : white;")
 
         # Imports
-        self.saveFile = SaveFile.Download()
+        self.saveFile = SaveFile.Download(self.code)
         self.readQuestions = ReadQuestions.ReadQuestions(self.code)
 
     def enviarAbrir(self):

@@ -28,8 +28,9 @@ class QLabelClick(QLabel):
 
 
 class Download(QDialog):
-    def __init__(self):
+    def __init__(self, code):
         super(Download, self).__init__()
+        self.code = str(code)
         self.initialize()
 
     def initialize(self):
@@ -45,20 +46,20 @@ class Download(QDialog):
 
         formLayout = QFormLayout()
         groupBox = QGroupBox()
-
-        files, quantity = ConnectionDB.Connection().listFile()
+        files, quantity = ConnectionDB.Connection().listFile(self.code)
+        print(files)
         #
         self.urls = []
         for u in files:
-            self.urls.append(u[1])
+            self.urls.append(u[2])
         #
         self.names = []
         for n in files:
-            self.names.append(n[2])
+            self.names.append(n[1])
         #
-        self.descriptions = []
-        for d in files:
-            self.descriptions.append(d[3])
+        # self.descriptions = []
+        # for d in files:
+        #     self.descriptions.append(d[3])
         #
         self.vars = []
         for i in range(quantity):
@@ -77,8 +78,8 @@ class Download(QDialog):
             self.vars.setFont(QFont("Comic Sans MS", 10))
             self.vars.move(30, 50 * (i + 1))
 
-            self.descs = QLabel(f'{self.descriptions[i]}', self)
-            self.descs.move(120, 50 * (i + 1))
+            # self.descs = QLabel(f'{self.descriptions[i]}', self)
+            # self.descs.move(120, 50 * (i + 1))
 
             image = r'../../Images/Others/icono.png'
             self.varsu = QLabelClick(f"<a href='{self.urls[i]}'><img src='{image}' alt='PDF' /></a>", self)
@@ -100,8 +101,3 @@ class Download(QDialog):
         layout.addWidget(scroll)
 
 
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = Download()
-    window.show()
-    sys.exit(app.exec_())

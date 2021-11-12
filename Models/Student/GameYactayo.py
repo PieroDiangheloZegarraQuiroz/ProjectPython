@@ -124,8 +124,8 @@ class GameOne(QDialog):
             if self.text_num == self.text_ran:
                 rpt = QMessageBox.information(self, "Success",
                                               f"!Felicitaciones¡ adivinaste el número {self.text_ran} en "
-                                              f"\n{self.intentos} intento(s)", QMessageBox.Yes | QMessageBox.No,
-                                              QMessageBox.Yes)
+                                              f"\n{self.intentos} intento(s), Deseas ver el resultado probabilistico?",
+                                              QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
                 if rpt == QMessageBox.Yes:
                     graphic = GraphicGameYactayo.Graphic()
                     graphic.exec_()

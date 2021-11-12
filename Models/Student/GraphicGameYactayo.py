@@ -22,7 +22,7 @@ class Canvas(FigureCanvas):
         self.ax.plot(x, y)
         plt.xlabel("Resultados")
         plt.ylabel("Probabilidades")
-        plt.bar(x, y, color="green", align="center")
+        plt.bar(x, y, color="blue", align="center")
         plt.xlabel("Resultados")
         plt.ylabel("Probabilidades")
         self.ax.grid()
