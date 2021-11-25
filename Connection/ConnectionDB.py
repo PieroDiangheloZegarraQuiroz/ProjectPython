@@ -7,9 +7,9 @@ class Connection:
         try:
             conexion = mysql.connector.connect(
                 user="root",
-                password="kimini28",
+                password="root",
                 host="localhost",
-                database="python",
+                database="ultimo",
                 port="3306")
             return conexion
         except Error:

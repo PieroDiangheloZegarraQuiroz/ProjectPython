@@ -9,6 +9,7 @@ from Models.General import Login
 from Models.Student import SaveFile
 from Models.Student import ReadQuestions
 from Models.General import Profile
+from Models.Student import ViewGames
 
 
 class QLabelClick(QLabel):
@@ -133,6 +134,9 @@ class General_Interface(QMainWindow):
         self.saveFile = SaveFile.Download(self.code)
         self.readQuestions = ReadQuestions.ReadQuestions(self.code)
 
+        # Import Game
+        self.FrameGames = ViewGames.Games()
+
     def enviarAbrir(self):
         Profile.selectProfile(self.idUser).exec_()
         General_Interface.display_widgets(self)
@@ -140,6 +144,7 @@ class General_Interface(QMainWindow):
     def Action1(self):
         self.booleanJuegos = True
         if self.booleanJuegos:
+            self.FrameGames.show()
             self.lblJuegos.show()
             self.lblLecutra.hide()
             self.readQuestions.hide()
