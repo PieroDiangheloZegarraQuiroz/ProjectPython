@@ -127,6 +127,7 @@ class GameOne(QDialog):
                                               f"\n{self.intentos} intento(s), Deseas ver el resultado probabilistico?",
                                               QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
                 if rpt == QMessageBox.Yes:
+                    self.timer.stop()
                     graphic = GraphicGameYactayo.Graphic()
                     graphic.exec_()
                 elif rpt == QMessageBox.No:

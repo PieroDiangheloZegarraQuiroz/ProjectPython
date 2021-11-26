@@ -4,6 +4,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QDialog, QLabel
 from PyQt5.QtWidgets import QPushButton
+from Models.Student import GameYactayo
 
 
 class Games(QDialog):
@@ -72,11 +73,11 @@ class Games(QDialog):
 
     def openAbrir(self):
         GamePiero = subprocess.run([sys.executable, '../Student/GamePiero.py'])
-        pass
 
     def openAbrir1(self):
-        # Game2 =
-        pass
+        game2 = GameYactayo.GameOne()
+        game2.exec_()
+        game2.show()
 
     def openAbrir2(self):
         # Game3 =

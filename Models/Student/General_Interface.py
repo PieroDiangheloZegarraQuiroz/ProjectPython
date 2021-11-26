@@ -145,32 +145,27 @@ class General_Interface(QMainWindow):
         self.booleanJuegos = True
         if self.booleanJuegos:
             self.FrameGames.show()
-            self.lblJuegos.show()
             self.lblLecutra.hide()
             self.readQuestions.hide()
         self.booleanJuegos = False
-        print("boton juego")
 
     def Action2(self):
         self.booleanTarea = True
         if self.booleanTarea:
-            self.lblJuegos.hide()
+            self.FrameGames.hide()
             self.lblLecutra.hide()
             self.readQuestions.show()
             self.saveFile.hide()
         self.booleanTarea = False
-        print("boton tarea")
 
     def Action3(self):
         self.booleanLectura = True
         if self.booleanLectura:
-            self.lblJuegos.hide()
+            self.FrameGames.hide()
             self.lblLecutra.show()
             self.readQuestions.hide()
             self.saveFile.show()
         self.booleanLectura = False
-
-        print("boton lectura")
 
     def sessionClose(self):
         self.saveFile.hide()
@@ -181,6 +176,7 @@ class General_Interface(QMainWindow):
     def importadosClose(self):
         self.saveFile.close()
         self.readQuestions.close()
+        self.FrameGames.close()
 
     # def closeEvent(self, event):
     #     cuadro = QMessageBox.warning(self, "Cerrar", "¿Estas seguro de cerrar la ventana?",

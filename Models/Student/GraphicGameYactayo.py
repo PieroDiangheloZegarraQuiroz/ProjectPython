@@ -3,12 +3,8 @@ import numpy as np
 
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 
-import random
-import sys
-from PyQt5 import QtTest
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QFont, QMovie, QPixmap
-from PyQt5.QtWidgets import QApplication, QPushButton, QLineEdit, QMessageBox, QLabel, QDialog, QWidget
+from PyQt5.QtGui import QFont, QPixmap
+from PyQt5.QtWidgets import QLabel, QDialog
 
 
 class Canvas(FigureCanvas):
