@@ -26,7 +26,7 @@ class Games(QDialog):
         self.lbl_Title.setFont(QFont("Comic Sans MS", 12))
         self.lbl_Title.setStyleSheet("color: black;")
 
-        self.btnAbrir = QPushButton("Stacks", self)
+        self.btnAbrir = QPushButton("Adivina el número", self)
         self.btnAbrir.move(170, 130)
         self.btnAbrir.resize(150, 30)
         self.btnAbrir.setFont(QFont("Comic Sans MS", 12))
@@ -35,7 +35,7 @@ class Games(QDialog):
                                     "background-color: rgb(14, 150, 232);"
                                     "color: white;")
 
-        self.btnAbrir1 = QPushButton("Second Game", self)
+        self.btnAbrir1 = QPushButton("Buscaminas", self)
         self.btnAbrir1.move(170, 180)
         self.btnAbrir1.resize(150, 30)
         self.btnAbrir1.setFont(QFont("Comic Sans MS", 12))
@@ -44,7 +44,7 @@ class Games(QDialog):
                                      "background-color: rgb(14, 150, 232);"
                                      "color: white;")
 
-        self.btnAbrir2 = QPushButton("Third Game", self)
+        self.btnAbrir2 = QPushButton("Jan-ken-pon", self)
         self.btnAbrir2.move(170, 230)
         self.btnAbrir2.resize(150, 30)
         self.btnAbrir2.setFont(QFont("Comic Sans MS", 12))
@@ -53,7 +53,7 @@ class Games(QDialog):
                                      "background-color: rgb(14, 150, 232);"
                                      "color: white;")
 
-        self.btnAbrir3 = QPushButton("Fourth Game", self)
+        self.btnAbrir3 = QPushButton("Stacks", self)
         self.btnAbrir3.move(170, 280)
         self.btnAbrir3.resize(150, 30)
         self.btnAbrir3.setFont(QFont("Comic Sans MS", 12))
@@ -62,7 +62,7 @@ class Games(QDialog):
                                      "background-color: rgb(14, 150, 232);"
                                      "color: white;")
 
-        self.btnAbrir4 = QPushButton("Fifth Game", self)
+        self.btnAbrir4 = QPushButton("Juego del Dado", self)
         self.btnAbrir4.move(170, 330)
         self.btnAbrir4.resize(150, 30)
         self.btnAbrir4.setFont(QFont("Comic Sans MS", 12))
@@ -72,21 +72,21 @@ class Games(QDialog):
                                      "color: white;")
 
     def openAbrir(self):
-        GamePiero = subprocess.run([sys.executable, '../Student/GamePiero.py'])
-
-    def openAbrir1(self):
         game2 = GameYactayo.GameOne()
         game2.exec_()
         game2.show()
 
+    def openAbrir1(self):
+        GameJorge = subprocess.run([sys.executable, '../Student/GameJorge.py'])
+
     def openAbrir2(self):
-        # Game3 =
+        GameSthefany2 = subprocess.run([sys.executable, '../Student/Game2.py'])
         pass
 
     def openAbrir3(self):
-        # Game4 =
+        GamePiero = subprocess.run([sys.executable, '../Student/GamePiero.py'])
         pass
 
     def openAbrir4(self):
-        # Game5 =
+        GameSthefany = subprocess.run([sys.executable, '../Student/GameStef.py'])
         pass
