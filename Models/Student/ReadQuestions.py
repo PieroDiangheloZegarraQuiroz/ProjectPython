@@ -56,9 +56,15 @@ class ReadQuestions(QDialog):
             self.vars.append(f'labs{i + 1}')
 
         for i in range(quantity):
-            self.vars = QLabelClick(f'<b>Tarea\t{i + 1}</b><label\tstyle="color:white;"> {self.urls[i]}</label>', self)
+            self.vars = QLabelClick(f'<b>Tarea\t{i + 1}</b><label\tstyle="color:gray;"> {self.urls[i]}</label>', self)
             self.vars.setFont(QFont("Comic Sans MS", 10))
             self.vars.move(30, 50 * (i + 1))
+            # self.vars.
+            self.vars.setStyleSheet("border: 1px solid gray;"
+                                    "border-radius: 10px;"
+                                    "background-color : gray;"
+                                    "color : black;")
+
 
             formLayout.setContentsMargins(50, 10, 5, 5)
             formLayout.setHorizontalSpacing(100)
