@@ -1,5 +1,3 @@
-import sys
-
 from PyQt5.QtCore import *
 from PyQt5.QtGui import QFont, QPixmap, QPalette, QBrush
 from PyQt5.QtWidgets import QLabel, QPushButton, QDialog, QMainWindow, QApplication, QMessageBox
@@ -24,6 +22,7 @@ class General_Interface_Teacher(QMainWindow):
 
     def initialize(self):
         self.setWindowFlag(Qt.FramelessWindowHint)
+        self.setAttribute(Qt.WA_TranslucentBackground, True)
         self.setGeometry(350, 150, 800, 650)
         self.setWindowTitle("General Interface Teacher")
         # window_palette = QPalette()
@@ -41,7 +40,9 @@ class General_Interface_Teacher(QMainWindow):
         # Labels
         self.back = QLabelClick(self)
         self.back.resize(800, 650)
-        self.back.setStyleSheet("background-color: black")
+        self.back.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, "
+                                "0, 0, 255), stop:1 rgba(255, 255, 255, 255));"
+                                "border-radius: 60%;")
         self.back.clicked.connect(self.importadosClose)
 
         self.results = ConnectionDB.Connection().getDataUserTeacher(self.idUser)
@@ -52,12 +53,12 @@ class General_Interface_Teacher(QMainWindow):
         try:
             with open(self.user_image):
                 self.etiqueta_imagen = QLabel(self)
-                self.etiqueta_imagen.move(60, 40)
-                self.etiqueta_imagen.resize(180, 120)
+                self.etiqueta_imagen.move(75, 40)
+                self.etiqueta_imagen.resize(140, 140)
                 self.etiqueta_imagen.setStyleSheet(f" \
                                                    border-image: url('{self.user_image}'); \
                                                    background-color: black; \
-                                                   border-radius: 50%; \
+                                                   border-radius: 60%; \
                                                    ")
                 self.etiqueta_imagen.setMargin(20)
                 self.etiqueta_imagen.setScaledContents(True)
@@ -68,7 +69,7 @@ class General_Interface_Teacher(QMainWindow):
         self.user = QLabel(f'{self.names}', self)
         self.user.setAlignment(Qt.AlignCenter)
         self.user.setFont(QFont("Arial", 12))
-        self.user.move(60, 180)
+        self.user.move(70, 180)
         self.user.resize(150, 50)
         self.user.setStyleSheet("color: white;")
 
@@ -159,3 +160,11 @@ class General_Interface_Teacher(QMainWindow):
         self.addurl.close()
         self.addform.close()
         self.orderStudent.close()
+
+
+Stylesheet = """
+    #Custom_Widget {
+        border-radius: 20px;
+        opacity: 100;
+        border: 1px;                   
+    }"""

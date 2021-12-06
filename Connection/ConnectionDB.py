@@ -7,9 +7,9 @@ class Connection:
         try:
             conexion = mysql.connector.connect(
                 user="root",
-                password="root",
+                password="sebas2001",
                 host="localhost",
-                database="ultimo",
+                database="projectpython",
                 port="3306")
             return conexion
         except Error:
@@ -19,7 +19,6 @@ class Connection:
     def changeAvatar(self, idUser, avatar):
         conexion = self.startConnection()
         cursor = conexion.cursor()
-
         sql = "UPDATE user set avatar = '{}' WHERE user.idUser = '{}'".format(avatar, idUser)
         cursor.execute(sql)
         conexion.commit()

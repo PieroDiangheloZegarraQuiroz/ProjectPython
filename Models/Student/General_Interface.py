@@ -1,8 +1,7 @@
 import time
-
 from PyQt5.QtCore import *
 from PyQt5.QtGui import QFont, QPixmap, QPalette, QBrush, QWindow, QImage
-from PyQt5.QtWidgets import QLabel, QPushButton, QMainWindow, QMessageBox
+from PyQt5.QtWidgets import QLabel, QPushButton, QMainWindow, QMessageBox,QVBoxLayout, QWidget
 
 from Connection import ConnectionDB
 from Models.General import Login
@@ -27,7 +26,12 @@ class General_Interface(QMainWindow):
         self.initialize()
 
     def initialize(self):
-        self.setWindowFlag(Qt.FramelessWindowHint)
+        self.widget = QWidget(self)
+        self.widget.setObjectName('Custom_Widget')
+        layout = QVBoxLayout(self)
+        layout.addWidget(self.widget)
+        self.setWindowFlags(Qt.FramelessWindowHint)
+        self.setAttribute(Qt.WA_TranslucentBackground, True)
         self.setGeometry(350, 150, 800, 650)
         self.setWindowTitle("General Interface Student")
         # self.setStyleSheet("background-color: black")
@@ -35,12 +39,15 @@ class General_Interface(QMainWindow):
         # window_palette.setBrush(self.backgroundRole(), QBrush(QPixmap("Images/")))
         # self.setPalette(window_palette)
         self.display_widgets()
+        self.setStyleSheet(Stylesheet)
 
     def display_widgets(self):
         # Labels
         self.back = QLabelClick(self)
         self.back.resize(800, 650)
-        self.back.setStyleSheet("background-color: black")
+        self.back.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, "
+                                "0, 0, 255), stop:1 rgba(255, 255, 255, 255));"
+                                "border-radius: 60%;")
         self.back.clicked.connect(self.importadosClose)
 
         self.booleanJuegos = False
@@ -69,12 +76,12 @@ class General_Interface(QMainWindow):
         try:
             with open(self.user_image):
                 self.etiqueta_imagen = QLabel(self)
-                self.etiqueta_imagen.move(60, 40)
-                self.etiqueta_imagen.resize(180, 120)
+                self.etiqueta_imagen.move(75, 40)
+                self.etiqueta_imagen.resize(140, 140)
                 self.etiqueta_imagen.setStyleSheet(f" \
                                                    border-image: url('{self.user_image}'); \
                                                    background-color: black; \
-                                                   border-radius: 50%; \
+                                                   border-radius: 60%; \
                                                    ")
                 self.etiqueta_imagen.setMargin(20)
                 self.etiqueta_imagen.setScaledContents(True)
@@ -85,7 +92,7 @@ class General_Interface(QMainWindow):
         self.user = QLabel(f'{self.names}', self)
         self.user.setAlignment(Qt.AlignCenter)
         self.user.setFont(QFont("Arial", 12))
-        self.user.move(60, 180)
+        self.user.move(70, 180)
         self.user.resize(150, 50)
         self.user.setStyleSheet("color: white;")
 
@@ -147,6 +154,7 @@ class General_Interface(QMainWindow):
             self.FrameGames.show()
             self.lblLecutra.hide()
             self.readQuestions.hide()
+            self.saveFile.hide()
         self.booleanJuegos = False
 
     def Action2(self):
@@ -178,13 +186,21 @@ class General_Interface(QMainWindow):
         self.readQuestions.close()
         self.FrameGames.close()
 
-    # def closeEvent(self, event):
-    #     cuadro = QMessageBox.warning(self, "Cerrar", "¿Estas seguro de cerrar la ventana?",
-    #                                  QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
-    #
-    #     if cuadro == QMessageBox.Yes:
-    #         print("Se ha cerrado la ventana")
-    #         self.saveFile.hide()
-    #         event.accept()
-    #     elif cuadro == QMessageBox.No:
-    #         event.ignore()
+
+Stylesheet = """
+    #Custom_Widget {
+        border-radius: 20px;
+        opacity: 100;
+        border: 1px;                   
+    }"""
+
+# def closeEvent(self, event):
+#     cuadro = QMessageBox.warning(self, "Cerrar", "¿Estas seguro de cerrar la ventana?",
+#                                  QMessageBox.Yes | QMessageBox.No, QMessageBox.Yes)
+#
+#     if cuadro == QMessageBox.Yes:
+#         print("Se ha cerrado la ventana")
+#         self.saveFile.hide()
+#         event.accept()
+#     elif cuadro == QMessageBox.No:
+#         event.ignore()
