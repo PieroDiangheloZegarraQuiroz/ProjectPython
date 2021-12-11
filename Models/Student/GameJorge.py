@@ -6,6 +6,7 @@ import subprocess
 import sys
 
 # ----------------------------- Bloque de ejecucion -------------------------------------------------------------------------------------------------------------------------------------------------------
+
 pygame.init()
 
 screen_width = 600
@@ -13,7 +14,9 @@ screen_height = 600
 
 screen = pygame.display.set_mode((screen_width, screen_height), pygame.NOFRAME)
 
-pygame.display.set_caption('Button Demo')
+
+
+pygame.display.set_caption('Buscaminas')
 
 font = pygame.font.SysFont('Constantia', 30)
 
@@ -78,16 +81,15 @@ class button():
         return action
 
 
-counter = 4
-iniciar = button(200, 350, 'Iniciar Juego!')
-bajarnivel = button(75, 200, 'Bajar')
-subirnivel = button(325, 200, 'Subir')
-
 run = True
 while run:
 
-    screen.fill(bg)
+    counter = 5
+    iniciar = button(200, 250, 'Iniciar Juego!')
 
+    screen.fill(bg)
+    hey = pygame.image.load(r"../../Images/Others/background.jpg").convert()
+    screen.blit(hey, [0, 150])
     if iniciar.draw_button():
         if counter < 4:
             print('No se puedo iniciar')
@@ -97,17 +99,11 @@ while run:
 
             pygame.init()
 
-    if subirnivel.draw_button():
-        counter += 1
-        if counter == 0 or counter <= 4:
-            print('Ingrese un nivel correcto por favor!')
-    if bajarnivel.draw_button():
-        counter -= 1
-        if counter <= 4:
-            print('Ingrese un nivel correcto por favor!')
 
     counter_img = font.render(str(counter), True, red)
-    screen.blit(counter_img, (280, 450))
+    screen.blit(counter_img, (280, 350))
+
+
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -116,8 +112,6 @@ while run:
     pygame.display.update()
 
 pygame.quit()
-if counter > 4:
-    pass
 
 pygame.init()
 
@@ -136,7 +130,7 @@ screen_width = 700
 screen_height = 700
 
 screen = pygame.display.set_mode((screen_width, screen_height))
-pygame.display.set_caption('Button Demo')
+pygame.display.set_caption('Buscaminas')
 
 font = pygame.font.SysFont('Constantia', 16)
 
@@ -234,13 +228,13 @@ while run:
         juego.ventana.blit(msg, pos_arriba)  # Imprime el mensaje
         pygame.display.update()  # Actualiza por ultima vez
         juega = False  # Hace que deje de leer clicks en la cuadricula
-        quit = button(150, 560, 'Ver resultados?')
+        quit = button(150, 560, 'Ver probabilidad')
         quit1 = button(440, 560, 'Jugar de nuevo')
-        quit2 = button(300, 560, 'Elegir Nivel')
+        # quit2 = button(300, 560, 'Cerrar juego') #esto cerrar juego
 
-        if quit2.draw_button():
-            pygame.quit()
-            Jorge = subprocess.run([sys.executable, '../Student/GameJorge.py'])
+        # if quit2.draw_button():
+        #     pygame.quit()
+
 
         if quit1.draw_button():
             pygame.init()
@@ -265,7 +259,8 @@ while run:
         pygame.display.update()
 
         if quit.draw_button():
-            juego.graf()
+            Stf = subprocess.run([sys.executable, '../Student/Graphic_Jorge.py'])
+
             # La leyenda en la esquina superior izquierda es aleatoria, puede cambiar la posicion nosotros mismos
 
         counter_img = font.render(str(counter), True, red)
@@ -287,15 +282,13 @@ while run:
         juega = False  # Hace que deje de leer clicks en la cuadricula
 
         again = button(440, 560, 'Jugar de nuevo')
-        quit1 = button(150, 560, 'Ver resultados?')
-        quit2 = button(300, 560, 'Elegir Nivel')
-
-        if quit2.draw_button():
-            pygame.quit()
-            Jorge = subprocess.run([sys.executable, '../Student/GameJorge.py'])
+        quit1 = button(150, 560, 'Ver probabilidad')
 
         if quit1.draw_button():
-            juego.graf()
+
+            Stf = subprocess.run([sys.executable, '../Student/Graphic_Jorge.py'])
+
+
             # La leyenda en la esquina superior izquierda es aleatoria, puede cambiar la posicion nosotros mismos
 
         counter_img = font.render(str(counter), True, red)
