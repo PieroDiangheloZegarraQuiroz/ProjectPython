@@ -21,8 +21,8 @@ class Games(QDialog):
 
     def display_widgets(self):
         # Buttons
-        self.lbl_Title = QLabel("Select Game: ", self)
-        self.lbl_Title.setGeometry(200, 70, 150, 30)
+        self.lbl_Title = QLabel("Selecciona un juego: ", self)
+        self.lbl_Title.setGeometry(170, 70, 150, 30)
         self.lbl_Title.setFont(QFont("Comic Sans MS", 12))
         self.lbl_Title.setStyleSheet("color: black;")
 
