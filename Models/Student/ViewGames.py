@@ -53,7 +53,7 @@ class Games(QDialog):
                                      "background-color: rgb(14, 150, 232);"
                                      "color: white;")
 
-        self.btnAbrir3 = QPushButton("Stacks", self)
+        self.btnAbrir3 = QPushButton("Soocer", self)
         self.btnAbrir3.move(170, 280)
         self.btnAbrir3.resize(150, 30)
         self.btnAbrir3.setFont(QFont("Comic Sans MS", 12))
@@ -84,7 +84,7 @@ class Games(QDialog):
         pass
 
     def openAbrir3(self):
-        GamePiero = subprocess.run([sys.executable, '../Student/GamePiero.py'])
+        GamePiero = subprocess.run([sys.executable, '../Student/soocer.py'])
         pass
 
     def openAbrir4(self):
