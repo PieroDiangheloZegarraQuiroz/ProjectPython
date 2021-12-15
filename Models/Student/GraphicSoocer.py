@@ -52,6 +52,7 @@ class Graphic1(QDialog):
 
         # labels
         self.label = QLabel('Análisis Estadístico', self)
+        self.label.setStyleSheet("border: 5px outset teal;")
         self.label.setFont(QFont("roboto", 14))
         self.label.move(220, 10)
 
