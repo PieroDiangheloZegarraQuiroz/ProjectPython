@@ -46,19 +46,19 @@ class SoocerGame(QDialog):
 
         # Tabla Equipos - Derrotas
         self.TableLosses = QLabel(self)
-        self.TableLosses.setPixmap(QPixmap("../../Images/Others/TableLosses.png").scaled(200, 100, Qt.KeepAspectRatio, Qt.SmoothTransformation))
-        self.TableLosses.setGeometry(90, 120, 160, 105)
+        self.TableLosses.setPixmap(QPixmap("../../Images/Others/TableLosses.PNG").scaled(200, 100, Qt.KeepAspectRatio, Qt.SmoothTransformation))
+        self.TableLosses.setGeometry(90, 120, 169, 105)
 
         # Tabla Equipos - Empates
         self.TableDraw = QLabel(self)
         self.TableDraw.setPixmap(
-            QPixmap("../../Images/Others/TableDraw.png").scaled(203, 103, Qt.KeepAspectRatio, Qt.SmoothTransformation))
-        self.TableDraw.setGeometry(275, 120, 165, 105)
+            QPixmap("../../Images/Others/TableDraw.PNG").scaled(203, 103, Qt.KeepAspectRatio, Qt.SmoothTransformation))
+        self.TableDraw.setGeometry(275, 120, 169, 105)
 
         # Tabla Equipos - Victorias
         self.TableWins = QLabel(self)
-        self.TableWins.setPixmap(QPixmap("../../Images/Others/TableWin.png").scaled(203, 103, Qt.KeepAspectRatio, Qt.SmoothTransformation))
-        self.TableWins.setGeometry(455, 120, 165, 105)
+        self.TableWins.setPixmap(QPixmap("../../Images/Others/TableWin.PNG").scaled(203, 103, Qt.KeepAspectRatio, Qt.SmoothTransformation))
+        self.TableWins.setGeometry(455, 120, 169, 105)
 
         # Gif
         self.labelGif = QLabel(self)
@@ -103,7 +103,7 @@ class SoocerGame(QDialog):
 
 
         # Insertar el equipo (número)
-        self.lbl_InsertTeam = QLabel("Ingrese el número de un Team: ", self)
+        self.lbl_InsertTeam = QLabel("Ingrese el número de un Equipo: ", self)
         self.lbl_InsertTeam.move(70, 495)
         self.lbl_InsertTeam.setFont(QFont("roboto", 10))
         # QEdit
@@ -154,7 +154,7 @@ class SoocerGame(QDialog):
 
         self.r = int(self.num_rand)
         self.s = int(self.numb)
-        self.lis_j = ['Team 1', 'Team 2', 'Team 3', 'Team 4', 'Team 5', 'Team 6']
+        self.lis_j = ['Equipo 1', 'Equipo 2', 'Equipo 3', 'Equipo 4', 'Equipo 5', 'Equipo 6']
 
         if self.accountant > 0 and self.s <= 6:
 
@@ -167,8 +167,8 @@ class SoocerGame(QDialog):
                                            "background-color: #FAD474;")
                 self.text.setText(
                     str(f'Lista de Equipos: {self.lis_j} '
-                        f'\n Team Ganador -> Team{self.num_rand} \n Team ingresado -> Team {self.numb} '
-                        f'\n      ¡ Felicitaciones tu team {self.numb} es el ganador !'))
+                        f'\n Equipo Ganador -> Equipo{self.num_rand} \n Equipo ingresado -> Equipo {self.numb} '
+                        f'\n      ¡ Felicitaciones tu Equipo {self.numb} es el ganador !'))
                 self.labelaccountant.setText(f"Le quedan <b>{self.accountant}</b> intentos")
 
             elif self.r > self.s:
@@ -176,8 +176,8 @@ class SoocerGame(QDialog):
                 self.number.clear()
                 self.text.setText(
                     str(f'Lista de Equipos: {self.lis_j} '
-                        f'\n Team Ganador -> Team {self.num_rand} \n Team ingresado -> Team {self.numb} '
-                        f'\n  --------El team {self.numb} no ganó el campeonato -------'))
+                        f'\n Equipo Ganador -> Equipo {self.num_rand} \n Equipo ingresado -> Equipo {self.numb} '
+                        f'\n  --------El Equipo {self.numb} no ganó el campeonato -------'))
                 self.labelaccountant.setText(f"Le quedan <b>{self.accountant}</b> intentos")
                 self.buttonR.setEnabled(False)
                 self.buttonR.setStyleSheet("color: gray;"
@@ -189,8 +189,8 @@ class SoocerGame(QDialog):
                 self.number.clear()
                 self.text.setText(
                     str(f'Lista de Equipos: {self.lis_j} '
-                        f'\n Team Ganador -> Team {self.num_rand} \n Team ingresado -> Team {self.numb} '
-                        f'\n  --------El team {self.numb} no ganó el campeonato -------'))
+                        f'\n Equipo Ganador -> Equipo {self.num_rand} \n Equipo ingresado -> Equipo {self.numb} '
+                        f'\n  --------El Equipo {self.numb} no ganó el campeonato -------'))
                 self.labelaccountant.setText(f"Le quedan <b>{self.accountant}</b> intentos")
                 self.buttonR.setEnabled(False)
                 self.buttonR.setStyleSheet("color: gray;"
@@ -198,7 +198,7 @@ class SoocerGame(QDialog):
                                            "background-color: #FAD474;")
 
         elif self.s > 6 and self.accountant > 0:
-            self.text.setText('Team fuera del rango')
+            self.text.setText('Equipo fuera del rango')
             self.accountant = self.accountant - 1
             self.labelaccountant.setText(f"Le quedan <b>{self.accountant}</b> intentos")
 
@@ -208,7 +208,7 @@ class SoocerGame(QDialog):
             self.number.clear()
             self.text.setText(
                 str(f"Lista de Equipos: {self.lis_j} "
-                    f"\n Team Ganador -> Team {self.num_rand} \n Team ingresado -> Team {self.numb} "
+                    f"\n Equipo Ganador -> Equipo {self.num_rand} \n Equipo ingresado -> Equipo {self.numb} "
                     f'\n              ¡Usted ha perdido!     '))
             self.labelaccountant.setText(f"Le quedan <b>{self.accountant}</b> intentos")
 
