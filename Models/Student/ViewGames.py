@@ -5,6 +5,9 @@ from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QDialog, QLabel
 from PyQt5.QtWidgets import QPushButton
 from Models.Student import GameYactayo
+from Models.Student import Game2
+from Models.Student import GameStef
+from Models.Student import soocer
 
 
 class Games(QDialog):
@@ -72,21 +75,24 @@ class Games(QDialog):
                                      "color: white;")
 
     def openAbrir(self):
-        game2 = GameYactayo.GameOne()
-        game2.exec_()
-        game2.show()
+        game1 = GameYactayo.GameOne()
+        game1.exec_()
+        game1.show()
 
     def openAbrir1(self):
         GameJorge = subprocess.run([sys.executable, '../Student/GameJorge.py'])
 
     def openAbrir2(self):
-        GameSthefany2 = subprocess.run([sys.executable, '../Student/Game2.py'])
-        pass
+        gameS2 = Game2.Game2()
+        gameS2.exec_()
+        gameS2.show()
 
     def openAbrir3(self):
-        GamePiero = subprocess.run([sys.executable, '../Student/soocer.py'])
-        pass
+        game3 = soocer.SoocerGame()
+        game3.exec_()
+        game3.show()
 
     def openAbrir4(self):
-        GameSthefany = subprocess.run([sys.executable, '../Student/GameStef.py'])
-        pass
+        game4 = GameStef.Game()
+        game4.exec_()
+        game4.show()
