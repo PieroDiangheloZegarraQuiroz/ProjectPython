@@ -9,7 +9,7 @@ class Connection:
                 user="root",
                 password="root",
                 host="localhost",
-                database="python_project_u",
+                database="ultimo",
                 port="3306")
             return conexion
         except Error:
