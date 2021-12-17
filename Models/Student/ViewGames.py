@@ -5,6 +5,9 @@ from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QDialog, QLabel
 from PyQt5.QtWidgets import QPushButton
 from Models.Student import GameYactayo
+from Models.Student import Game2
+from Models.Student import GameStef
+from Models.Student import soocer
 
 
 class Games(QDialog):
@@ -21,8 +24,8 @@ class Games(QDialog):
 
     def display_widgets(self):
         # Buttons
-        self.lbl_Title = QLabel("Select Game: ", self)
-        self.lbl_Title.setGeometry(200, 70, 150, 30)
+        self.lbl_Title = QLabel("Selecciona un juego: ", self)
+        self.lbl_Title.setGeometry(170, 70, 150, 30)
         self.lbl_Title.setFont(QFont("Comic Sans MS", 12))
         self.lbl_Title.setStyleSheet("color: black;")
 
@@ -53,7 +56,7 @@ class Games(QDialog):
                                      "background-color: rgb(14, 150, 232);"
                                      "color: white;")
 
-        self.btnAbrir3 = QPushButton("Stacks", self)
+        self.btnAbrir3 = QPushButton("Soocer", self)
         self.btnAbrir3.move(170, 280)
         self.btnAbrir3.resize(150, 30)
         self.btnAbrir3.setFont(QFont("Comic Sans MS", 12))
@@ -72,21 +75,24 @@ class Games(QDialog):
                                      "color: white;")
 
     def openAbrir(self):
-        game2 = GameYactayo.GameOne()
-        game2.exec_()
-        game2.show()
+        game1 = GameYactayo.GameOne()
+        game1.exec_()
+        game1.show()
 
     def openAbrir1(self):
         GameJorge = subprocess.run([sys.executable, '../Student/GameJorge.py'])
 
     def openAbrir2(self):
-        GameSthefany2 = subprocess.run([sys.executable, '../Student/Game2.py'])
-        pass
+        gameS2 = Game2.Game2()
+        gameS2.exec_()
+        gameS2.show()
 
     def openAbrir3(self):
-        GamePiero = subprocess.run([sys.executable, '../Student/GamePiero.py'])
-        pass
+        game3 = soocer.SoocerGame()
+        game3.exec_()
+        game3.show()
 
     def openAbrir4(self):
-        GameSthefany = subprocess.run([sys.executable, '../Student/GameStef.py'])
-        pass
+        game4 = GameStef.Game()
+        game4.exec_()
+        game4.show()
