@@ -3,7 +3,7 @@ from urllib import request
 
 from PyQt5.QtCore import *
 from PyQt5.QtGui import QFont
-from PyQt5.QtWidgets import QApplication, QFileDialog, QMessageBox, QLabel, QScrollArea, QVBoxLayout, QFormLayout, \
+from PyQt5.QtWidgets import QLabel, QScrollArea, QVBoxLayout, QFormLayout, \
     QGroupBox, QDialog
 
 from Connection import ConnectionDB
@@ -24,9 +24,10 @@ class QLabelClick(QLabel):
 
 
 class ReadQuestions(QDialog):
-    def __init__(self, codeId):
+    def __init__(self, codeId, idUser):
         super(ReadQuestions, self).__init__()
         self.codeId = str(codeId)
+        self.idUser = str(idUser)
         self.initialize()
 
     def initialize(self):
@@ -54,6 +55,8 @@ class ReadQuestions(QDialog):
         for i in range(quantity):
             self.vars.append(f'labs{i + 1}')
 
+        QLabelClick(self.idUser)
+
         for i in range(quantity):
             self.vars = QLabelClick(f'<b>Tarea\t{i + 1}</b><label\tstyle="color:gray;"> {self.urls[i]}</label>', self)
             self.vars.setFont(QFont("Comic Sans MS", 10))
@@ -63,7 +66,6 @@ class ReadQuestions(QDialog):
                                     "border-radius: 10px;"
                                     "background-color : gray;"
                                     "color : black;")
-
 
             formLayout.setContentsMargins(50, 10, 5, 5)
             formLayout.setHorizontalSpacing(100)
@@ -79,5 +81,3 @@ class ReadQuestions(QDialog):
 
         layout = QVBoxLayout(self)
         layout.addWidget(scroll)
-
-

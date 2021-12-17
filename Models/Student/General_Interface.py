@@ -1,7 +1,7 @@
 import time
 from PyQt5.QtCore import *
 from PyQt5.QtGui import QFont, QPixmap, QPalette, QBrush, QWindow, QImage
-from PyQt5.QtWidgets import QLabel, QPushButton, QMainWindow, QMessageBox,QVBoxLayout, QWidget
+from PyQt5.QtWidgets import QLabel, QPushButton, QMainWindow, QMessageBox, QVBoxLayout, QWidget
 
 from Connection import ConnectionDB
 from Models.General import Login
@@ -19,10 +19,10 @@ class QLabelClick(QLabel):
 
 
 class General_Interface(QMainWindow):
+
     def __init__(self, idUser):
         super(General_Interface, self).__init__()
         self.idUser = str(idUser)
-
         self.initialize()
 
     def initialize(self):
@@ -67,7 +67,6 @@ class General_Interface(QMainWindow):
         self.lblLecutra.setGeometry(550, 250, 500, 650)
         self.lblLecutra.move(300, 0)
         self.lblLecutra.hide()
-
         self.results = ConnectionDB.Connection().getDataUserStudent(self.idUser)
         self.perfil = str(self.results[9])
         self.names = (self.results[1] + "\n" + self.results[2])
@@ -139,7 +138,7 @@ class General_Interface(QMainWindow):
 
         # Imports
         self.saveFile = SaveFile.Download(self.code)
-        self.readQuestions = ReadQuestions.ReadQuestions(self.code)
+        self.readQuestions = ReadQuestions.ReadQuestions(self.code, self.idUser)
 
         # Import Game
         self.FrameGames = ViewGames.Games()

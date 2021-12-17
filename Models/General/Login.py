@@ -85,7 +85,6 @@ class Login(QMainWindow):
         text_password = self.passwordBox.text()
         largoEmail = len(text_email)
         largoPassword = len(text_password)
-
         if largoEmail != 0 and largoPassword != 0:
             user, result = ConnectionDB.Connection().validateUser(text_email, text_password)
 

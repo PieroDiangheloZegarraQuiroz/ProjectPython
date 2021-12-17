@@ -9,7 +9,7 @@ class Connection:
                 user="root",
                 password="sebas2001",
                 host="localhost",
-                database="projectpython",
+                database="python",
                 port="3306")
             return conexion
         except Error:
@@ -178,3 +178,12 @@ class Connection:
         quantity = cursor.rowcount
         conexion.close()
         return results, quantity
+
+    def insertAnswer(self, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, idForm, idUser):
+        conexion = self.startConnection()
+        cursor = conexion.cursor()
+        sql = "INSERT INTO answer (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, idForm, idUser) VALUES ('{}', '{}', '{}', '{}', " \
+              "'{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')".format(q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, idForm, idUser)
+        cursor.execute(sql)
+        conexion.commit()
+        conexion.close()
