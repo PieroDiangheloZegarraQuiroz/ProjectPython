@@ -48,7 +48,6 @@ class ReadQuestions(QDialog):
         self.urls = []
         for u in results:
             self.urls.append(u[0])
-        print(results)
         #
 
         self.vars = []

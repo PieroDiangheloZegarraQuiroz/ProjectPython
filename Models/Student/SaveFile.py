@@ -47,7 +47,6 @@ class Download(QDialog):
         formLayout = QFormLayout()
         groupBox = QGroupBox()
         files, quantity = ConnectionDB.Connection().listFile(self.code)
-        print(files)
         #
         self.urls = []
         for u in files:

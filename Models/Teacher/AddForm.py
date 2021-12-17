@@ -148,6 +148,7 @@ class Form(QDialog):
             self.textBox10.setStyleSheet(self.stylo)
             self.textBox10.show()
             self.textBox10.textChanged.connect(self.buttonEnabled)
+
             self.buttonInsert.setEnabled(False)
             self.buttonInsert.setStyleSheet("border-radius: 5px;"
                                             "background-color: gray;"
@@ -157,24 +158,120 @@ class Form(QDialog):
                                     "Ya no se podran añadir mas cajas de texto",
                                     QMessageBox.Ok, QMessageBox.Ok)
 
+    def limpiar(self):
+        if self.contador == 1:
+            self.textBox1.clear()
+        elif self.contador == 2:
+            self.textBox1.clear()
+            self.textBox2.clear()
+        elif self.contador == 3:
+            self.textBox1.clear()
+            self.textBox2.clear()
+            self.textBox3.clear()
+        elif self.contador == 4:
+            self.textBox1.clear()
+            self.textBox2.clear()
+            self.textBox3.clear()
+            self.textBox4.clear()
+        elif self.contador == 5:
+            self.textBox1.clear()
+            self.textBox2.clear()
+            self.textBox3.clear()
+            self.textBox4.clear()
+            self.textBox5.clear()
+        elif self.contador == 6:
+            self.textBox1.clear()
+            self.textBox2.clear()
+            self.textBox3.clear()
+            self.textBox4.clear()
+            self.textBox5.clear()
+            self.textBox6.clear()
+        elif self.contador == 7:
+            self.textBox1.clear()
+            self.textBox2.clear()
+            self.textBox3.clear()
+            self.textBox4.clear()
+            self.textBox5.clear()
+            self.textBox6.clear()
+            self.textBox7.clear()
+        elif self.contador == 8:
+            self.textBox1.clear()
+            self.textBox2.clear()
+            self.textBox3.clear()
+            self.textBox4.clear()
+            self.textBox5.clear()
+            self.textBox6.clear()
+            self.textBox7.clear()
+            self.textBox8.clear()
+        elif self.contador == 9:
+            self.textBox1.clear()
+            self.textBox2.clear()
+            self.textBox3.clear()
+            self.textBox4.clear()
+            self.textBox5.clear()
+            self.textBox6.clear()
+            self.textBox7.clear()
+            self.textBox8.clear()
+            self.textBox9.clear()
+        elif self.contador == 10:
+            self.textBox1.clear()
+            self.textBox2.clear()
+            self.textBox3.clear()
+            self.textBox4.clear()
+            self.textBox5.clear()
+            self.textBox6.clear()
+            self.textBox7.clear()
+            self.textBox8.clear()
+            self.textBox9.clear()
+            self.textBox10.clear()
+
     def saveForm(self):
-        ConnectionDB.Connection().insertQuestions(self.textBox1.text(), self.textBox2.text(), self.textBox3.text(),
-                                                  self.textBox4.text(), self.textBox5.text(), self.textBox6.text(),
-                                                  self.textBox7.text(), self.textBox8.text(), self.textBox9.text(),
-                                                  self.textBox10.text(), self.idUser)
+        if self.contador == 1:
+            ConnectionDB.Connection().insertQuestions(self.textBox1.text(), '', '', '', '', '', '', '', '',
+                                                      '', self.idUser)
+        elif self.contador == 2:
+            ConnectionDB.Connection().insertQuestions(self.textBox1.text(), self.textBox2.text(), '', '', '', '', '',
+                                                      '', '',
+                                                      '', self.idUser)
+        elif self.contador == 3:
+            ConnectionDB.Connection().insertQuestions(self.textBox1.text(), self.textBox2.text(), self.textBox3.text(),
+                                                      '', '', '', '', '', '',
+                                                      '', self.idUser)
+        elif self.contador == 4:
+            ConnectionDB.Connection().insertQuestions(self.textBox1.text(), self.textBox2.text(), self.textBox3.text(),
+                                                      self.textBox4.text(), '', '', '', '', '',
+                                                      '', self.idUser)
+        elif self.contador == 5:
+            ConnectionDB.Connection().insertQuestions(self.textBox1.text(), self.textBox2.text(), self.textBox3.text(),
+                                                      self.textBox4.text(), self.textBox5.text(), '', '', '', '',
+                                                      '', self.idUser)
+        elif self.contador == 6:
+            ConnectionDB.Connection().insertQuestions(self.textBox1.text(), self.textBox2.text(), self.textBox3.text(),
+                                                      self.textBox4.text(), self.textBox5.text(), self.textBox6.text(),
+                                                      '', '', '', '', self.idUser)
+        elif self.contador == 7:
+            ConnectionDB.Connection().insertQuestions(self.textBox1.text(), self.textBox2.text(), self.textBox3.text(),
+                                                      self.textBox4.text(), self.textBox5.text(), self.textBox6.text(),
+                                                      self.textBox7.text(), '', '', '', self.idUser)
+        elif self.contador == 8:
+            ConnectionDB.Connection().insertQuestions(self.textBox1.text(), self.textBox2.text(), self.textBox3.text(),
+                                                      self.textBox4.text(), self.textBox5.text(), self.textBox6.text(),
+                                                      self.textBox7.text(), self.textBox8.text(), '', '', self.idUser)
+        elif self.contador == 9:
+            ConnectionDB.Connection().insertQuestions(self.textBox1.text(), self.textBox2.text(), self.textBox3.text(),
+                                                      self.textBox4.text(), self.textBox5.text(), self.textBox6.text(),
+                                                      self.textBox7.text(), self.textBox8.text(), self.textBox9.text(),
+                                                      '', self.idUser)
+        elif self.contador == 10:
+            ConnectionDB.Connection().insertQuestions(self.textBox1.text(), self.textBox2.text(), self.textBox3.text(),
+                                                      self.textBox4.text(), self.textBox5.text(), self.textBox6.text(),
+                                                      self.textBox7.text(), self.textBox8.text(), self.textBox9.text(),
+                                                      self.textBox10.text(), self.idUser)
+
         QMessageBox.information(self, "Succeful",
                                 "Se ha ingresado el formulario",
                                 QMessageBox.Ok, QMessageBox.Ok)
-        self.textBox1.clear()
-        self.textBox2.clear()
-        self.textBox3.clear()
-        self.textBox4.clear()
-        self.textBox5.clear()
-        self.textBox6.clear()
-        self.textBox7.clear()
-        self.textBox8.clear()
-        self.textBox9.clear()
-        self.textBox10.clear()
+        self.limpiar()
 
     def buttonEnabled(self):
         self.stylo2 = "border-radius: 5px;" \
@@ -183,7 +280,6 @@ class Form(QDialog):
         if self.textBox1.text() != "" and self.contador == 1:
             self.buttonSave.setEnabled(True)
             self.buttonSave.setStyleSheet(self.stylo2)
-
         elif self.textBox1.text() != "" and self.textBox2.text() != "" and self.contador == 2:
             self.buttonSave.setEnabled(True)
             self.buttonSave.setStyleSheet(self.stylo2)
@@ -240,6 +336,3 @@ class Form(QDialog):
             self.buttonSave.setStyleSheet("border-radius: 5px;"
                                           "background-color: gray;"
                                           "color: white;")
-
-
-

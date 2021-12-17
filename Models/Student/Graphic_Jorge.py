@@ -1,15 +1,9 @@
 import random
 import time
 import pygame
-import sys
+from matplotlib import pyplot as plt
 
-import matplotlib.pyplot as plt
-import numpy as np
 
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-
-from PyQt5.QtGui import QFont, QPixmap
-from PyQt5.QtWidgets import QLabel, QDialog, QApplication
 class Juego:
 
 
@@ -18,7 +12,7 @@ class Juego:
     def __init__(self, ancho, alto,counter):
         # juego1 = ejt.Juego1()
         self.counter=counter
-        # print(counter,'Este es el counter del def')
+        print(counter,'Este es el counter del def')
         self.size = self.counter
         # self.size=juego1.counter()
         # self.size=self.counter
@@ -44,7 +38,7 @@ class Juego:
         self.bandera = pygame.transform.scale(bandera, (self.width, self.width))  # Imagen de la bandera
         pygame.mixer.init()
         pygame.mixer.music.load('../../Images/Others/Sounds/explosion.mp3')  # Sonido de la explosion
-        pygame.mixer.music.set_volume(0.02)
+        pygame.mixer.music.set_volume(0.2)
         # ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
         # ------------------- Atributos propios del buscaminas -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -77,7 +71,24 @@ class Juego:
                 x += self.width + 5
             x -= (self.width + 5) * self.size
             y += self.width + 5
+    def graf(self):
+        x = pow(self.size, 2)
+        print(self.t2)
+        data = [1, x, self.banderas_max,  self.a]
+        labels = [f'N.Vida {1}' , f'N.Cuadriculas {x}' , f'N.Banderas {self.banderas_max}', f'T.Tiempo {self.a}']
 
+        # data = np.random.rand(7) * 100
+
+        # 1.2f significa que dos lugares decimales estan reservados
+        plt.pie(data, labels=labels, autopct='%1.2f%%')
+        # El primer parametros es la proporcion
+        # El segundo es la etiqueta respectiva
+        # El tercero es la precision de visualización
+
+        # Haga que la imagen se vea redonda, de lo contrario sera plana
+        plt.axis('equal')
+        plt.legend()
+        plt.show()
     # ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     # --------------------- Metodo que imprime el mapa en pantalla ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -325,6 +336,7 @@ class Juego:
         self.t = str(int(self.t2 - t1))
         self.t = self.temp.render("Tiempo : {0} sec".format(self.t), 1, (255, 255, 0))
         self.a = (int(self.t2 - t1))
+        print('aca el t del juego',self.a)
         pygame.draw.rect(self.ventana, (0, 0, 0),
                          (pos[0], pos[1], 200, self.width))  # Dibuja un fondo negro para que no se sobreponga
         self.ventana.blit(self.t, (pos))  # Dibuja el mensaje
@@ -343,128 +355,4 @@ class Juego:
                 pygame.draw.line(self.ventana, (0, 0, 0), (i[0], i[1]), (i[0] + self.width, i[1] + self.width),
                                  (5))  # Dibuja una x sobre una bandera mal puesta
                 pygame.draw.line(self.ventana, (0, 0, 0), (i[0] + self.width, i[1]), (i[0], i[1] + self.width), (5))
-
-class graf(QDialog):
-    def __init__(self):
-        super(graf, self).__init__()
-        self.resize(600, 600)
-        self.setWindowTitle("Resultado probabilistico")
-        self.setStyleSheet("background: white")
-
-        self.label = QLabel('Resultado probabilístico', self)
-        self.label.setFont(QFont("Comic Sans MS", 14))
-        self.label.move(180, 0)
-        self.label1 = QLabel('<b>Espacio muestral:</b> S = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14 ,15 ,16}', self)
-        self.label1.setFont(QFont("Comic Sans MS", 10))
-        self.label1.move(30, 30)
-
-        self.label3 = QLabel('<b>Formula:</b>', self)
-
-        self.label3.setFont(QFont("Comic Sans MS", 10))
-        self.label3.move(30, 110)
-
-        self.label66 = QLabel('<b>Solución:</b>', self)
-
-        self.label66.setFont(QFont("Comic Sans MS", 10))
-        self.label66.move(280, 110)
-
-        self.label35 = QLabel(f'<b>Evento (A1): ¿Cual es la probabilidad de que un cuadro sea una mina en el nivel 5?</b>', self)
-
-        self.label35.setFont(QFont("Comic Sans MS", 10))
-        self.label35.move(30, 60)
-
-        self.label4 = QLabel('Nºcasos favorables A1', self)
-        self.label4.setFont(QFont("Comic Sans MS", 8, QFont.Bold))
-        self.label4.move(100, 130)
-
-        self.label5 = QLabel('Nºtotal casos posibles', self)
-        self.label5.setFont(QFont("Comic Sans MS", 8, QFont.Bold))
-        self.label5.move(100, 170)
-
-        self.label14 = QLabel('1', self)
-        self.label14.setFont(QFont("Comic Sans MS", 10, QFont.Bold))
-        self.label14.move(410, 135)
-
-        self.label15 = QLabel('25', self)
-        self.label15.setFont(QFont("Comic Sans MS", 10, QFont.Bold))
-        self.label15.move(410, 170)
-
-        self.label7 = QLabel('•A1:', self)
-        self.label7.setFont(QFont("Comic Sans MS", 10, QFont.Bold))
-        self.label7.move(1, 150)
-
-        self.label6 = QLabel('•Interpretación: el resultado de la operación es 0.04, por tanto si lo multiplicamos por el  ', self)
-        self.label6.setFont(QFont("Comic Sans MS", 10, QFont.Bold))
-        self.label6.move(1, 210)
-
-        self.label1313 = QLabel(
-            '100% obtenemos el valor de 4%, que representa la probabilidad de ', self)
-        self.label1313.setFont(QFont("Comic Sans MS", 10, QFont.Bold))
-        self.label1313.move(110, 230)
-
-        self.label99 = QLabel(
-            'que al destapar un cuadro sea una mina.', self)
-        self.label99.setFont(QFont("Comic Sans MS", 10, QFont.Bold))
-        self.label99.move(110, 250)
-#-----------------------------------------------------------------------------------------
-        user_png = r"../../Images/Others/Formula2.png"
-        try:
-            with open(user_png):
-                imageLogin = QLabel(self)
-                pixmap = QPixmap(user_png)
-                imageLogin.setPixmap(pixmap)
-                imageLogin.move(35, 150)
-                imageLogin.resize(600, 20)
-        except FileNotFoundError:
-            print("A1Izquierda")
-# -----------------------------------------------------------------------------------------
-        user_png1 = r"../../Images/Others/Formula1.png"
-        try:
-            with open(user_png1):
-                imageLogin1 = QLabel(self)
-                pixmap = QPixmap(user_png1)
-                imageLogin1.setPixmap(pixmap)
-                imageLogin1.move(280, 150)
-                imageLogin1.resize(500, 20)
-        except FileNotFoundError:
-            print("A1 derecha")
-#------------------------------------------------------------------------------------------------------
-        self.label5 = QLabel('Representación gráfica:', self)
-        self.label5.setFont(QFont("Comic Sans MS", 10, QFont.Bold))
-        self.label5.move(1, 285)
-        chart = Canvas(self)
-        chart.move(100, 315)
-        chart.resize(380, 280)
-
-        self.labelresult1 = QLabel('0.04', self)
-        self.labelresult1.setFont(QFont("Comic Sans MS", 12, QFont.Bold))
-        self.labelresult1.move(500, 150)
-
-
-class Canvas(FigureCanvas):
-    def __init__(self, parent):
-        self.fig, self.ax = plt.subplots(figsize=(5, 4), dpi=80)
-        super(Canvas, self).__init__(self.fig)
-        self.setParent(parent)
-
-        x = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])
-        y = np.array([1 / 10, 1 / 10, 1 / 10, 1 / 10, 1 / 10, 1 / 10, 1 / 10, 1 / 10, 1 / 10, 1 / 10, 1 / 10, 1 / 10, 1 / 10, 1 / 10, 1 / 10, 1 / 10])
-        self.ax.plot(x, y)
-        plt.xlabel("Resultados")
-        plt.ylabel("Probabilidades")
-        plt.bar(x, y, color="blue", align="center")
-        plt.xlabel("Resultados")
-        plt.ylabel("Probabilidades")
-        self.ax.grid()
-
-
-
-
-
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = graf()
-    window.show()
-    sys.exit(app.exec_())
-
-# -------------------------------------------------------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------------------------------------------

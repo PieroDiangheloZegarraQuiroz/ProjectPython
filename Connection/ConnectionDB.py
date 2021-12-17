@@ -7,9 +7,9 @@ class Connection:
         try:
             conexion = mysql.connector.connect(
                 user="root",
-                password="root",
+                password="sebas2001",
                 host="localhost",
-                database="ultimo",
+                database="projectpython",
                 port="3306")
             return conexion
         except Error:
@@ -84,7 +84,7 @@ class Connection:
         conexion.commit()
         conexion.close()
 
-    def insertUser_Teacher(self, name, lastName, cellphone, idUser):
+    def insertUser_Teacher(self, name, lastName, cellphone, idUser):  # ?
         conexion = self.startConnection()
         cursor = conexion.cursor()
         sql = "INSERT INTO teacher (name, lastName, cellphone, idUser) VALUES ('{}', '{}', '{}', '{}')" \
@@ -102,7 +102,6 @@ class Connection:
             " WHERE u.code = '" + code + "' and s.degree = '4toº Primaria'")
         results = cursor.fetchall()
         quantity = cursor.rowcount
-        print(results)
         conexion.close()
         return results, quantity
 
@@ -125,7 +124,6 @@ class Connection:
             " WHERE u.code = '" + code + "' and s.degree = '6toº Primaria'")
         results = cursor.fetchall()
         quantity = cursor.rowcount
-        print(results)
         conexion.close()
         return results, quantity
 
@@ -154,8 +152,8 @@ class Connection:
     def insertQuestions(self, q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, idUser):
         conexion = self.startConnection()
         cursor = conexion.cursor()
-        sql = "INSERT INTO form (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, idUser) VALUES ('{}', '{}', '{}', '{}', " \
-              "'{}', '{}', '{}', '{}', '{}', '{}', '{}')".format(q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, idUser)
+        sql = "INSERT INTO form (q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, idUser) VALUES ('{}', '{}', '{}', " \
+              "'{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')".format(q1, q2, q3, q4, q5, q6, q7, q8, q9, q10, idUser)
         cursor.execute(sql)
         conexion.commit()
         conexion.close()
@@ -180,11 +178,3 @@ class Connection:
         quantity = cursor.rowcount
         conexion.close()
         return results, quantity
-
-    def insertFiles2(self, pdf):
-        conexion = self.startConnection()
-        cursor = conexion.cursor()
-        sql = """INSERT INTO test (pdf) VALUES (%s)"""
-        cursor.execute(sql, (pdf,))
-        conexion.commit()
-        conexion.close()
